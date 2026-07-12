@@ -6,6 +6,8 @@ import pandas as pd
 from datetime import date
 from google.cloud import bigquery
 
+from query import get_config, active_trips_table, trips_weather_sql
+
 # Credentials: use GOOGLE_APPLICATION_CREDENTIALS env var if set (local dev),
 # otherwise fall back to ADC (Cloud Run attached service account).
 _KEY = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
@@ -14,54 +16,57 @@ if _KEY:
 
 st.set_page_config(page_title="Citi Bike Explorer", layout="wide")
 
+# ── Configuration (env-driven; see query.py) ─────────────────────────────────
+
+try:
+    CFG = get_config()
+except ValueError as exc:
+    st.error(f"Configuration error: {exc}")
+    st.stop()
+
+TRIPS_TABLE = active_trips_table(CFG)
+
 # ── BigQuery client (one per app process) ────────────────────────────────────
 
 @st.cache_resource
 def get_client():
-    return bigquery.Client(project="msbai-dwd-jrs10127")
+    return bigquery.Client(project=CFG["project"])
 
-# ── Data fetching — cached per (rider_type, start, end) ──────────────────────
-# Each unique arg combination is cached independently, so changing rider_type
-# reuses the cached other type rather than re-querying it.
+# ── Data fetching — one cached daily query per (mode, start, end) ────────────
+# The wide result carries all rider series at once, so switching the rider
+# radio re-slices the cached frame instead of re-querying BigQuery.
 
-TRIP_COLS = {
+SERIES_COLS = {
     "member": "num_member_trips_nyc",
     "casual": "num_casual_trips_nyc",
 }
 
 @st.cache_data(ttl=3600, show_spinner="Querying BigQuery…")
-def fetch(rider_type: str, start: date, end: date) -> pd.DataFrame:
-    col = TRIP_COLS[rider_type]
-    sql = f"""
-        SELECT
-            t.date,
-            t.{col}                                         AS num_trips,
-            w.tavg_f,
-            w.prcp_inches,
-            w.is_weekend,
-            w.season,
-            w.is_rainy,
-            w.is_snowy
-        FROM `nyu-datasets.citibike.m_daily_trips`      t
-        JOIN `nyu-datasets.weather.m_weather_daily_nyc` w USING (date)
-        WHERE t.date BETWEEN @s AND @e
-        ORDER BY t.date
-    """
+def fetch_daily(mode: str, start: date, end: date) -> pd.DataFrame:
     cfg = bigquery.QueryJobConfig(query_parameters=[
         bigquery.ScalarQueryParameter("s", "DATE", start.isoformat()),
         bigquery.ScalarQueryParameter("e", "DATE", end.isoformat()),
     ])
-    df = get_client().query(sql, job_config=cfg).to_dataframe()
-    df["rider_type"] = rider_type
-    return df
+    return get_client().query(trips_weather_sql(CFG), job_config=cfg).to_dataframe()
 
 
-def load(rider_type: str, start: date, end: date) -> pd.DataFrame:
-    """Return combined df for 'member', 'casual', or 'both'."""
-    if rider_type == "both":
-        return pd.concat([fetch("member", start, end), fetch("casual", start, end)],
-                         ignore_index=True)
-    return fetch(rider_type, start, end)
+def load(rider_type: str, start: date, end: date):
+    """Return (wide df, long df of the selected member/casual series).
+
+    The long frame feeds the per-rider-type charts and deliberately contains
+    only member/casual — unknown-rider trips are counted in num_nyc_trips
+    (and the KPI total) but are never folded into either named series.
+    """
+    wide = fetch_daily(CFG["source_mode"], start, end)
+    types = ["member", "casual"] if rider_type == "both" else [rider_type]
+    parts = []
+    for rt in types:
+        part = wide[["date", SERIES_COLS[rt], "tavg_f", "prcp_inches",
+                     "is_weekend", "season", "is_rainy", "is_snowy"]].copy()
+        part = part.rename(columns={SERIES_COLS[rt]: "num_trips"})
+        part["rider_type"] = rt
+        parts.append(part)
+    return wide, pd.concat(parts, ignore_index=True)
 
 
 # ── Sidebar controls ──────────────────────────────────────────────────────────
@@ -89,7 +94,7 @@ start, end = date_range
 
 # ── Load data ─────────────────────────────────────────────────────────────────
 
-df = load(rider_type, start, end)
+wide, df = load(rider_type, start, end)
 
 if df.empty:
     st.warning("No data for selected filters.")
@@ -99,8 +104,13 @@ if df.empty:
 
 st.title("Citi Bike NYC — Daily Ridership")
 
-total   = df["num_trips"].sum()
-avg_day = df.groupby("date")["num_trips"].sum().mean()
+if rider_type == "both":
+    # Total NYC trips includes unknown-rider trips, not just member+casual.
+    total   = wide["num_nyc_trips"].sum()
+    avg_day = wide["num_nyc_trips"].mean()
+else:
+    total   = df["num_trips"].sum()
+    avg_day = df.groupby("date")["num_trips"].sum().mean()
 avg_tmp = df["tavg_f"].mean()
 days    = df["date"].nunique()
 
@@ -109,6 +119,20 @@ k1.metric("Total trips",      f"{total:,.0f}")
 k2.metric("Avg trips / day",  f"{avg_day:,.0f}")
 k3.metric("Avg temperature",  f"{avg_tmp:.1f} °F")
 k4.metric("Days covered",     f"{days:,}")
+
+# ── Active data source ────────────────────────────────────────────────────────
+
+st.caption(f"Trip data source: `{TRIPS_TABLE}` "
+           f"({'verified v2 pipeline' if CFG['source_mode'] == 'v2' else 'course reference (fallback)'})")
+if CFG["source_mode"] == "v2":
+    st.caption(
+        "Data quality: counts independently verified against the official "
+        "Citi Bike archive (byte-identical sources; see docs/verification/). "
+        "Trips with an unknown rider type (≈0.017%, Oct 2016–Mar 2017 only) are "
+        "included in total rides but not in the member/casual series. The "
+        "course reference table is known to overcount April 2018 (2×) and "
+        "2022 / 2023 / May 2024 (~2.4–3.2%), so totals here can sit below it."
+    )
 
 st.divider()
 
@@ -234,9 +258,9 @@ def fetch_model(start: date, end: date) -> pd.DataFrame:
         bigquery.ScalarQueryParameter("s", "DATE", effective_start.isoformat()),
         bigquery.ScalarQueryParameter("e", "DATE", end.isoformat()),
     ])
-    return get_client().query("""
+    return get_client().query(f"""
         SELECT date, num_nyc_trips, expected_rides, residual, residual_pct
-        FROM `msbai-dwd-jrs10127.citibike.trips_daily_model`
+        FROM `{CFG["model_table"]}`
         WHERE date BETWEEN @s AND @e
         ORDER BY date
     """, job_config=cfg).to_dataframe()
@@ -304,5 +328,6 @@ else:
 
     st.caption(
         "Days in red ran significantly below what weather and season alone would predict — "
-        "likely operational, external, or event-driven causes."
+        "likely operational, external, or event-driven causes. The model was fitted on the "
+        "pre-v2 daily series; its actuals may sit slightly above the verified v2 counts."
     )
