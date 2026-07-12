@@ -18,9 +18,10 @@
 archive → GCS → raw BQ tables → clean unified view → daily summary view → materialized table
 
 ## GCP
-- Project: [your project id]
-- GCS bucket: [your bucket name]
-- BQ dataset: [your dataset name]
+- Project: msbai-dwd-jrs10127
+- GCS bucket: bigdataday1
+- BQ dataset: citibike
+- Cloud Run service: citibike-app (us-central1)
 
 
 ##Here are my decisions and reasoning:
@@ -46,3 +47,22 @@ Captures the rider's behavioral day (commute, weekend leisure, etc.) and aligns 
 That's lines 8–40 in `archive_inventory.txt` — **33 files**, all NYC, all monthly, consistent new schema. No JC files, no annual bundles, no `index.html`.
 
 Ready to build the download script?
+
+## Cloud Credentials
+
+Managed by the `cloud-bootstrap` skill (`.claude/skills/cloud-bootstrap/`). Encrypted service-account keys live in the repo; plaintext keys never do.
+
+- **Provider / project:** GCP, `msbai-dwd-jrs10127`
+- **Service account:** `claude-agent@msbai-dwd-jrs10127.iam.gserviceaccount.com`
+- **Roles granted:**
+  - `roles/bigquery.dataEditor` — query and maintain tables in the `citibike` dataset
+  - `roles/bigquery.jobUser` — required to run any BigQuery job
+  - `roles/storage.objectAdmin` — list/manage objects in `bigdataday1` (project-level; a bucket-scoped binding was attempted but the bootstrapping account lacks `storage.buckets.getIamPolicy` on that specific bucket — see note below)
+  - `roles/run.developer` — inspect and deploy the `citibike-app` Cloud Run service
+  - `roles/artifactregistry.writer` — build and push the app's container image
+- **Multi-user setup:** each team member has their own `.cloud-credentials.<email>.enc`, encrypted with their own passphrase (`CLOUD_CREDENTIALS_KEY` / `GCP_CREDENTIALS_KEY` env var, never committed).
+- **Authenticating:** automatic — the `SessionStart` hook (`.claude/hooks/cloud-auth.sh`) decrypts credentials and activates `gcloud` + Application Default Credentials at the start of each session.
+- **Adding a team member:** ask Claude to "add cloud access for `<email>`" — it follows the skill's `add-team-member` workflow using an existing member's bootstrap token.
+- **Escalating permissions:** if a command fails with 403, ask Claude to fix it — it will identify the specific missing role and ask you to grant it (it will not modify IAM policy without approval).
+
+**Known gap:** `bigdataday1` appears to be a shared bucket outside this project's IAM scope for the current user — bucket-level object listing may need the bucket owner to grant `roles/storage.objectViewer` (or similar) directly to `claude-agent@msbai-dwd-jrs10127.iam.gserviceaccount.com` on the bucket.
