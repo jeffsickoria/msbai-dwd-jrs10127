@@ -6,7 +6,8 @@ import pandas as pd
 from datetime import date
 from google.cloud import bigquery
 
-from query import get_config, active_trips_table, trips_weather_sql
+from query import (get_config, active_trips_table, trips_weather_sql,
+                   detect_model_kind, model_sql)
 
 # Credentials: use GOOGLE_APPLICATION_CREDENTIALS env var if set (local dev),
 # otherwise fall back to ADC (Cloud Run attached service account).
@@ -171,6 +172,18 @@ fig1.update_layout(
 )
 st.plotly_chart(fig1, use_container_width=True)
 
+# Data-derived finding: warm days vs cold days (per-date total across shown series)
+_daily_tot = df.groupby("date")["num_trips"].sum()
+_tmp_by_date = df.drop_duplicates("date").set_index("date")["tavg_f"]
+_warm = _daily_tot[_tmp_by_date >= _tmp_by_date.quantile(0.75)].mean()
+_cold = _daily_tot[_tmp_by_date <= _tmp_by_date.quantile(0.25)].mean()
+if _cold and _warm:
+    _mult = _warm / _cold
+    st.caption(
+        f"**Finding:** the warmest quarter of days averages **{_warm:,.0f}** trips/day "
+        f"versus **{_cold:,.0f}** on the coldest quarter — about **{_mult:.1f}× more** "
+        f"riding when it's warm.")
+
 # ── Charts 2 & 3 side-by-side ─────────────────────────────────────────────────
 
 col_a, col_b = st.columns(2)
@@ -196,6 +209,16 @@ with col_a:
                        legend=dict(orientation="h", y=1.08))
     st.plotly_chart(fig2, use_container_width=True)
 
+    # Finding: locate the temperature bucket with peak average ridership
+    _bucket_tot = (scatter_df.groupby("tavg_bucket")["num_trips"].mean())
+    if len(_bucket_tot):
+        _peak_b = int(_bucket_tot.idxmax()); _peak_v = _bucket_tot.max()
+        _cold_v = _bucket_tot.loc[_bucket_tot.index.min()]
+        _updown = "then eases off in extreme heat" if _peak_b < int(_bucket_tot.index.max()) else "and keeps rising"
+        st.caption(
+            f"**Finding:** average ridership peaks near **{_peak_b}–{_peak_b+5}°F** "
+            f"(~{_peak_v:,.0f} trips/day, ~{_peak_v/_cold_v:.1f}× the coldest buckets) {_updown}.")
+
 # Chart 3: Average trips by day of week
 with col_b:
     st.subheader("Avg trips by day of week")
@@ -217,6 +240,18 @@ with col_b:
     fig3.update_layout(margin=dict(l=0, r=0, t=10, b=0),
                        legend=dict(orientation="h", y=1.08))
     st.plotly_chart(fig3, use_container_width=True)
+
+    # Finding: weekday vs weekend split, per shown rider type
+    _wk = dow_df.copy()
+    _wk["is_wknd"] = pd.to_datetime(_wk["date"]).dt.dayofweek >= 5
+    _bits = []
+    for rt in sorted(_wk["rider_type"].unique()):
+        g = _wk[_wk["rider_type"] == rt].groupby("is_wknd")["num_trips"].mean()
+        if True in g.index and False in g.index and g[False]:
+            pct = (g[True] - g[False]) / g[False] * 100
+            _bits.append(f"{rt} ride **{abs(pct):.0f}% {'more' if pct>0 else 'fewer'}** on weekends")
+    if _bits:
+        st.caption("**Finding:** " + "; ".join(_bits) + " than on weekdays.")
 
 # ── Chart 4: Rain impact ──────────────────────────────────────────────────────
 
@@ -243,91 +278,119 @@ fig4.update_layout(margin=dict(l=0, r=0, t=10, b=0),
                    legend=dict(orientation="h", y=1.08))
 st.plotly_chart(fig4, use_container_width=True)
 
+# Finding: rain/snow suppression vs clear, on per-date totals
+_cond = impact_df.groupby(["date", "conditions"])["num_trips"].sum().reset_index()
+_cm = _cond.groupby("conditions")["num_trips"].mean()
+if "Clear" in _cm.index and _cm.get("Clear"):
+    _parts = []
+    for c in ("Rain", "Snow"):
+        if c in _cm.index:
+            d = (_cm[c] - _cm["Clear"]) / _cm["Clear"] * 100
+            _parts.append(f"**{abs(d):.0f}% {'fewer' if d<0 else 'more'}** on {c.lower()}y days")
+    if _parts:
+        st.caption("**Finding:** average daily trips run " + " and ".join(_parts)
+                   + f" versus clear days (~{_cm['Clear']:,.0f}/day).")
+
 # ── Section 5: Is it us or the weather? ──────────────────────────────────────
 
 st.divider()
 st.subheader("Is it us or the weather?")
 
-@st.cache_data(ttl=3600, show_spinner="Loading model residuals…")
-def fetch_model(start: date, end: date) -> pd.DataFrame:
-    # Model table only covers 2022+; clamp start date silently
-    effective_start = max(start, date(2022, 1, 1))
+# Detect which model table is wired in (v1 legacy vs v2 weather-adjusted).
+# A missing/incompatible table raises -> we show a clear error, never stale data.
+try:
+    MODEL_KIND = detect_model_kind(get_client(), CFG)
+    MODEL_ERROR = None
+except ValueError as exc:
+    MODEL_KIND, MODEL_ERROR = None, str(exc)
+
+
+@st.cache_data(ttl=3600, show_spinner="Loading model…")
+def fetch_model(kind: str, start: date, end: date) -> pd.DataFrame:
+    effective_start = max(start, date(2022, 1, 1))  # model window starts 2022
     if effective_start > end:
         return pd.DataFrame()
-    cfg = bigquery.QueryJobConfig(query_parameters=[
+    job = bigquery.QueryJobConfig(query_parameters=[
         bigquery.ScalarQueryParameter("s", "DATE", effective_start.isoformat()),
         bigquery.ScalarQueryParameter("e", "DATE", end.isoformat()),
     ])
-    return get_client().query(f"""
-        SELECT date, num_nyc_trips, expected_rides, residual, residual_pct
-        FROM `{CFG["model_table"]}`
-        WHERE date BETWEEN @s AND @e
-        ORDER BY date
-    """, job_config=cfg).to_dataframe()
+    return get_client().query(model_sql(kind, CFG), job_config=job).to_dataframe()
 
-mdf = fetch_model(start, end)
 
-if mdf.empty:
-    st.info("Model data starts 2022-01-01 — adjust the date range to include 2022 or later.")
+if MODEL_ERROR:
+    st.error(f"Model section unavailable: {MODEL_ERROR}. "
+             f"Set MODEL_TABLE to a compatible model table (v1 or v2).")
 else:
-    below = mdf[mdf["residual_pct"] < -15]
-    above = mdf[mdf["residual_pct"] >  15]
+    mdf = fetch_model(MODEL_KIND, start, end)
+    # v2 carries total/member/casual; show the selected rider series (total for 'both').
+    if MODEL_KIND == "v2":
+        want = "total" if rider_type == "both" else rider_type
+        mdf = mdf[mdf["rider_series"] == want].copy()
+    if mdf.empty:
+        st.info("Model data starts 2022-01-01 — widen the date range to include 2022 or later.")
+    else:
+        has_band = mdf["lower_expected_bound"].notna().any()
+        flagged = mdf[mdf["gap_flag"]]
+        below = flagged[flagged["percent_gap"] < 0]
+        above = flagged[flagged["percent_gap"] > 0]
 
-    fig5 = go.Figure()
+        fig5 = go.Figure()
+        # Expected range band (v2 only)
+        if has_band:
+            fig5.add_trace(go.Scatter(
+                x=mdf["date"], y=mdf["upper_expected_bound"], mode="lines",
+                line=dict(width=0), showlegend=False, hoverinfo="skip"))
+            fig5.add_trace(go.Scatter(
+                x=mdf["date"], y=mdf["lower_expected_bound"], mode="lines",
+                line=dict(width=0), fill="tonexty", fillcolor="rgba(150,150,150,0.25)",
+                name="Expected range (~95%)", hoverinfo="skip"))
+        fig5.add_trace(go.Scatter(
+            x=mdf["date"], y=mdf["actual_trips"], name="Actual trips",
+            mode="lines", line=dict(color="#1f77b4", width=1.5)))
+        fig5.add_trace(go.Scatter(
+            x=mdf["date"], y=mdf["expected_trips"], name="Expected (weather + calendar)",
+            mode="lines", line=dict(color="#888", width=1.2, dash="dot")))
+        fig5.add_trace(go.Scatter(
+            x=below["date"], y=below["actual_trips"], name="Unusually low", mode="markers",
+            marker=dict(color="red", size=6),
+            customdata=below[["percent_gap", "expected_trips"]].values,
+            hovertemplate="<b>%{x}</b><br>Actual: %{y:,}<br>Expected: %{customdata[1]:,.0f}<br>Gap: %{customdata[0]:.1f}%<extra></extra>"))
+        fig5.add_trace(go.Scatter(
+            x=above["date"], y=above["actual_trips"], name="Unusually high", mode="markers",
+            marker=dict(color="green", size=6),
+            customdata=above[["percent_gap", "expected_trips"]].values,
+            hovertemplate="<b>%{x}</b><br>Actual: %{y:,}<br>Expected: %{customdata[1]:,.0f}<br>Gap: %{customdata[0]:.1f}%<extra></extra>"))
+        fig5.update_layout(height=400, yaxis=dict(title="Trips"),
+                           legend=dict(orientation="h", y=1.08),
+                           margin=dict(l=0, r=0, t=10, b=0), hovermode="x unified")
+        st.plotly_chart(fig5, use_container_width=True)
 
-    # Actual trips
-    fig5.add_trace(go.Scatter(
-        x=mdf["date"], y=mdf["num_nyc_trips"],
-        name="Actual trips", mode="lines",
-        line=dict(color="#1f77b4", width=1.5),
-    ))
+        n = len(mdf)
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Unusually low days", f"{len(below):,}", f"{len(below)/n*100:.1f}% of days", delta_color="inverse")
+        c2.metric("Unusually high days", f"{len(above):,}", f"{len(above)/n*100:.1f}% of days", delta_color="normal")
+        c3.metric("Within expected range", f"{n - len(flagged):,}", f"{(n-len(flagged))/n*100:.1f}% of days", delta_color="off")
 
-    # Expected trips
-    fig5.add_trace(go.Scatter(
-        x=mdf["date"], y=mdf["expected_rides"],
-        name="Expected (weather + season)", mode="lines",
-        line=dict(color="#aaa", width=1.2, dash="dot"),
-    ))
+        # Dynamic one-sentence finding with direction + magnitude
+        series_label = ("total" if MODEL_KIND != "v2" or rider_type == "both" else rider_type)
+        if len(flagged):
+            worst = flagged.loc[flagged["percent_gap"].abs().idxmax()]
+            wd = worst["date"]
+            wd = wd.date() if hasattr(wd, "date") else wd
+            st.caption(
+                f"**Finding:** over this range, **{series_label}** ridership fell outside the model's "
+                f"expected range on **{len(flagged)} of {n} days** ({len(flagged)/n*100:.0f}%); the "
+                f"largest gap was **{wd}**, ~**{abs(worst['percent_gap']):.0f}% "
+                f"{'below' if worst['percent_gap']<0 else 'above'}** expected.")
+        else:
+            st.caption(f"**Finding:** **{series_label}** ridership stayed within the model's expected "
+                       f"range on all {n} days shown.")
 
-    # Red markers: significantly below expected
-    fig5.add_trace(go.Scatter(
-        x=below["date"], y=below["num_nyc_trips"],
-        name="Below expected >15%",
-        mode="markers",
-        marker=dict(color="red", size=5, symbol="circle"),
-        customdata=below[["residual_pct", "expected_rides"]].values,
-        hovertemplate="<b>%{x}</b><br>Actual: %{y:,}<br>Expected: %{customdata[1]:,}<br>Δ: %{customdata[0]:.1f}%<extra></extra>",
-    ))
-
-    # Green markers: significantly above expected
-    fig5.add_trace(go.Scatter(
-        x=above["date"], y=above["num_nyc_trips"],
-        name="Above expected >15%",
-        mode="markers",
-        marker=dict(color="green", size=5, symbol="circle"),
-        customdata=above[["residual_pct", "expected_rides"]].values,
-        hovertemplate="<b>%{x}</b><br>Actual: %{y:,}<br>Expected: %{customdata[1]:,}<br>Δ: %{customdata[0]:.1f}%<extra></extra>",
-    ))
-
-    fig5.update_layout(
-        height=400,
-        yaxis=dict(title="Trips"),
-        legend=dict(orientation="h", y=1.08),
-        margin=dict(l=0, r=0, t=10, b=0),
-        hovermode="x unified",
-    )
-    st.plotly_chart(fig5, use_container_width=True)
-
-    pct_red   = len(below) / len(mdf) * 100
-    pct_green = len(above) / len(mdf) * 100
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Days below expected >15%", f"{len(below):,}",  f"{pct_red:.1f}% of days",   delta_color="inverse")
-    c2.metric("Days above expected >15%", f"{len(above):,}",  f"{pct_green:.1f}% of days", delta_color="normal")
-    c3.metric("Days within ±15%",         f"{len(mdf) - len(below) - len(above):,}",
-              f"{100 - pct_red - pct_green:.1f}% of days", delta_color="off")
-
-    st.caption(
-        "Days in red ran significantly below what weather and season alone would predict — "
-        "likely operational, external, or event-driven causes. The model was fitted on the "
-        "pre-v2 daily series; its actuals may sit slightly above the verified v2 counts."
-    )
+        st.caption(
+            "Flagged days are **outside the model's typical error range and merit investigation** — "
+            "they do **not** prove a bike shortage, outage, event, or promotion; the model describes "
+            "weather/calendar expectations and establishes no cause."
+            + ("" if MODEL_KIND == "v2" else
+               " ⚠️ This is the pre-v2 model (fitted on the reference-era series; its 2022+ actuals "
+               "run ~3% above the verified v2 counts). The refitted v2 model supersedes it once "
+               "MODEL_TABLE points to trips_daily_model_v2."))

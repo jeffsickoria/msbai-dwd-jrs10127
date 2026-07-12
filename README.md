@@ -47,6 +47,13 @@ The v2 table was verified in three stages (all evidence in this repo):
 Evidence lives in `evidence/` (manifests, job logs, inventories, row counts)
 and `docs/` (execution, verification, repair, recovery records).
 
+## Specifications & decisions
+
+- **Dashboard specification (Part 2):** [`docs/spec/dashboard-spec.md`](docs/spec/dashboard-spec.md) — purpose, audience, business questions, charts, and the per-chart finding requirement.
+- **Acceptance criteria:** [`docs/verification/acceptance-criteria.md`](docs/verification/acceptance-criteria.md) — correctness / speed / reach / clarity, each with measurement, result, and pre/post-deployment status.
+- **Decisions memo (Parts 1 & 2):** [`docs/decisions/decisions-memo.md`](docs/decisions/decisions-memo.md).
+- **Weather-Adjusted Ridership v2 (Stretch 1):** [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md) — design, holdout, proposed `trips_daily_model_v2`.
+
 ## Dashboard configuration
 
 `query.py` centralizes all table names and the source selection via

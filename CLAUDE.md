@@ -65,6 +65,17 @@ for analysis and never rebuild them**.
   it still serves the course-reference build until a separately approved
   deployment.
 
+## Specifications & decisions
+- `docs/spec/dashboard-spec.md` — the Part 2 dashboard specification (purpose,
+  audience, business questions, charts + required per-chart findings, caching,
+  model purpose/limits, deployment expectation).
+- `docs/verification/acceptance-criteria.md` — correctness/speed/reach/clarity
+  criteria (each with measurement, result, evidence, and pre/post-deployment
+  status; speed and clarity targets are explicitly post-deployment).
+- `docs/decisions/decisions-memo.md` — consolidated Parts 1 & 2 decisions.
+- `docs/verification/weather-model-v2.md` — Stretch 1 model design + holdout;
+  future table `trips_daily_model_v2` (not yet created).
+
 ## Verification status (evidence under `docs/` and `evidence/`)
 - `docs/execution/v2-build.md` — the one-shot `_v2` build record (job IDs, 0 bad records).
 - `docs/verification/v2-reconciliation.md` — reconciliation vs the course reference.

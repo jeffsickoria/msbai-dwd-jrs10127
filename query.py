@@ -132,6 +132,74 @@ def trips_weather_sql(cfg: dict | None = None) -> str:
     """
 
 
+# ── Model section (weather-adjusted ridership) ───────────────────────────────
+# Two model-table shapes are supported so a MODEL_TABLE swap needs no code
+# change and a wrong table fails loudly instead of showing stale results:
+#   v1 (pre-v2, trips_daily_model): date, num_nyc_trips, expected_rides,
+#       residual, residual_pct
+#   v2 (trips_daily_model_v2):      date, rider_series, actual_trips,
+#       expected_trips, lower_expected_bound, upper_expected_bound, residual,
+#       percent_gap, gap_flag, model_version, training_start, training_end
+MODEL_V1_REQUIRED = {"date", "num_nyc_trips", "expected_rides", "residual_pct"}
+MODEL_V2_REQUIRED = {"date", "rider_series", "actual_trips", "expected_trips",
+                     "lower_expected_bound", "upper_expected_bound",
+                     "percent_gap", "gap_flag"}
+
+
+def detect_model_kind(client, cfg: dict | None = None) -> str:
+    """Inspect MODEL_TABLE's columns. Returns 'v2' or 'v1'.
+
+    Raises ValueError if the table is missing or its schema matches neither
+    contract — so the dashboard can show a clear error instead of stale data.
+    """
+    cfg = cfg or get_config()
+    from google.api_core.exceptions import NotFound
+    try:
+        cols = {f.name for f in client.get_table(cfg["model_table"]).schema}
+    except NotFound:
+        raise ValueError(f"MODEL_TABLE {cfg['model_table']!r} does not exist")
+    if MODEL_V2_REQUIRED.issubset(cols):
+        return "v2"
+    if MODEL_V1_REQUIRED.issubset(cols):
+        return "v1"
+    raise ValueError(
+        f"MODEL_TABLE {cfg['model_table']!r} has an incompatible schema "
+        f"(columns: {sorted(cols)}); expected the v1 or v2 model contract")
+
+
+def model_sql(kind: str, cfg: dict | None = None) -> str:
+    """Parameterized (@s,@e) SELECT for the model section, normalized so the app
+    consumes the same column names regardless of table version.
+
+    v2 exposes the full total/member/casual series with prediction bounds and an
+    objective gap flag; v1 is the legacy total-only residual table.
+    """
+    cfg = cfg or get_config()
+    if kind == "v2":
+        return f"""
+            SELECT date, rider_series, actual_trips, expected_trips,
+                   lower_expected_bound, upper_expected_bound,
+                   percent_gap, gap_flag, model_version
+            FROM `{cfg["model_table"]}`
+            WHERE date BETWEEN @s AND @e
+            ORDER BY date
+        """
+    return f"""
+        SELECT date,
+               'total'          AS rider_series,
+               num_nyc_trips    AS actual_trips,
+               expected_rides   AS expected_trips,
+               CAST(NULL AS FLOAT64) AS lower_expected_bound,
+               CAST(NULL AS FLOAT64) AS upper_expected_bound,
+               residual_pct     AS percent_gap,
+               ABS(residual_pct) > 15 AS gap_flag,
+               'v1_pre_v2'      AS model_version
+        FROM `{cfg["model_table"]}`
+        WHERE date BETWEEN @s AND @e
+        ORDER BY date
+    """
+
+
 _CLIENT = None
 
 
