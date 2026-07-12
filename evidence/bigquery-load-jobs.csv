@@ -1,0 +1,5 @@
+job_id,creation_time_ms,start_time_ms,end_time_ms,destination_table,source_uris,source_format,write_disposition,create_disposition,schema_update_options,skip_leading_rows,max_bad_records,autodetect,input_files,input_bytes,output_rows,bad_records,state,error
+c385aa67-8051-4124-9bcc-39f67a5a1d93,1781123876464,1781123876634,1781123917631,msbai-dwd-jrs10127.citibike.raw_pre2021,gs://bigdataday1/staging/pre2021/*.csv,CSV,WRITE_TRUNCATE,,,1,,,136,19333976233,109278654,0,DONE,
+38c06cdd-a1d4-4dc3-b774-c6cc01f3d022,1781123920960,1781123921145,1781123944461,msbai-dwd-jrs10127.citibike.raw_post2021,gs://bigdataday1/staging/post2021/*.csv,CSV,WRITE_TRUNCATE,,,1,,,266,42959210973,222078370,0,DONE,
+1992d4e1-d33b-4e0d-a1c9-bb436291e092,1781127167003,1781127167144,1781127168817,msbai-dwd-jrs10127.citibike.trips_daily_model,,PARQUET,WRITE_TRUNCATE,,,,,,1,141761,4736,0,DONE,
+c299f67a-7414-425b-84ae-5d9df546141b,1781181863163,1781181863332,1781181864695,msbai-dwd-jrs10127.citibike.trips_daily_model,,PARQUET,WRITE_TRUNCATE,,,,,,1,51190,1609,0,DONE,
