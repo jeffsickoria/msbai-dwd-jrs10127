@@ -1,0 +1,21 @@
+field,value
+deployment_timestamp_utc,2026-07-12T18:37:30Z
+git_commit,11d46d8e732137d9a236f3317c5a67996075c1e7
+build_job_id,c2f1cec9-9663-4a65-a4fc-f3e747ed974b
+image_uri,us-central1-docker.pkg.dev/msbai-dwd-jrs10127/citibike/app:11d46d8e732137d9a236f3317c5a67996075c1e7
+image_uri_latest_tag,us-central1-docker.pkg.dev/msbai-dwd-jrs10127/citibike/app:latest
+image_digest,sha256:ffe03a39b983946c0eeabeed2236d5668dddc2c87ccc5d3729ca843979acdead
+previous_revision,citibike-app-00003-n8z
+previous_image_digest,sha256:04dbc01ab2294053f5ec71b8a5172d28fae24c296bc21e1016d479dc8dcce2df
+new_revision,citibike-app-00004-52b
+public_url,https://citibike-app-kpkbtfmmcq-uc.a.run.app
+traffic_percent,100
+cold_load_seconds,5.28
+warm_load_seconds,<1
+cold_warm_measurement_note,"local-equivalent Streamlit startup-to-health (identical image+env); live *.run.app HTTP not reachable from build sandbox (egress policy blocks *.run.app) — server-side revision Ready confirms container health"
+health_status,Ready (Cloud Run startup probe passed; local /_stcore/health = ok)
+active_data_source_mode,v2
+active_trips_table,msbai-dwd-jrs10127.citibike.trips_daily_table_v2
+public_access,allUsers roles/run.invoker (verified via getIamPolicy)
+rollback_used,no
+final_result,SUCCESS
