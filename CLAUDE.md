@@ -57,7 +57,7 @@ Managed by the `cloud-bootstrap` skill (`.claude/skills/cloud-bootstrap/`). Encr
 - **Roles granted:**
   - `roles/bigquery.dataEditor` — query and maintain tables in the `citibike` dataset
   - `roles/bigquery.jobUser` — required to run any BigQuery job
-  - `roles/storage.objectAdmin` — list/manage objects in `bigdataday1` (project-level; a bucket-scoped binding was attempted but the bootstrapping account lacks `storage.buckets.getIamPolicy` on that specific bucket — see note below)
+  - `roles/storage.objectAdmin` — list/manage objects in `bigdataday1` (project-level; verified working for object listing)
   - `roles/run.developer` — inspect and deploy the `citibike-app` Cloud Run service
   - `roles/artifactregistry.writer` — build and push the app's container image
 - **Multi-user setup:** each team member has their own `.cloud-credentials.<email>.enc`, encrypted with their own passphrase (`CLOUD_CREDENTIALS_KEY` / `GCP_CREDENTIALS_KEY` env var, never committed).
@@ -65,4 +65,4 @@ Managed by the `cloud-bootstrap` skill (`.claude/skills/cloud-bootstrap/`). Encr
 - **Adding a team member:** ask Claude to "add cloud access for `<email>`" — it follows the skill's `add-team-member` workflow using an existing member's bootstrap token.
 - **Escalating permissions:** if a command fails with 403, ask Claude to fix it — it will identify the specific missing role and ask you to grant it (it will not modify IAM policy without approval).
 
-**Known gap:** `bigdataday1` appears to be a shared bucket outside this project's IAM scope for the current user — bucket-level object listing may need the bucket owner to grant `roles/storage.objectViewer` (or similar) directly to `claude-agent@msbai-dwd-jrs10127.iam.gserviceaccount.com` on the bucket.
+**Note:** setting a *bucket-level* IAM policy on `bigdataday1` failed (`storage.buckets.getIamPolicy` denied for the bootstrapping user account), but this had no practical effect — the project-level `roles/storage.objectAdmin` binding already grants the service account full object read/write on the bucket, confirmed by a live listing.
