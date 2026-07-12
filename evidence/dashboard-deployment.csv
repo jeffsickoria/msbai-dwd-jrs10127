@@ -10,12 +10,29 @@ previous_image_digest,sha256:04dbc01ab2294053f5ec71b8a5172d28fae24c296bc21e1016d
 new_revision,citibike-app-00004-52b
 public_url,https://citibike-app-kpkbtfmmcq-uc.a.run.app
 traffic_percent,100
-cold_load_seconds,5.28
-warm_load_seconds,<1
-cold_warm_measurement_note,"local-equivalent Streamlit startup-to-health (identical image+env); live *.run.app HTTP not reachable from build sandbox (egress policy blocks *.run.app) — server-side revision Ready confirms container health"
+local_equiv_cold_init_seconds,5.28
+local_equiv_warm_health_seconds,<1
+local_equiv_measurement_note,"local-equivalent Streamlit startup-to-health (identical image+env); live *.run.app HTTP not reachable from build sandbox (egress policy blocks *.run.app) — server-side revision Ready confirms container health"
 health_status,Ready (Cloud Run startup probe passed; local /_stcore/health = ok)
 active_data_source_mode,v2
 active_trips_table,msbai-dwd-jrs10127.citibike.trips_daily_table_v2
-public_access,allUsers roles/run.invoker (verified via getIamPolicy)
+public_access,PASS (allUsers roles/run.invoker via getIamPolicy; plus external no-login browser test)
 rollback_used,no
-final_result,SUCCESS
+deployment_result,SUCCESS
+external_test_tester,Jeffrey Sickoria
+external_test_browser,Chrome Guest mode (no login)
+external_test_timestamp_et,2026-07-12 2:52 PM ET
+external_test_network,5G mobile
+external_no_login_public_access,PASS
+external_source_caption_visible,PASS
+external_active_source,msbai-dwd-jrs10127.citibike.trips_daily_table_v2
+external_date_control_visible,PASS
+external_rider_control_visible,PASS
+external_charts_visible,PASS
+external_data_quality_note_visible,PASS
+external_no_visible_errors,PASS
+external_cold_load_seconds,37
+external_warm_load_seconds,17
+external_load_note,"5G mobile; may be materially affected by mobile-network latency/bandwidth and minScale=0 cold start; not measured against any committed speed target (none exists)"
+committed_speed_target,"NONE — repo search found only measurements (readiness doc local health 1.03s); no page-load target/SLA committed; recorded as outstanding verification gap"
+checkpoint_d_status,"PENDING — awaits (1) a second independent no-login tester and (2) resolution of the speed-target gap; deployment result itself is SUCCESS and public-access is PASS"

@@ -66,12 +66,43 @@ No unrelated environment variable or service setting was altered.
   authentication.
 - Public URL confirmed: **https://citibike-app-kpkbtfmmcq-uc.a.run.app**
   (100% of traffic on `citibike-app-00004-52b`).
+- **Independent external confirmation (resolves the sandbox limitation):** an
+  external tester opened the URL with no login (details below), confirming
+  real-world unauthenticated public access. Public-access verification: **PASS**.
+
+## External browser verification (independent tester)
+
+The deploy-time note that the live URL was unreachable from the build sandbox
+is **resolved** by an independent, unauthenticated browser test:
+
+| Field | Value |
+|---|---|
+| Tester | Jeffrey Sickoria |
+| Browser | Chrome Guest mode (no login) |
+| Timestamp | 2026-07-12 2:52 PM ET |
+| Network | 5G mobile |
+| No-login public access | **PASS** |
+| Source caption visible | **PASS** |
+| Active source | `msbai-dwd-jrs10127.citibike.trips_daily_table_v2` |
+| Date control visible | **PASS** |
+| Rider control visible | **PASS** |
+| Charts visible | **PASS** |
+| Data-quality note visible | **PASS** |
+| No visible errors | **PASS** |
+| External cold load | 37 s |
+| External warm load | 17 s |
+
+The cold/warm load times were captured over a 5G mobile connection and may be
+materially affected by mobile-network latency and bandwidth (and by the
+`minScale=0` cold start); they are not claimed against any speed target (none is
+committed — see Speed measurements). A single tester has confirmed access; a
+**second independent tester** is still required before Checkpoint D closes.
 
 ## Speed measurements
 
-The live `*.run.app` URL is **not reachable from this build sandbox** — the
-egress proxy returns 403 CONNECT for `*.run.app` (and WebFetch likewise), so an
-external end-user HTTP round-trip could not be timed here. Substitutes:
+From the build sandbox the live `*.run.app` URL was **not reachable** (egress
+proxy 403s `*.run.app`, WebFetch likewise), so the following server-side and
+local substitutes were captured at deploy time:
 
 - **Server-side health:** the new revision reached `Ready=True`, which means
   Cloud Run's startup probe against the container's port succeeded — the
@@ -79,9 +110,25 @@ external end-user HTTP round-trip could not be timed here. Substitutes:
 - **Local-equivalent cold init** (identical image code + identical env):
   headless Streamlit `run` → `/_stcore/health = ok` in **5.28 s** this run
   (1.03 s in the PR #9 readiness run on a warm interpreter cache).
-- **Warm health:** sub-second locally. Documented target (readiness doc):
-  warm health ≈1 s; the app page renders after the first data query
-  (~1 s BigQuery, 20 MB billed).
+- **Warm health:** sub-second locally.
+
+**External end-user load (independent tester, 5G mobile):** **cold 37 s / warm
+17 s** (see the external-verification section below). These are real
+browser-to-service page loads and supersede the "not reachable from sandbox"
+gap for *access*; they are materially inflated by mobile-network latency and
+bandwidth and by the `minScale=0` scale-from-zero cold start, so they are not a
+clean measure of service-side latency.
+
+**No committed page-load speed target exists.** A repository search
+(`docs/verification/dashboard-v2-readiness.md` and every other committed file)
+found only *measurements* — the readiness doc records a local health-endpoint
+time of 1.03 s — and **no** stated page-load requirement or SLA. The "≈1 s"
+figure some earlier notes referenced is that health-endpoint *measurement*, not
+an agreed target, and it is not the same thing as full browser page load. Per
+the deployment constraints, no speed target is claimed "met": the absence of a
+pre-deployment page-load target is recorded here as an **outstanding
+verification gap** to be resolved (define a target, then measure against it on
+a representative non-mobile connection) before Checkpoint D can close.
 
 ## Chart and control verification
 
@@ -137,9 +184,24 @@ Not used. Rollback target if ever needed: previous healthy revision
 (digest `sha256:04dbc01ab2294053f5ec71b8a5172d28fae24c296bc21e1016d479dc8dcce2df`),
 restored by routing 100% traffic back to it.
 
-## Checkpoint D: **PASS**
+## Checkpoint D: **PENDING**
 
-New revision `citibike-app-00004-52b` is Ready, serving 100% of traffic at the
-correct public URL with `CITIBIKE_SOURCE_MODE=v2` and all six env vars set;
-build and deploy succeeded on the first attempt; charts, controls, and
-per-period counts verified; no data resource modified.
+The deployment itself **succeeded** (SUCCESS, no rollback): new revision
+`citibike-app-00004-52b` is Ready, serving 100% of traffic at the correct
+public URL with `CITIBIKE_SOURCE_MODE=v2` and all six env vars set; build and
+deploy succeeded on the first attempt; charts, controls, and per-period counts
+verified; public access confirmed (PASS, IAM + one external tester); no data
+resource modified.
+
+Checkpoint D (the acceptance gate) is held **PENDING** two open items:
+
+1. **Second independent tester** — one more person must open the public URL
+   without login and confirm it renders. (One tester, Jeffrey Sickoria, has
+   done so; a second is required.)
+2. **Speed-target requirement** — no page-load speed target was committed
+   before deployment (confirmed by repository search; only measurements exist).
+   A target must be defined and then measured against on a representative
+   connection. Until then this is an outstanding verification gap, and no
+   speed target is claimed met.
+
+Public-access verification is **PASS** independently of the above.
