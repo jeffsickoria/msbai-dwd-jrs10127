@@ -1,0 +1,6 @@
+execution_timestamp_utc,job_id,job_type,destination,source_uri_count,input_files,input_bytes,output_rows,bad_records,bytes_processed,bytes_billed,elapsed_seconds,final_status,error_message
+2026-07-12T13:57:49Z,job_1CpLlFgGJUex4c_BRfKMf0oB0lZz,load,msbai-dwd-jrs10127.citibike.raw_pre2021_v2,113,113,16204176908,91944421,0,,,36.5,DONE,
+2026-07-12T13:58:26Z,job_SvbbTiaWxR6yefrNLr6ps83Q9SMC,load,msbai-dwd-jrs10127.citibike.raw_post2021_v2,258,258,41972532910,216249376,0,,,29.9,DONE,
+2026-07-12T13:58:57Z,job_HyszYs_aLopQtxDzUO0kBylohJtr,query:CREATE_VIEW,msbai-dwd-jrs10127.citibike.trips_v2,,,,,,0,0,0.1,DONE,
+2026-07-12T13:58:58Z,job_sYImK5FOOrG-b7LknkTUUgMT7fvB,query:CREATE_VIEW,msbai-dwd-jrs10127.citibike.trips_daily_v2,,,,,,0,0,0.1,DONE,
+2026-07-12T13:58:59Z,job_dSMqm8uqIk8589JRrHQG9FKmWT-O,query:CREATE_TABLE_AS_SELECT,msbai-dwd-jrs10127.citibike.trips_daily_table_v2,,,,,,34674038784,34674311168,17.6,DONE,
