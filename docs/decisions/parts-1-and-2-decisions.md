@@ -23,6 +23,17 @@ Detailed evidence is linked rather than duplicated.
 | 15 | Official-source freshness audit | proves staged data is current and the reference (not the project) overcounts | `docs/verification/official-source-freshness.md` |
 | 16 | Reproducible ingestion/staging script (dry-run default) | closes the previously uncommitted staging stage; safe, manifest-driven | `scripts/ingest_and_stage_archives.py` |
 
+### Region handling in the raw layer
+
+The project scope is NYC only. Jersey City and Hoboken archives are excluded
+by the canonical manifest before extraction and staging, so both v2 raw tables
+are NYC-only by construction.
+
+The raw tables preserve their source CSV schemas and do not add a synthetic
+`region` column. The explicit `region = 'NYC'` marker is introduced in the
+daily semantic layer. This preserves source fidelity while making the selected
+geographic scope explicit for downstream analysis.
+
 ## Part 2 — Dashboard
 | # | Decision | Reason | Detail |
 |---|---|---|---|
@@ -40,7 +51,16 @@ Detailed evidence is linked rather than duplicated.
 | 28 | Deployed to Cloud Run, public, image pinned by digest, settings preserved | reproducible controlled deploy; code cutover approved separately from build | `docs/execution/dashboard-v2-deployment.md` |
 | 29 | **Post-deployment acceptance target** (speed ≤20s/≤10s; clarity finding rule) | closes omitted verification; explicitly labeled post-hoc, not pre-registered | `docs/specifications/acceptance-criteria.md` |
 
-## Open items requiring explicit approval (not done here)
-Live monthly-partition migration; creating/validating `trips_daily_model_v2`;
-one controlled dashboard redeploy pointing `MODEL_TABLE` at the v2 model;
-external acceptance retest. See the PR report.
+## Final verification results
+
+- Verified v2 pipeline and independent reconciliation: **PASS**
+- Monthly partitioning on `date` and clustering by `region, rider_type`: **PASS**
+- Weather-Adjusted Ridership model v2 creation and validation: **PASS**
+- Public Cloud Run deployment using the v2 trip and model tables: **PASS**
+- External no-login browser acceptance: **PASS**
+- Broadband load target: **PASS** — 3 seconds cold and 1 second warm
+- Every dashboard chart has a visible direction-and-magnitude finding: **PASS**
+- Weather-Adjusted Ridership Stretch 1: **COMPLETE**
+
+The speed and clarity targets were formalized after the original deployment
+and remain explicitly disclosed as post-hoc criteria.
