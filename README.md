@@ -6,9 +6,9 @@ trips) into BigQuery, joins it to daily NYC weather, and serves an interactive
 Streamlit dashboard on Cloud Run.
 
 **Live app:** https://citibike-app-kpkbtfmmcq-uc.a.run.app
-*Note: the currently deployed revision predates the v2 cutover and still reads
-the course fallback table; the next deployment will serve the verified v2
-source that this repository's code now defaults to.*
+**Production status:** Cloud Run revision `citibike-app-00005-t4q` is Ready,
+receives 100% of traffic, and uses the verified v2 trip table and
+Weather-Adjusted Ridership model v2.*
 
 ## Architecture
 
@@ -34,15 +34,16 @@ Streamlit (app.py + query.py)  →  Cloud Run (citibike-app, us-central1)
 The five **v2 BigQuery objects** (project `msbai-dwd-jrs10127`, dataset
 `citibike`) are the corrected pipeline: `raw_pre2021_v2` (91,944,421 rows),
 `raw_post2021_v2` (216,249,376 rows), `trips_v2`, `trips_daily_v2`, and
-`trips_daily_table_v2` (9,654 rows, clustered by region/rider_type). The
-original non-v2 objects are retained only as historical evidence.
+`trips_daily_table_v2` (9,654 rows, monthly partitioned on `date` and
+clustered by `region, rider_type`). The original non-v2 objects are retained 
+only as historical evidence.
 
 ## Data verification
 
 The v2 table was verified in three stages (all evidence in this repo):
 1. **Reconciliation** against the course reference (`docs/verification/v2-reconciliation.md`) — loss-free build, 2013/2015/2018 defects fixed.
 2. **Official-source audit** (`docs/verification/official-source-freshness.md`) — the staged archives are byte-identical (MD5) to the current official Citi Bike archive, and official row counts match `trips_daily_table_v2` exactly (24/26 target months at +0 rows; remainder are cross-archive month-boundary rows). NYC DOT-published totals agree with the project within 0.05%; the course reference overcounts April 2018 (2×) and 2022/2023/May 2024 (~2.4–3.2%).
-3. **Cutover decision** (`docs/verification/v2-cutover-decision.md`) — GO for code cutover; deployment pending.
+3. **Cutover and deployment** — the verified v2 trip source and `trips_daily_model_v2` are live in Cloud Run. Deployment and external acceptance evidence are recorded under `docs/execution/` and `evidence/`.
 
 Evidence lives in `evidence/` (manifests, job logs, inventories, row counts)
 and `docs/` (execution, verification, repair, recovery records).
@@ -73,7 +74,7 @@ environment variables (defaults in parentheses):
 | `CITIBIKE_V2_TABLE` | `msbai-dwd-jrs10127.citibike.trips_daily_table_v2` |
 | `CITIBIKE_REFERENCE_TABLE` | `nyu-datasets.citibike.m_daily_trips` |
 | `WEATHER_TABLE` | `nyu-datasets.weather.m_weather_daily_nyc` |
-| `MODEL_TABLE` | `msbai-dwd-jrs10127.citibike.trips_daily_model` |
+| `MODEL_TABLE` | `msbai-dwd-jrs10127.citibike.trips_daily_model_v2` |
 
 The dashboard shows the active source in a caption. Total NYC trips include
 unknown-rider trips (≈0.017%); the member/casual series never absorb them.
@@ -104,8 +105,10 @@ python3 scripts/audit_official_source_freshness.py
 
 - Weather coverage ends 2026-05-29, so the trips-weather inner join drops the
   last two trip dates (2026-05-30/31).
-- `trips_daily_model` was fitted on the pre-v2 series; its 2022+ "actual"
-  counts run ~3% above the verified v2 numbers until refitted.
+- The Weather-Adjusted Ridership model is descriptive rather than causal.
+  Flagged dates fall outside the model's typical error range and merit
+  investigation, but they do not prove an operational issue, event effect,
+  bike shortage, or promotion impact.
 - Distance is Haversine straight-line between stations — it understates true
   route distance by roughly 20–30%.
 - NYC trips only; Jersey City / Hoboken are out of scope.

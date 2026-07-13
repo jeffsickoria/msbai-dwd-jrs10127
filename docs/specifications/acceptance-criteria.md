@@ -15,7 +15,7 @@ lives, and **whether the criterion was defined before or after deployment**.
 | Criterion | v2 daily counts reconcile with the official source; pipeline is loss-free and duplication-free; rider labels normalized; no missing dates. |
 | Measurement | Reconciliation vs the course reference and the official Citi Bike archive (MD5-identical staged sources; DOT-published totals); zero-loss row accounting; structural checks (dup keys, null/neg, legacy labels). |
 | Result | **PASS.** 2013 doubling fixed (ratio 1.0000), early-2015 gap fixed (0 missing dates), 0 `Customer`/`Subscriber`; official row counts equal the project in 24/26 target months (+0 rows); loads 308,193,797 rows = 308,193,797 daily trips. Course reference overcounts Apr 2018 (2×) and 2022/2023/May 2024 (~2.4–3.2%); project sides with the official archive + DOT. |
-| Evidence | `docs/verification/v2-reconciliation.md`, `docs/verification/official-source-freshness.md`, `docs/execution/v2-build.md` |
+| Evidence | `docs/execution/stage3-model-v2-deployment.md`, `evidence/stage3-model-v2-deployment.csv` |
 | Status | **PASS** |
 | When defined | **pre-deployment** |
 

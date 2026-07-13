@@ -29,7 +29,7 @@ conclusion in one plain-English sentence.
 | Trips (default, verified) | `msbai-dwd-jrs10127.citibike.trips_daily_table_v2` |
 | Trips (fallback) | `nyu-datasets.citibike.m_daily_trips` (`CITIBIKE_SOURCE_MODE=reference`) |
 | Weather | `nyu-datasets.weather.m_weather_daily_nyc` |
-| Model | `msbai-dwd-jrs10127.citibike.trips_daily_model` (v1 today) → `…trips_daily_model_v2` (after Stretch 1) |
+| Model | `msbai-dwd-jrs10127.citibike.trips_daily_model_v2` |
 
 ## Date coverage
 Trips 2013-06-01 → 2026-05-31; weather ends 2026-05-29, so the inner
@@ -85,15 +85,15 @@ ride ~39% more on weekends"), never a generic "ridership varies with weather."
   `docs/verification/weather-model-v2.md`.
 - **Limitations:** descriptive, not causal — a flagged day does **not** prove a
   shortage, outage, event, or promotion. Holiday effects, special events, and
-  multi-year growth beyond the window are not modeled. The current live model is
-  the pre-v2 v1 table (reference-era actuals ~3% above v2) until MODEL_TABLE is
-  repointed.
+  multi-year growth beyond the modeling window are not modeled. The live
+  dashboard uses `trips_daily_model_v2`.
 
 ## Public deployment expectation
 Public, unauthenticated Cloud Run service (`citibike-app`, us-central1) at
-https://citibike-app-kpkbtfmmcq-uc.a.run.app. A visible source caption names the
-active trip table and a data-quality note states the unknown-rider share and the
-known course-reference discrepancies. See `docs/specifications/acceptance-criteria.md`.
+https://citibike-app-kpkbtfmmcq-uc.a.run.app. Revision `citibike-app-00005-t4q` 
+receives 100% of traffic. A visible source caption names the active trip table 
+and a data-quality note states the unknown-rider share and the known 
+course-reference discrepancies. See `docs/specifications/acceptance-criteria.md`.
 
 ## Graceful failure behavior
 - **Invalid `CITIBIKE_SOURCE_MODE`:** `query.get_config()` raises; the app shows
