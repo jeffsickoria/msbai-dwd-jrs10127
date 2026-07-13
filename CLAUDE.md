@@ -65,6 +65,19 @@ for analysis and never rebuild them**.
   it still serves the course-reference build until a separately approved
   deployment.
 
+## Specifications & decisions
+- `docs/specifications/part2-dashboard-specification.md` — the Part 2 dashboard
+  specification (purpose, audience, business questions, charts + required
+  per-chart findings, caching, model purpose/limits, deployment expectation,
+  graceful failure behavior).
+- `docs/specifications/acceptance-criteria.md` — correctness/speed/reach/clarity
+  criteria (each with measurement, result, evidence, and pre/during/post-
+  deployment status; speed and clarity targets are explicitly post-deployment).
+- `docs/decisions/parts-1-and-2-decisions.md` — consolidated Parts 1 & 2 decisions.
+- Ingestion/staging: `scripts/ingest_and_stage_archives.py` (dry-run default).
+- `docs/verification/weather-model-v2.md` — Stretch 1 model design + holdout;
+  future table `trips_daily_model_v2` (not yet created).
+
 ## Verification status (evidence under `docs/` and `evidence/`)
 - `docs/execution/v2-build.md` — the one-shot `_v2` build record (job IDs, 0 bad records).
 - `docs/verification/v2-reconciliation.md` — reconciliation vs the course reference.
