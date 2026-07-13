@@ -19,30 +19,28 @@ active_model_table,msbai-dwd-jrs10127.citibike.trips_daily_model_v2
 env_MODEL_TABLE,msbai-dwd-jrs10127.citibike.trips_daily_model_v2
 preserved_settings,"SA claude-agent; CPU 1; mem 1Gi; concurrency 80; timeout 300; minScale 0; maxScale 3; cpu-throttling off; ingress all"
 server_side_verification,PASS (Ready; 100% traffic; digest match; 6 env vars; public IAM)
-dashboard_local_equiv_verification,PASS (v2 caption, quality note, 5 sections, 5 findings, band, flags, non-causation caveat, pre-v2 caveat absent, no errors)
-live_url_sandbox_egress,BLOCKED (HTTP 000; *.run.app not reachable from build sandbox)
-external_browser_verification,PASS (independent real-browser test; see rows below)
-ext_test_tester,Jeffrey Sickoria
-ext_test_timestamp_et,2026-07-12 8:38 PM ET
-ext_test_browser_device,Chrome PC
-ext_test_connection,Home broadband
-ext_test_opened_without_login,PASS
-ext_test_cold_load_seconds,3
-ext_test_warm_refresh_seconds,1
-ext_test_v2_source_caption,PASS
-ext_test_data_quality_note,PASS
-ext_test_model_section_visible,PASS
-ext_test_actual_vs_expected,PASS
-ext_test_expected_band_visible,PASS
-ext_test_high_low_flags_visible,PASS
-ext_test_non_causation_caveat,PASS
-ext_test_pre_v2_caveat_absent,PASS
-ext_test_date_control,PASS
-ext_test_rider_control,PASS
-ext_test_all_five_sections,PASS
-ext_test_per_chart_findings,PASS
-ext_test_no_visible_errors,PASS
-ext_test_vs_speed_target,PASS (cold 3s<=20s; warm 1s<=10s)
+dashboard_local_equiv_verification,"PASS (v2 caption, quality note, 5 sections, 5 findings, band, flags, non-causation caveat, pre-v2 caveat absent, no errors)"
+live_url_sandbox_egress,BLOCKED historical (HTTP 000; *.run.app unreachable from build sandbox) — RESOLVED by real unauthenticated browser testing
+external_browser_verification,PASS (two independent real-browser tests; see rows below)
+ext_primary_tester,Jeffrey Sickoria
+ext_primary_timestamp_et,2026-07-12 8:38 PM ET
+ext_primary_browser_device,Chrome PC
+ext_primary_connection,Home broadband
+ext_primary_cold_load_seconds,3
+ext_primary_warm_refresh_seconds,1
+ext_primary_all_checks,PASS (no-login; v2 caption; data-quality note; model_v2 section; actual-vs-expected; expected band; high/low flags; non-causation caveat; pre-v2 caveat absent; date+rider controls; all five sections; per-chart findings; no errors)
+ext_independent_tester,Lia Sickoria
+ext_independent_timestamp_et,2026-07-12 8:38 PM ET
+ext_independent_browser_device,Chrome PC
+ext_independent_connection,Home broadband
+ext_independent_cold_load_seconds,3
+ext_independent_warm_refresh_seconds,1
+ext_independent_all_checks,PASS (same checklist as primary; all PASS)
+ext_vs_speed_target,PASS (cold 3s<=20s; warm 1s<=10s; both testers)
+speed_target_definition,post-deployment (post-hoc; not pre-registered; see docs/specifications/acceptance-criteria.md)
+stage3_external_acceptance,PASS
+weather_adjusted_stretch1,COMPLETE
+checkpoint_d_revalidation,PASS (two independent no-login testers + broadband within target)
 rollback_used,no
 rollback_target,citibike-app-00004-52b (digest sha256:ffe03a39...)
 data_resources_modified,none (BigQuery/GCS/IAM/billing unchanged)

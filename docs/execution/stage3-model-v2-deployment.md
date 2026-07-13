@@ -83,35 +83,59 @@ dashboard-content checks above are **server-side + local-equivalent** (identical
 image code + identical production env), not a real-browser fetch of the live
 URL. This gap is now closed by the independent external test below.
 
-## External browser verification (independent tester) — PASS
-An independent, unauthenticated real-browser test of the live URL confirms the
-deployment end-to-end and closes the sandbox-egress gap:
+## External browser verification (two independent testers) — PASS
+Two independent, unauthenticated real-browser tests of the live URL confirm the
+deployment end-to-end and **close the sandbox-egress gap** (which is retained
+above as historical context — the sandbox could not reach `*.run.app`, but real
+browsers can and did).
 
-| Field | Value |
+| Check | Primary — Jeffrey Sickoria | Independent — Lia Sickoria |
+|---|---|---|
+| Timestamp | 2026-07-12 8:38 PM ET | 2026-07-12 8:38 PM ET |
+| Browser / device | Chrome, PC | Chrome, PC |
+| Connection | Home broadband | Home broadband |
+| Opened without login | **PASS** | **PASS** |
+| Cold load | **3 s** | **3 s** |
+| Warm refresh | **1 s** | **1 s** |
+| Verified v2 source caption | **PASS** | **PASS** |
+| Data-quality note visible | **PASS** | **PASS** |
+| Weather-adjusted model section visible | **PASS** | **PASS** |
+| Actual-vs-expected chart visible | **PASS** | **PASS** |
+| Expected range / shaded band visible | **PASS** | **PASS** |
+| High/low gap flags visible | **PASS** | **PASS** |
+| Non-causation caveat visible | **PASS** | **PASS** |
+| Old pre-v2 caveat absent | **PASS** | **PASS** |
+| Date control works | **PASS** | **PASS** |
+| Rider control works | **PASS** | **PASS** |
+| All five chart sections visible | **PASS** | **PASS** |
+| Each chart has a direction+magnitude finding | **PASS** | **PASS** |
+| Visible errors | **PASS** (none) | **PASS** (none) |
+
+### Evaluation vs the post-deployment broadband target
+| Required criterion | Result |
 |---|---|
-| Tester | Jeffrey Sickoria |
-| Timestamp | 2026-07-12 8:38 PM ET |
-| Browser / device | Chrome, PC |
-| Connection | Home broadband |
-| Opened without login | **PASS** |
-| Cold load | **3 s** (≤ 20 s target) |
-| Warm refresh | **1 s** (≤ 10 s target) |
-| Verified v2 source caption | **PASS** |
-| Data-quality note visible | **PASS** |
-| Weather-adjusted model section visible | **PASS** |
-| Actual-vs-expected chart visible | **PASS** |
-| Expected range / shaded band visible | **PASS** |
-| High/low gap flags visible | **PASS** |
+| Cold load ≤ 20 s | **PASS** (3 s, both testers) |
+| Warm refresh ≤ 10 s | **PASS** (1 s, both testers) |
+| Public no-login access | **PASS** |
+| Verified v2 trip source visible | **PASS** |
+| model_v2 section renders | **PASS** |
+| Expected band visible | **PASS** |
+| High/low flags visible | **PASS** |
 | Non-causation caveat visible | **PASS** |
-| Old pre-v2 caveat absent | **PASS** |
-| Date control works | **PASS** |
-| Rider control works | **PASS** |
-| All five chart sections visible | **PASS** |
-| Each chart has a direction+magnitude finding | **PASS** |
-| Visible errors | **PASS** (none) |
+| Controls work | **PASS** |
+| All chart findings visible | **PASS** |
+| No visible errors | **PASS** |
 
-Broadband load (cold 3 s / warm 1 s) is **within** the post-deployment
-acceptance target (cold ≤ 20 s, warm ≤ 10 s).
+All required criteria pass across both testers.
+
+- **Stage 3 external acceptance: PASS**
+- **Weather-Adjusted Ridership Stretch 1: COMPLETE**
+- **Checkpoint D revalidation: PASS** (two independent no-login testers + broadband speed within target)
+
+> Disclosure retained: the page-load speed target (cold ≤ 20 s, warm ≤ 10 s)
+> was **defined after the original deployment** (post-hoc), not pre-registered
+> — see `docs/specifications/acceptance-criteria.md`. Both broadband tests meet
+> it; that does not change its post-hoc status.
 
 ## Rollback
 Not used (no rollback condition triggered). Rollback target: previous revision
@@ -140,8 +164,9 @@ $0.00 for this stage.
 - **Stage 2 — `trips_daily_model_v2` creation:** complete (PR #12, merged).
 - **Stage 3 — deployment:** **complete** (revision `citibike-app-00005-t4q`,
   100% traffic, `MODEL_TABLE=…trips_daily_model_v2`).
-- **External acceptance verification:** **COMPLETE** — independent real-browser
-  test passed on all points (broadband cold 3 s / warm 1 s), recorded above.
+- **External acceptance verification:** **PASS / COMPLETE** — two independent
+  real-browser tests passed on all points (broadband cold 3 s / warm 1 s),
+  recorded above. Checkpoint D revalidation: **PASS**.
 
 ## Project status
 All four project stages are complete and externally verified: repository
