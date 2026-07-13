@@ -93,4 +93,20 @@ ride ~39% more on weekends"), never a generic "ridership varies with weather."
 Public, unauthenticated Cloud Run service (`citibike-app`, us-central1) at
 https://citibike-app-kpkbtfmmcq-uc.a.run.app. A visible source caption names the
 active trip table and a data-quality note states the unknown-rider share and the
-known course-reference discrepancies. See `docs/verification/acceptance-criteria.md`.
+known course-reference discrepancies. See `docs/specifications/acceptance-criteria.md`.
+
+## Graceful failure behavior
+- **Invalid `CITIBIKE_SOURCE_MODE`:** `query.get_config()` raises; the app shows
+  a visible "Configuration error" and stops — it never silently picks a source.
+- **Empty result for the chosen filters:** a visible warning ("No data for
+  selected filters"), no blank charts.
+- **Model table missing or schema-incompatible:** `detect_model_kind()` raises
+  and the model section shows a clear `st.error` naming the problem — it never
+  renders stale or mismatched model data. A v1 table shows the pre-v2 caveat; a
+  v2 table removes it.
+- **Model window:** requests before 2022-01-01 are clamped to the model window
+  with an informational note rather than an error.
+- **Weather coverage tail:** the trips⋈weather inner join drops the final two
+  trip dates (weather ends 2026-05-29); disclosed, not silently mis-summed.
+- **BigQuery/auth failure:** surfaces as a Streamlit exception on the affected
+  section rather than a wrong number.

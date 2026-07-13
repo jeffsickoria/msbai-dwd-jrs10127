@@ -48,7 +48,7 @@ and is documented as future work.
 
 Rejected for parsimony/interpretability: humidity/dewpoint/wind/pressure
 (marginal, collinear with temp/precip), is_* one-hots (redundant with the
-continuous fields). Documented in docs/decisions/decisions-memo.md.
+continuous fields). Documented in docs/decisions/parts-1-and-2-decisions.md.
 
 MODELING WINDOW
 ---------------

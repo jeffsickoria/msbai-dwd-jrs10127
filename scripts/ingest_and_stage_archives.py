@@ -23,14 +23,27 @@ SAFETY
   archives against the inventory's md5 (when --apply downloads them).
 * Checkpoint/restart: completed archives are recorded in a checkpoint file and
   skipped on re-run.
+* Idempotent restage-avoidance: with --apply, a staged object already present
+  in GCS whose md5 matches the manifest is SKIPPED (no redownload/reupload).
+* Partial-failure safe: each archive is processed independently; a failure is
+  logged and the archive is left OUT of the checkpoint so a re-run retries it,
+  while other archives still proceed. A nonzero exit reports any failures.
+* Auditable execution log: every decision (plan/skip/stage/fail) is emitted as a
+  timestamped line to stdout and, if --log PATH is given, appended there.
 * Never prints credentials; uses Application Default Credentials.
-* This PR does NOT run --apply and does NOT download the full archive.
-  No production run has been performed; only offline dry-run + fixture unit
-  tests have been exercised.
+
+TEST STATUS (honest)
+--------------------
+* syntax tested: yes (py_compile).
+* unit tested with fixtures: yes (tests/test_ingest_and_stage_archives.py).
+* dry-run tested: yes (offline, against the committed manifest).
+* NOT yet end-to-end tested against the full official archive set — that
+  requires --apply, GCS writes, and explicit human approval, and has not been
+  performed. No historical execution evidence is fabricated.
 
 Usage:
-    python3 scripts/prepare_staging.py                 # offline dry-run plan
-    python3 scripts/prepare_staging.py --apply         # download+stage (needs approval)
+    python3 scripts/ingest_and_stage_archives.py               # offline dry-run plan
+    python3 scripts/ingest_and_stage_archives.py --apply       # download+stage (needs approval)
 """
 import argparse
 import base64
@@ -105,6 +118,23 @@ def safe_zip_members(zf):
             yield name
 
 
+def make_logger(log_path):
+    """Return a log(msg) that writes a timestamped line to stdout and,
+    optionally, appends it to an audit-log file. `import datetime` is local so
+    the module imports cleanly in restricted runners; timestamps only matter at
+    --apply time."""
+    import datetime
+    fh = open(log_path, "a") if log_path else None
+
+    def log(msg):
+        line = f"{datetime.datetime.now(datetime.timezone.utc).isoformat()} {msg}"
+        print(line)
+        if fh:
+            fh.write(line + "\n")
+            fh.flush()
+    return log
+
+
 def load_checkpoint(path):
     if path and os.path.exists(path):
         return set(json.load(open(path)).get("completed_archives", []))
@@ -139,32 +169,34 @@ def main():
     ap.add_argument("--manifest", default="evidence/canonical-source-manifest.csv")
     ap.add_argument("--inventory", default="evidence/gcs-source-inventory.csv")
     ap.add_argument("--checkpoint", default="")
+    ap.add_argument("--log", default="", help="append an audit log to this path")
     ap.add_argument("--apply", action="store_true",
                     help="ACTUALLY download archives and upload staged CSVs (default: offline dry-run)")
     args = ap.parse_args()
+    log = make_logger(args.log)
 
     _rows, selected, excluded = load_manifest(args.manifest)
     check_routing(selected)
     by_key = check_no_duplicate_representation(selected)
     plan, excl = build_plan(selected, excluded)
 
-    print(f"=== prepare_staging [{'APPLY' if args.apply else 'DRY-RUN'}] "
-          f"project={args.project} bucket={args.bucket} dataset={args.dataset} ===")
-    print(f"manifest: {len(selected)} selected / {len(excluded)} excluded objects; "
-          f"{len(by_key)} unique (table,month) keys, exactly one representation each.")
+    log(f"=== ingest_and_stage_archives [{'APPLY' if args.apply else 'DRY-RUN'}] "
+        f"project={args.project} bucket={args.bucket} dataset={args.dataset} ===")
+    log(f"manifest: {len(selected)} selected / {len(excluded)} excluded objects; "
+        f"{len(by_key)} unique (table,month) keys, exactly one representation each.")
     for tbl, items in plan.items():
         months = sorted({i['year_month'] for i in items})
-        print(f"  {tbl}: {len(items)} CSVs to stage, {len(months)} months "
-              f"({months[0]}..{months[-1] if months else '-'})" if months else f"  {tbl}: 0")
-    print(f"  excluded duplicates (never staged): {len(excl)} "
-          f"(e.g. {[e['object_name'].split('/')[-1] for e in excl[:3]]})")
+        log(f"  plan {tbl}: {len(items)} CSVs to stage, {len(months)} months "
+            f"({months[0]}..{months[-1]})" if months else f"  plan {tbl}: 0")
+    log(f"  excluded duplicates (never staged): {len(excl)} "
+        f"(e.g. {[e['object_name'].split('/')[-1] for e in excl[:3]]})")
 
     if not args.apply:
-        print("\n[dry-run] offline plan only — no download, no upload. "
-              "Re-run with --apply (and human approval) to execute.")
+        log("[dry-run] offline plan only — no download, no upload. "
+            "Re-run with --apply (and human approval) to execute.")
         return
 
-    # --- APPLY path (NOT exercised in this PR) ---
+    # --- APPLY path (NOT exercised in this PR; requires explicit approval) ---
     from google.cloud import storage
     done = load_checkpoint(args.checkpoint)
     gcs = storage.Client(project=args.project)
@@ -174,41 +206,51 @@ def main():
     selected_names = {r["object_name"] for r in selected}
     manifest_by_name = {r["object_name"]: r for r in selected}
 
-    # archives to process = distinct raw/ zips that contain any selected member
     archives = sorted({r["object_name"].split("/")[-1].split("!")[0] for r in inv.values()})
+    failures = []
     for arch in archives:
         if arch in done:
-            print(f"[skip] {arch} (checkpoint)")
+            log(f"[skip] {arch} (checkpoint)")
             continue
         meta = inv.get(arch)
         if meta is None:
-            print(f"[skip] {arch}: not in inventory")
+            log(f"[skip] {arch}: not in inventory")
             continue
-        blob = bucket.blob(f"raw/{arch}")
-        data = blob.download_as_bytes()
-        if meta.get("md5_hash") and b64_md5(data) != meta["md5_hash"]:
-            sys.exit(f"CHECKSUM MISMATCH on raw/{arch}")
-        with zipfile.ZipFile(io.BytesIO(data)) as zf:
-            for member in safe_zip_members(zf):
-                # target staging object name is decided by the manifest only
-                # (this stage never invents new staged objects)
-                for folder in ("pre2021", "post2021"):
-                    cand = f"staging/{folder}/{os.path.basename(member)}"
-                    if cand in selected_names:
+        try:
+            data = bucket.blob(f"raw/{arch}").download_as_bytes()
+            if meta.get("md5_hash") and b64_md5(data) != meta["md5_hash"]:
+                raise ValueError(f"archive checksum mismatch raw/{arch}")
+            with zipfile.ZipFile(io.BytesIO(data)) as zf:
+                for member in safe_zip_members(zf):
+                    for folder in ("pre2021", "post2021"):
+                        cand = f"staging/{folder}/{os.path.basename(member)}"
+                        if cand not in selected_names:
+                            continue
                         row = manifest_by_name[cand]
+                        target = bucket.blob(cand)
+                        # idempotent: skip if already staged with matching md5
+                        target.reload() if target.exists() else None
+                        if target.exists() and row["md5_hash"] and target.md5_hash == row["md5_hash"]:
+                            log(f"[skip] {cand} already staged (md5 match)")
+                            continue
                         with zf.open(member) as fh:
                             head = fh.readline().decode("utf-8", "replace")
                         era = classify_header(next(csv.reader([head])))
                         if ERA_TO_TABLE.get(era) != row["target_table"]:
-                            sys.exit(f"HEADER/ROUTE MISMATCH for {cand}: header={era}")
+                            raise ValueError(f"header/route mismatch {cand}: header={era}")
                         body = zf.read(member)
                         if row["md5_hash"] and b64_md5(body) != row["md5_hash"]:
-                            sys.exit(f"CHECKSUM MISMATCH on staged {cand}")
-                        bucket.blob(cand).upload_from_string(body, content_type="text/csv")
-                        print(f"[staged] {cand} ({era})")
-        done.add(arch)
-        save_checkpoint(args.checkpoint, done)
-    print(f"[apply] staging complete: {len(done)} archives processed")
+                            raise ValueError(f"staged checksum mismatch {cand}")
+                        target.upload_from_string(body, content_type="text/csv")
+                        log(f"[staged] {cand} ({era})")
+            done.add(arch)
+            save_checkpoint(args.checkpoint, done)   # checkpoint only on full success
+        except Exception as exc:  # partial-failure safe: log, keep going, retry on re-run
+            failures.append((arch, str(exc)))
+            log(f"[FAIL] {arch}: {exc} (left out of checkpoint; re-run will retry)")
+    log(f"[apply] staging complete: {len(done)} archives done, {len(failures)} failed")
+    if failures:
+        sys.exit(f"{len(failures)} archive(s) failed: {[a for a, _ in failures[:5]]}")
 
 
 if __name__ == "__main__":

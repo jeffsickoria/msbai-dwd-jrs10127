@@ -1,5 +1,5 @@
-"""Unit tests for scripts/prepare_staging.py — small in-memory fixtures, no
-cloud. Run: python3 tests/test_prepare_staging.py"""
+"""Unit tests for scripts/ingest_and_stage_archives.py — small in-memory
+fixtures, no cloud. Run: python3 tests/test_ingest_and_stage_archives.py"""
 import csv
 import io
 import os
@@ -8,7 +8,7 @@ import tempfile
 import zipfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
-import prepare_staging as P  # noqa: E402
+import ingest_and_stage_archives as P  # noqa: E402
 
 MANIFEST_COLS = ["object_uri", "object_name", "gcs_folder", "year_month",
                  "inferred_year", "schema_era", "representation", "size_bytes",

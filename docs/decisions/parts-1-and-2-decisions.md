@@ -21,24 +21,24 @@ Detailed evidence is linked rather than duplicated.
 | 13 | Materialized table **partitioned monthly (`DATE_TRUNC(date,MONTH)`), clustered by region, rider_type** | few rows/day over >150 months → monthly avoids thousands of tiny partitions while staying time-unit partitioned on `date` | `sql/materialize_daily_v2.sql` |
 | 14 | Independent reconciliation vs the course reference | quantifies correctness and localizes disagreements | `docs/verification/v2-reconciliation.md` |
 | 15 | Official-source freshness audit | proves staged data is current and the reference (not the project) overcounts | `docs/verification/official-source-freshness.md` |
-| 16 | Reproducible ingestion/staging script (dry-run default) | closes the previously uncommitted staging stage; safe, manifest-driven | `scripts/prepare_staging.py` |
+| 16 | Reproducible ingestion/staging script (dry-run default) | closes the previously uncommitted staging stage; safe, manifest-driven | `scripts/ingest_and_stage_archives.py` |
 
 ## Part 2 — Dashboard
 | # | Decision | Reason | Detail |
 |---|---|---|---|
 | 17 | Default trip source = verified `trips_daily_table_v2` | independently verified more accurate than the reference for the disputed periods | `docs/verification/v2-cutover-decision.md` |
 | 18 | Env-driven config; `CITIBIKE_SOURCE_MODE` fails on unknown values | no scattered names; never silently pick a source | `query.py` |
-| 19 | Weather join `nyu-datasets.weather.m_weather_daily_nyc` (inner) | daily NYC weather; disclosed 2-day tail drop (weather ends 2026-05-29) | `query.py`, `docs/spec/dashboard-spec.md` |
+| 19 | Weather join `nyu-datasets.weather.m_weather_daily_nyc` (inner) | daily NYC weather; disclosed 2-day tail drop (weather ends 2026-05-29) | `query.py`, `docs/specifications/part2-dashboard-specification.md` |
 | 20 | Filters = rider type + date range only | the two dimensions non-technical users actually vary; keeps UI legible | `app.py` |
 | 21 | Cache client (`cache_resource`) + daily/model reads (`cache_data`, 1 h) | rider switching re-slices cached data; only new date ranges query | `app.py` |
-| 22 | Five charts: trend+temp, temp response, day-of-week, weather impact, model | cover the business questions with minimal redundancy | `docs/spec/dashboard-spec.md` |
-| 23 | **Every chart shows a data-derived one-sentence finding (direction+magnitude)** | non-technical clarity criterion; no generic claims | `app.py`, `docs/verification/acceptance-criteria.md` |
+| 22 | Five charts: trend+temp, temp response, day-of-week, weather impact, model | cover the business questions with minimal redundancy | `docs/specifications/part2-dashboard-specification.md` |
+| 23 | **Every chart shows a data-derived one-sentence finding (direction+magnitude)** | non-technical clarity criterion; no generic claims | `app.py`, `docs/specifications/acceptance-criteria.md` |
 | 24 | Model = simple interpretable log-space OLS on weather + calendar | interpretable, reproducible; log linearizes multiplicative weather/growth effects | `scripts/build_weather_model_v2.py`, `docs/verification/weather-model-v2.md` |
 | 25 | **Global linear growth trend tested and rejected on diagnostics** | it worsened time-based holdout error (unstable extrapolation); month effects absorb within-window structure | `docs/verification/weather-model-v2.md` |
 | 26 | Objective flag = outside the model's ~95% prediction band | data-driven, not chosen for visual effect; "merits investigation," not causal | `scripts/build_weather_model_v2.py` |
-| 27 | Model limitations disclosed; no causal claims | a flagged day does not prove shortage/outage/event/promotion; growth beyond window unmodeled | `app.py`, `docs/spec/dashboard-spec.md` |
+| 27 | Model limitations disclosed; no causal claims | a flagged day does not prove shortage/outage/event/promotion; growth beyond window unmodeled | `app.py`, `docs/specifications/part2-dashboard-specification.md` |
 | 28 | Deployed to Cloud Run, public, image pinned by digest, settings preserved | reproducible controlled deploy; code cutover approved separately from build | `docs/execution/dashboard-v2-deployment.md` |
-| 29 | **Post-deployment acceptance target** (speed ≤20s/≤10s; clarity finding rule) | closes omitted verification; explicitly labeled post-hoc, not pre-registered | `docs/verification/acceptance-criteria.md` |
+| 29 | **Post-deployment acceptance target** (speed ≤20s/≤10s; clarity finding rule) | closes omitted verification; explicitly labeled post-hoc, not pre-registered | `docs/specifications/acceptance-criteria.md` |
 
 ## Open items requiring explicit approval (not done here)
 Live monthly-partition migration; creating/validating `trips_daily_model_v2`;

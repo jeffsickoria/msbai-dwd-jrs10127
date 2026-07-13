@@ -47,12 +47,19 @@ The v2 table was verified in three stages (all evidence in this repo):
 Evidence lives in `evidence/` (manifests, job logs, inventories, row counts)
 and `docs/` (execution, verification, repair, recovery records).
 
-## Specifications & decisions
+## Assignment deliverables
 
-- **Dashboard specification (Part 2):** [`docs/spec/dashboard-spec.md`](docs/spec/dashboard-spec.md) — purpose, audience, business questions, charts, and the per-chart finding requirement.
-- **Acceptance criteria:** [`docs/verification/acceptance-criteria.md`](docs/verification/acceptance-criteria.md) — correctness / speed / reach / clarity, each with measurement, result, and pre/post-deployment status.
-- **Decisions memo (Parts 1 & 2):** [`docs/decisions/decisions-memo.md`](docs/decisions/decisions-memo.md).
-- **Weather-Adjusted Ridership v2 (Stretch 1):** [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md) — design, holdout, proposed `trips_daily_model_v2`.
+| Deliverable | Location |
+|---|---|
+| Part 2 dashboard specification | [`docs/specifications/part2-dashboard-specification.md`](docs/specifications/part2-dashboard-specification.md) |
+| Acceptance criteria (correctness / speed / reach / clarity) | [`docs/specifications/acceptance-criteria.md`](docs/specifications/acceptance-criteria.md) |
+| Decisions memo (Parts 1 & 2) | [`docs/decisions/parts-1-and-2-decisions.md`](docs/decisions/parts-1-and-2-decisions.md) |
+| Ingestion / staging script | [`scripts/ingest_and_stage_archives.py`](scripts/ingest_and_stage_archives.py) |
+| Reconciliation & official-source evidence | [`docs/verification/v2-reconciliation.md`](docs/verification/v2-reconciliation.md), [`docs/verification/official-source-freshness.md`](docs/verification/official-source-freshness.md) |
+| Deployment evidence | [`docs/execution/dashboard-v2-deployment.md`](docs/execution/dashboard-v2-deployment.md), [`evidence/dashboard-deployment.csv`](evidence/dashboard-deployment.csv) |
+| Weather-Adjusted Ridership v2 (Stretch 1) | [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md), [`scripts/build_weather_model_v2.py`](scripts/build_weather_model_v2.py) |
+| Public dashboard | https://citibike-app-kpkbtfmmcq-uc.a.run.app |
+| BigQuery project & objects | project `msbai-dwd-jrs10127`; clean view `citibike.trips_v2`; daily view `citibike.trips_daily_v2`; materialized table `citibike.trips_daily_table_v2` |
 
 ## Dashboard configuration
 
