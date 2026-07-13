@@ -138,9 +138,12 @@ def build_design(df, feature_cols):
         X["tavg_f_sq"] = df["tavg_f"].astype(float) ** 2
     X["prcp_inches"] = df["prcp_inches"].astype(float)
     X["snow_inches"] = df["snow_inches"].astype(float)
-    # linear growth trend (days since first modeled date)
-    t0 = pd.to_datetime(df["date"]).min()
-    X["trend_days"] = (pd.to_datetime(df["date"]) - t0).dt.days.astype(float)
+    # optional linear growth trend (days since first modeled date) — included
+    # ONLY when requested (default spec omits it; see module docstring / holdout
+    # diagnostic). Gated on feature_cols so the documented design is the actual one.
+    if "trend_days" in feature_cols:
+        t0 = pd.to_datetime(df["date"]).min()
+        X["trend_days"] = (pd.to_datetime(df["date"]) - t0).dt.days.astype(float)
     # categorical day_of_week and month as one-hots (drop first level)
     dow = pd.get_dummies(df["day_of_week"].astype(int), prefix="dow", drop_first=True)
     mon = pd.get_dummies(df["month"].astype(int), prefix="mon", drop_first=True)
@@ -199,9 +202,24 @@ def evaluate_and_build(df, feature_cols, holdout_days=HOLDOUT_DAYS):
         Xho = build_design(hold, feature_cols).reindex(columns=Xtr.columns, fill_value=0.0)
         beta_h, _ = fit_ols(Xtr, np.log1p(train[s].to_numpy(dtype=float)))
         pred_ho = np.expm1(predict(Xho, beta_h))
-        mae, mape = mae_mape(hold[s], pred_ho)
+        act_ho = hold[s].to_numpy(dtype=float)
+        mae, mape = mae_mape(act_ho, pred_ho)
+        # WAPE (scale-aware, robust to low-volume days): sum|err| / sum(actual)
+        wape = float(np.sum(np.abs(act_ho - pred_ho)) / np.sum(act_ho) * 100) if np.sum(act_ho) else float("nan")
+        bias = float(np.mean(pred_ho - act_ho))   # mean signed error (pred - actual)
+        # Seasonal-naive baseline: training mean by (month, day_of_week)
+        base_key = ["month", "day_of_week"]
+        base_map = train.groupby(base_key)[s].mean()
+        overall = float(train[s].mean())
+        pred_base = hold.apply(lambda r: base_map.get((r["month"], r["day_of_week"]), overall), axis=1).to_numpy(float)
+        base_mae, _ = mae_mape(act_ho, pred_base)
         metrics[s] = {
             "holdout_mae": round(mae, 1), "holdout_mape_pct": round(mape, 2),
+            "holdout_wape_pct": round(wape, 2),
+            "holdout_actual_total": int(np.sum(act_ho)), "holdout_pred_total": int(np.sum(pred_ho)),
+            "holdout_bias": round(bias, 1),
+            "baseline_mae": round(base_mae, 1),
+            "improvement_vs_baseline_pct": round((base_mae - mae) / base_mae * 100, 1) if base_mae else None,
             "train_rows": int(len(train)), "holdout_rows": int(len(hold)),
             "train_dates": f"{pd.to_datetime(train['date']).min().date()}..{pd.to_datetime(train['date']).max().date()}",
             "holdout_dates": f"{pd.to_datetime(hold['date']).min().date()}..{pd.to_datetime(hold['date']).max().date()}",
@@ -272,8 +290,12 @@ def main():
     print("\n=== holdout metrics (time-based, log1p target) ===")
     for s, m in metrics.items():
         print(f"  {s:6s} MAE={m['holdout_mae']:>10,.1f}  MAPE={m['holdout_mape_pct']:>6}%  "
-              f"train={m['train_dates']} ({m['train_rows']})  holdout={m['holdout_dates']} ({m['holdout_rows']})  "
-              f"rmse_log={m['full_refit_rmse_log']}  flagged={m['flagged_pct']}%")
+              f"WAPE={m['holdout_wape_pct']:>5}%  bias={m['holdout_bias']:>+10,.1f}  "
+              f"actual_tot={m['holdout_actual_total']:>10,}  pred_tot={m['holdout_pred_total']:>10,}  "
+              f"obs={m['holdout_rows']}")
+        print(f"         baseline(month×dow) MAE={m['baseline_mae']:>10,.1f}  "
+              f"model improvement={m['improvement_vs_baseline_pct']}%  "
+              f"rmse_log={m['full_refit_rmse_log']}  band-flagged={m['flagged_pct']}%")
     print(f"\nproposed output schema: {[c for c,_ in OUTPUT_SCHEMA]}")
     print(f"output rows built in memory: {len(rows)} ({len(SERIES)} series x {len(df)} days)")
 
@@ -281,18 +303,30 @@ def main():
         print(f"\n[dry-run] NOT writing {args.dest}. Re-run with --apply (and human approval) to create it.")
         return
     guard_v2(args.dest)
-    proj, dset, tbl = args.dest.split(".")
     schema = [bigquery.SchemaField(n, t) for n, t in OUTPUT_SCHEMA]
-    table = bigquery.Table(args.dest, schema=schema)
-    table.time_partitioning = bigquery.TimePartitioning(
-        type_=bigquery.TimePartitioningType.MONTH, field="date")
-    table.clustering_fields = ["rider_series"]
-    client.delete_table(args.dest, not_found_ok=True)
-    client.create_table(table)
-    errors = client.insert_rows(client.get_table(args.dest), [tuple(r[n] for n, _ in OUTPUT_SCHEMA) for r in rows])
-    if errors:
-        sys.exit(f"LOAD ERRORS: {errors[:3]}")
-    print(f"[apply] created {args.dest} with {len(rows)} rows")
+    # Batch LOAD (not streaming insert_rows) so rows are immediately queryable
+    # for validation and there is no streaming buffer/cost. WRITE_TRUNCATE onto a
+    # freshly (re)created monthly-partitioned, rider_series-clustered table.
+    json_rows = []
+    for r in rows:
+        jr = dict(r)
+        jr["date"] = r["date"].isoformat() if hasattr(r["date"], "isoformat") else str(r["date"])
+        jr["training_start"] = str(r["training_start"])
+        jr["training_end"] = str(r["training_end"])
+        json_rows.append(jr)
+    job_config = bigquery.LoadJobConfig(
+        schema=schema,
+        write_disposition="WRITE_TRUNCATE",
+        time_partitioning=bigquery.TimePartitioning(
+            type_=bigquery.TimePartitioningType.MONTH, field="date"),
+        clustering_fields=["rider_series"],
+    )
+    load = client.load_table_from_json(json_rows, args.dest, job_config=job_config)
+    load.result()
+    if load.errors:
+        sys.exit(f"LOAD ERRORS: {load.errors[:3]}")
+    print(f"[apply] created {args.dest} with {client.get_table(args.dest).num_rows} rows "
+          f"(monthly-partitioned on date, clustered by rider_series)")
 
 
 if __name__ == "__main__":
