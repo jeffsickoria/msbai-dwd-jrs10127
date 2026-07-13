@@ -14,8 +14,8 @@
 ## Pipeline (v2 — the corrected, verified pipeline)
 archive → `gs://bigdataday1/raw/` (verbatim zips) → `staging/` (extracted CSVs)
 → canonical manifest → `raw_pre2021_v2` + `raw_post2021_v2` → `trips_v2` view
-→ `trips_daily_v2` view → `trips_daily_table_v2` (materialized, clustered) →
-Streamlit dashboard.
+→ `trips_daily_v2` view → `trips_daily_table_v2` (materialized, monthly
+partitioned on `date`, clustered by `region, rider_type`) → Streamlit dashboard.
 
 The **five `_v2` objects are authoritative**. The original non-v2 objects
 (`raw_pre2021`, `raw_post2021`, `trips`, `trips_daily`, `trips_daily_table`)
@@ -38,6 +38,11 @@ for analysis and never rebuild them**.
   (on `_v2` tables only), `maxBadRecords=0`.
 
 ## Semantics
+- **Region handling:** Jersey City/Hoboken archives are excluded by the
+  canonical manifest before extraction and staging, so both v2 raw tables are
+  NYC-only by construction. The raw tables preserve their source CSV schemas
+  and do not add a synthetic `region` column. The explicit `region = 'NYC'`
+  marker is introduced in the daily semantic layer.
 - **Timestamps are New York local civil time.** Source strings are parsed with
   `SAFE.PARSE_DATETIME` (5 layouts incl. no-seconds `%m/%d/%Y %H:%M`, which
   recovers early 2015) and the absolute instant is derived via
@@ -59,11 +64,10 @@ for analysis and never rebuild them**.
   fallback `nyu-datasets.citibike.m_daily_trips`; any other value fails fast.
 - Weather join: `nyu-datasets.weather.m_weather_daily_nyc` (currently ends
   2026-05-29, so the inner join drops the last two trip dates).
-  Model section: `msbai-dwd-jrs10127.citibike.trips_daily_model` (fitted
-  pre-v2; its 2022+ actuals run ~3% above v2 until refitted).
-- **The live Cloud Run app has NOT yet been redeployed with the v2 source** —
-  it still serves the course-reference build until a separately approved
-  deployment.
+  Model section: `msbai-dwd-jrs10127.citibike.trips_daily_model_v2`.
+- **The live Cloud Run app uses the verified v2 sources.** Revision
+  `citibike-app-00005-t4q` is Ready, receives 100% of traffic, and uses
+  `trips_daily_table_v2` and `trips_daily_model_v2`.
 
 ## Specifications & decisions
 - `docs/specifications/part2-dashboard-specification.md` — the Part 2 dashboard
@@ -75,8 +79,8 @@ for analysis and never rebuild them**.
   deployment status; speed and clarity targets are explicitly post-deployment).
 - `docs/decisions/parts-1-and-2-decisions.md` — consolidated Parts 1 & 2 decisions.
 - Ingestion/staging: `scripts/ingest_and_stage_archives.py` (dry-run default).
-- `docs/verification/weather-model-v2.md` — Stretch 1 model design + holdout;
-  future table `trips_daily_model_v2` (not yet created).
+- `docs/verification/weather-model-v2.md` — Stretch 1 model design, time-based
+  holdout results, model-table validation, and final deployment status.
 
 ## Verification status (evidence under `docs/` and `evidence/`)
 - `docs/execution/v2-build.md` — the one-shot `_v2` build record (job IDs, 0 bad records).
@@ -85,8 +89,8 @@ for analysis and never rebuild them**.
   byte-identical to the current official archive; official row counts match
   `trips_daily_table_v2`; the course reference overcounts April 2018 (exactly
   2×) and 2022/2023/May 2024 (~2.4–3.2%).
-- `docs/verification/v2-cutover-decision.md` — decision record: v2 approved as
-  the dashboard source; code cutover done, deployment pending.
+- `docs/verification/v2-cutover-decision.md` — historical cutover decision.
+  Final deployment evidence is in `docs/execution/stage3-model-v2-deployment.md`.
 
 ## Procedures
 - **Verification:** re-run `sql/verification/*.sql` sections individually
