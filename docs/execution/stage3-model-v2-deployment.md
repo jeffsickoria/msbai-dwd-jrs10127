@@ -78,11 +78,40 @@ earlier (`trips_daily_model` 2026-06-11, untouched); `staging/` newest object
 
 ### Sandbox egress limitation (explicit)
 The live `*.run.app` URL is **not reachable from the build sandbox** — the
-egress proxy returns HTTP 000 / 403 CONNECT for `*.run.app`. Therefore all
+egress proxy returns HTTP 000 / 403 CONNECT for `*.run.app`. Therefore the
 dashboard-content checks above are **server-side + local-equivalent** (identical
 image code + identical production env), not a real-browser fetch of the live
-URL. **External browser verification remains PENDING** and must be done from a
-real browser (see below).
+URL. This gap is now closed by the independent external test below.
+
+## External browser verification (independent tester) — PASS
+An independent, unauthenticated real-browser test of the live URL confirms the
+deployment end-to-end and closes the sandbox-egress gap:
+
+| Field | Value |
+|---|---|
+| Tester | Jeffrey Sickoria |
+| Timestamp | 2026-07-12 8:38 PM ET |
+| Browser / device | Chrome, PC |
+| Connection | Home broadband |
+| Opened without login | **PASS** |
+| Cold load | **3 s** (≤ 20 s target) |
+| Warm refresh | **1 s** (≤ 10 s target) |
+| Verified v2 source caption | **PASS** |
+| Data-quality note visible | **PASS** |
+| Weather-adjusted model section visible | **PASS** |
+| Actual-vs-expected chart visible | **PASS** |
+| Expected range / shaded band visible | **PASS** |
+| High/low gap flags visible | **PASS** |
+| Non-causation caveat visible | **PASS** |
+| Old pre-v2 caveat absent | **PASS** |
+| Date control works | **PASS** |
+| Rider control works | **PASS** |
+| All five chart sections visible | **PASS** |
+| Each chart has a direction+magnitude finding | **PASS** |
+| Visible errors | **PASS** (none) |
+
+Broadband load (cold 3 s / warm 1 s) is **within** the post-deployment
+acceptance target (cold ≤ 20 s, warm ≤ 10 s).
 
 ## Rollback
 Not used (no rollback condition triggered). Rollback target: previous revision
@@ -111,14 +140,12 @@ $0.00 for this stage.
 - **Stage 2 — `trips_daily_model_v2` creation:** complete (PR #12, merged).
 - **Stage 3 — deployment:** **complete** (revision `citibike-app-00005-t4q`,
   100% traffic, `MODEL_TABLE=…trips_daily_model_v2`).
-- **External acceptance verification:** **PENDING** — requires a real browser
-  (see below).
+- **External acceptance verification:** **COMPLETE** — independent real-browser
+  test passed on all points (broadband cold 3 s / warm 1 s), recorded above.
 
-## External tests still required (real browser, not sandbox)
-1. Open https://citibike-app-kpkbtfmmcq-uc.a.run.app with no login and confirm it loads.
-2. Confirm the v2 source caption + data-quality note are visible.
-3. Confirm the model section shows actual-vs-expected with the shaded expected
-   range and flagged high/low days, and the non-causation caveat.
-4. Confirm every chart shows its one-sentence finding and controls respond.
-5. Record cold/warm load times on stable broadband against the
-   post-deployment acceptance target (cold ≤ 20 s, warm ≤ 10 s).
+## Project status
+All four project stages are complete and externally verified: repository
+preparation (PR #11), the BigQuery monthly-partition migration and
+`trips_daily_model_v2` creation (PR #12), the controlled Cloud Run deployment
+(this stage), and independent external acceptance of the live v2 dashboard.
+No further steps are pending.
