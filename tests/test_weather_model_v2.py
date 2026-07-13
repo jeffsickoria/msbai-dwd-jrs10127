@@ -53,11 +53,18 @@ def test_build_design_shape_and_const():
     df = _synthetic(50)
     X = M.build_design(df, FEATURES)
     assert (X["const"] == 1.0).all()
-    assert "tavg_f_sq" in X.columns and "trend_days" in X.columns  # helper always builds trend col
+    assert "tavg_f_sq" in X.columns
+    assert "trend_days" not in X.columns  # default spec omits the trend (gated on feature_cols)
     # one-hots present for dow/month
     assert any(c.startswith("dow_") for c in X.columns)
     assert any(c.startswith("mon_") for c in X.columns)
     assert len(X) == len(df)
+
+
+def test_trend_gating():
+    df = _synthetic(50)
+    assert "trend_days" not in M.build_design(df, FEATURES).columns
+    assert "trend_days" in M.build_design(df, FEATURES + ["trend_days"]).columns
 
 
 def test_fit_ols_recovers_linear_signal():
