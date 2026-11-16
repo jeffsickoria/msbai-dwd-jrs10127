@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analytics projects | Jeffrey Sickoria</title>
+<style>
+:root{color-scheme:light;--ink:#14283d;--muted:#4b6171;--line:#d7e1e6;--bg:#eef4f5;--blue:#174a72;--green:#126352}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+header{background:#14283d;color:white;padding:2.2rem max(1.25rem,calc((100vw - 1020px)/2))}header p{margin:.25rem 0;color:#d1e4ec}h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.13;margin:.35rem 0 .7rem}h2{font-size:clamp(1.5rem,4vw,2rem);line-height:1.2;margin:.2rem 0}h3{margin-bottom:.45rem}
+nav{display:flex;flex-wrap:wrap;gap:.45rem 1.2rem;margin-top:1rem}a{color:var(--blue)}header a{color:white}main{max-width:1060px;margin:auto;padding:1.25rem}
+section{background:white;border:1px solid var(--line);border-radius:1rem;padding:clamp(1rem,4vw,2rem);margin-bottom:1.25rem}.kicker{margin:0;color:var(--green);font-size:.87rem;font-weight:700}.guide{padding:.75rem 1rem;border-left:4px solid var(--green);background:#edf6f3}.note{color:var(--muted);font-size:.92rem}
+fieldset{border:0;padding:0;margin:1rem 0;display:flex;gap:1rem;flex-wrap:wrap}legend{font-weight:700;margin-bottom:.35rem}label{display:inline-flex;align-items:center;gap:.35rem}select{font:inherit;border:1px solid #718998;background:white;color:var(--ink);padding:.35rem .55rem;border-radius:.35rem}input{accent-color:var(--blue)}:focus-visible{outline:3px solid #0b6bac;outline-offset:3px}
+.metrics{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0}.metric{min-width:9rem;background:var(--bg);padding:.65rem .85rem;border-radius:.55rem}.metric strong{display:block;font-size:1.5rem}.metric span{color:var(--muted);font-size:.86rem}
+table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}th,td{padding:.38rem .3rem;border-bottom:1px solid var(--line)}td:last-child{text-align:right;white-space:nowrap}thead th:last-child{text-align:right}tbody th{font-weight:600}.bar{height:.55rem;min-width:9rem;border-radius:.3rem;background:#e1eaee;overflow:hidden}.fill{display:block;background:var(--green);height:100%;border-radius:inherit}summary{cursor:pointer;font-weight:650}footer{padding:.25rem 0 1rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<header><p>Jeffrey Sickoria</p><h1>Analytics projects</h1><p>Two NYU Stern projects on transportation data, model validation, and operational decisions.</p><nav aria-label="Projects"><a href="#airport">Airport reliability</a><a href="#bike">Citi Bike and weather</a><a href="#watts">Watt’s Next</a></nav></header>
+<main>
+<section id="airport" aria-labelledby="airport-title">
+<p class="kicker">BTS and NOAA · December 2023</p><h2 id="airport-title">Capital Region flight reliability</h2>
+<p>How did departure reliability vary across BWI, DCA, and IAD, and how did it differ with daily weather?</p>
+<div class="metrics"><div class="metric"><strong>23,258</strong><span>completed departures</span></div><div class="metric"><strong>4,860</strong><span>departures delayed 15+ minutes</span></div><div class="metric"><strong>20.9%</strong><span>overall delayed-departure rate</span></div></div>
+<p class="guide"><strong>Try this.</strong> Compare the three airports, then switch to weather conditions. The views answer different questions. The weather view pools airports and cannot isolate the reason for the airport differences.</p>
+<fieldset><legend>Compare by</legend><label><input type="radio" name="flight-view" value="airport" checked> Origin airport</label><label><input type="radio" name="flight-view" value="weather"> Daily weather</label></fieldset>
+<div id="flight-results" aria-live="polite"></div>
+<details><summary>Coverage and method</summary><p>Snapshot reconciled to the project warehouse on July 17, 2026. The delay rate divides departures at least 15 minutes late by completed departures. Weather was measured at airport stations at daily resolution. These are descriptive comparisons. Per-group flight counts, route and departure-block exports, and the formal 2025 holdout are unavailable in this edition.</p><p>Sources: <a href="https://transtats.bts.gov/PREZIP/">U.S. DOT BTS On-Time Performance</a> and <a href="https://doi.org/10.7289/V5D21VHZ">NOAA NCEI GHCN-Daily</a>.</p></details>
+</section>
+<section id="bike" aria-labelledby="bike-title">
+<p class="kicker">Citi Bike · 2022 and 2023 archive audit</p><h2 id="bike-title">Citi Bike ridership and NYC weather</h2>
+<p>How does ridership change through the year, and when does it fall outside the range a historical model would expect?</p>
+<p class="guide"><strong>Try this.</strong> Select 2023, compare member and casual trips, then open the model results. The monthly counts show seasonality. A daily weather-adjusted baseline is the next step when investigating a particular day.</p>
+<fieldset><legend>Explore the audited archive</legend><label>Year <select id="bike-year"><option>2023</option><option>2022</option></select></label><label>Rider group <select id="bike-group"><option value="0">All riders</option><option value="1">Members</option><option value="2">Casual riders</option></select></label></fieldset>
+<p id="bike-total" aria-live="polite"></p><div id="bike-results"></div>
+<details><summary>Weather model and holdout results</summary>
+<p>The original project modeled daily ridership using temperature, precipitation, snow, day of week, and month. On the final 179 days of model coverage, the overall mean absolute error was 18.0% lower than the seasonal-naive benchmark. The model underpredicted part of the recent growth period.</p>
+<table><thead><tr><th scope="col">Rider series</th><th scope="col">Mean absolute error</th><th scope="col">Improvement vs. benchmark</th></tr></thead><tbody><tr><th scope="row">Total</th><td>23,808</td><td>18.0%</td></tr><tr><th scope="row">Member</th><td>21,993</td><td>12.8%</td></tr><tr><th scope="row">Casual</th><td>2,595</td><td>44.7%</td></tr></tbody></table>
+<p class="note">These are holdout summary metrics. Daily observed and expected series are unavailable in this edition.</p>
+</details>
+<p class="note">Monthly totals count 2022 and 2023 archive records by trip-start month. The audited archives omit 410 December 2023 boundary trips that the full pipeline recovered from an adjacent archive.</p>
+<p><a href="https://github.com/jeffsickoria/msbai-dwd-jrs10127/blob/main/docs/verification/official-source-freshness.md">Source audit</a> · <a href="https://github.com/jeffsickoria/msbai-dwd-jrs10127/blob/main/docs/verification/weather-model-v2.md">Model validation</a></p>
+</section>
+<section id="watts" aria-labelledby="watts-title"><p class="kicker">NYU Stern team capstone · In progress</p><h2 id="watts-title">Watt’s Next</h2><p>Explore how large AI data center loads affect regional infrastructure indicators in the team’s research dashboard.</p><a href="https://watts-next-team.wintry-wasp-6446.chatgpt.site">Open the team dashboard</a></section>
+<footer>The airport and Citi Bike demos run from embedded snapshots. They make no cloud queries.</footer>
+</main>
+<script>
+const monthly = [["2022-01",[1024055,878013,146042,0]],["2022-02",[1197359,1002884,194475,0]],["2022-03",[1846035,1475561,370474,0]],["2022-04",[2261339,1684660,576679,0]],["2022-05",[2865301,2198745,666556,0]],["2022-06",[3344145,2523724,820421,0]],["2022-07",[3397722,2572323,825399,0]],["2022-08",[3576182,2685549,890633,0]],["2022-09",[3411909,2608750,803159,0]],["2022-10",[2935959,2315350,620609,0]],["2022-11",[2386350,1946654,439696,0]],["2022-12",[1592086,1365396,226690,0]],["2023-01",[1795329,1559744,235585,0]],["2023-02",[1696101,1491760,204341,0]],["2023-03",[2119314,1834787,284527,0]],["2023-04",[2749360,2228898,520462,0]],["2023-05",[3453576,2777580,675996,0]],["2023-06",[3451869,2752229,699640,0]],["2023-07",[3659372,2815410,843962,0]],["2023-08",[3964206,3071711,892495,0]],["2023-09",[3471658,2746285,725373,0]],["2023-10",[3724615,3011888,712727,0]],["2023-11",[2816850,2353932,462918,0]],["2023-12",[2204460,1869459,335001,0]]];
+const flightRates = {
+  airport: [["BWI",30.1],["DCA",16.7],["IAD",13.1]],
+  weather: [["Measurable rain or snow",26.0],["Calm",18.1]]
+};
+const format = new Intl.NumberFormat("en-US");
+const monthName = new Intl.DateTimeFormat("en-US", {month:"short",timeZone:"UTC"});
+function renderBars(target, label, metric, rows, ceiling, formatValue) {
+  const headers = '<thead><tr><th scope="col">'+label+'</th><th scope="col">Comparison</th><th scope="col">'+metric+'</th></tr></thead>';
+  const body = rows.map(([name,value]) => '<tr><th scope="row">'+name+'</th><td><div class="bar" aria-hidden="true"><span class="fill" style="width:'+(100*value/ceiling)+'%"></span></div></td><td>'+formatValue(value)+'</td></tr>').join("");
+  target.innerHTML = '<table>'+headers+'<tbody>'+body+'</tbody></table>';
+}
+function renderFlight() {
+  const view = document.querySelector('input[name="flight-view"]:checked').value;
+  renderBars(document.getElementById("flight-results"),view==="airport"?"Airport":"Weather","Delayed",flightRates[view],35,v=>v.toFixed(1)+"%");
+}
+function renderBike() {
+  const year = document.getElementById("bike-year").value;
+  const group = Number(document.getElementById("bike-group").value);
+  const rows = monthly.filter(([period])=>period.startsWith(year)).map(([period,counts])=>[monthName.format(new Date(period+"-01T00:00:00Z")),counts[group]]);
+  document.getElementById("bike-total").textContent = format.format(rows.reduce((sum,[,count])=>sum+count,0))+" trips in the selected archive series";
+  renderBars(document.getElementById("bike-results"),"Month","Trips",rows,4000000,v=>format.format(v));
+}
+document.querySelectorAll('input[name="flight-view"]').forEach(input=>input.addEventListener("change",renderFlight));
+document.getElementById("bike-year").addEventListener("change",renderBike);
+document.getElementById("bike-group").addEventListener("change",renderBike);
+renderFlight();
+renderBike();
+</script>
+</body>
+</html>
