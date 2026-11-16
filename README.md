@@ -2,13 +2,11 @@
 
 End-to-end data product for the NYU *Dealing with Data* course: an ETL pipeline
 that loads the complete NYC Citi Bike trip history (2013-06 → 2026-05, ~308M
-trips) into BigQuery, joins it to daily NYC weather, and serves an interactive
-Streamlit dashboard on Cloud Run.
+trips) into BigQuery, joins it to daily NYC weather, and originally served an interactive
+Streamlit dashboard on Cloud Run. The public portfolio runs on GitHub Pages using exported data.
 
-**Live app:** https://citibike-app-kpkbtfmmcq-uc.a.run.app
-**Production status:** Cloud Run revision `citibike-app-00005-t4q` is Ready,
-receives 100% of traffic, and uses the verified v2 trip table and
-Weather-Adjusted Ridership model v2.*
+**Live app:** https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike
+The original Cloud Run deployment used the verified v2 trip table and Weather-Adjusted Ridership model v2.
 
 ## Architecture
 
@@ -43,7 +41,7 @@ only as historical evidence.
 The v2 table was verified in three stages (all evidence in this repo):
 1. **Reconciliation** against the course reference (`docs/verification/v2-reconciliation.md`) — loss-free build, 2013/2015/2018 defects fixed.
 2. **Official-source audit** (`docs/verification/official-source-freshness.md`) — the staged archives are byte-identical (MD5) to the current official Citi Bike archive, and official row counts match `trips_daily_table_v2` exactly (24/26 target months at +0 rows; remainder are cross-archive month-boundary rows). NYC DOT-published totals agree with the project within 0.05%; the course reference overcounts April 2018 (2×) and 2022/2023/May 2024 (~2.4–3.2%).
-3. **Cutover and deployment** — the verified v2 trip source and `trips_daily_model_v2` are live in Cloud Run. Deployment and external acceptance evidence are recorded under `docs/execution/` and `evidence/`.
+3. **Cutover and deployment** — the verified v2 trip source and `trips_daily_model_v2` were deployed to Cloud Run at the recorded checkpoint. Deployment and external acceptance evidence are recorded under `docs/execution/` and `evidence/`.
 
 Evidence lives in `evidence/` (manifests, job logs, inventories, row counts)
 and `docs/` (execution, verification, repair, recovery records).
@@ -59,7 +57,7 @@ and `docs/` (execution, verification, repair, recovery records).
 | Reconciliation & official-source evidence | [`docs/verification/v2-reconciliation.md`](docs/verification/v2-reconciliation.md), [`docs/verification/official-source-freshness.md`](docs/verification/official-source-freshness.md) |
 | Deployment evidence | [`docs/execution/dashboard-v2-deployment.md`](docs/execution/dashboard-v2-deployment.md), [`evidence/dashboard-deployment.csv`](evidence/dashboard-deployment.csv) |
 | Weather-Adjusted Ridership v2 (Stretch 1) | [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md), [`scripts/build_weather_model_v2.py`](scripts/build_weather_model_v2.py) |
-| Public dashboard | https://citibike-app-kpkbtfmmcq-uc.a.run.app |
+| Public dashboard | https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike |
 | BigQuery project & objects | project `msbai-dwd-jrs10127`; clean view `citibike.trips_v2`; daily view `citibike.trips_daily_v2`; materialized table `citibike.trips_daily_table_v2` |
 
 ## Dashboard configuration
