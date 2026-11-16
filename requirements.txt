@@ -1,7 +1,0 @@
-streamlit>=1.35
-plotly>=5.20
-pandas>=2.0
-google-cloud-bigquery>=3.20
-google-cloud-bigquery[pandas]>=3.20
-db-dtypes>=1.2
-statsmodels>=0.14

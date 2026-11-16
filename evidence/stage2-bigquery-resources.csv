@@ -1,7 +1,0 @@
-resource,action,rows,partitioning,clustering,sum_trip_count,notes
-citibike.trips_daily_table_v2_backup_20260713_001643,created (copy),9654,none,region/rider_type,308193797,rollback backup; expires 2026-08-12; free copy job
-citibike.trips_daily_table_v2_candidate,created then renamed,9654,MONTH/date,region/rider_type,308193797,partitioned build; renamed to trips_daily_table_v2 in swap
-citibike.trips_daily_table_v2_preswap,created (rename of old canonical),9654,none,region/rider_type,308193797,pre-swap cluster-only original; retained for rollback
-citibike.trips_daily_table_v2,replaced (partition migration),9654,MONTH/date,region/rider_type,308193797,new canonical; data byte-identical to backup (0 diffs / 9654 keys)
-citibike.trips_daily_model_v2,created,4827,MONTH/date,rider_series,,weather-adjusted model; total/member/casual; model_version wa_v2_ols_1
-citibike.trips_daily_model,UNCHANGED,1609,none,none,,pre-v2 model NOT overwritten (modified 2026-06-11)
