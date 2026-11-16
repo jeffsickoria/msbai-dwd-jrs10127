@@ -1,14 +1,12 @@
 # Portfolio snapshot inputs
 
-The portfolio accepts JSON files from the local device. Uploads stay in the browser. The bundled headline figures continue to display independently.
-
 ## Citi Bike daily model
 
-Use the signed-off weather-model export, including date, rider series, actual trips, expected trips, lower and upper expected bounds, and weather category from the dated daily weather source. Translate the exported fields to this shape:
+The portfolio embeds the validated BigQuery CSV export in the page as compact JSON. It contains 4,827 rows across 1,609 dates, with total, member, and casual counts for each included date. February 23, 2026 is absent and is rendered as a gap.
 
-- Top level: `source` (short pedigree string) and `rows` (array).
-- Each row: `date` (ISO day), `series` (total, member, or casual), `actual` (integer trips), `expected`, `lower`, `upper` (nonnegative trips as numbers), and `weather` (Adverse, Calm, or Unavailable).
-- Use one row per day and series. Keep missing weather labeled Unavailable. Check sample days against the original model and preserve the model vintage.
+The embedded rows have this order: days since 2022-01-01 (UTC), then actual trips, expected trips, lower bound, and upper bound for each group in total, member, casual order. The CSV contained the saved model output. Daily precipitation and snowfall labels are unavailable in this export. The chart uses the full refit, while the holdout summary comes from the original validation record.
+
+The airport JSON input stays in the browser when opened.
 
 ## Airport reliability
 
