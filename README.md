@@ -2,7 +2,7 @@
 
 **How does daily Citi Bike usage change with weather, and which days are unusual enough to investigate?** This NYU Stern *Dealing with Data* project combines about **308 million NYC trips** from June 2013 through May 2026 with daily weather and presents the results in Streamlit.
 
-[Open the hosted dashboard](https://citibike-app-kpkbtfmmcq-uc.a.run.app) · [Model validation](docs/verification/weather-model-v2.md) · [Source reconciliation](docs/verification/official-source-freshness.md)
+[Open the hosted dashboard](https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike) · [Model validation](docs/verification/weather-model-v2.md) · [Source reconciliation](docs/verification/official-source-freshness.md)
 
 ## What to explore
 
@@ -67,7 +67,7 @@ and `docs/` (execution, verification, repair, recovery records).
 | Reconciliation & official-source evidence | [`docs/verification/v2-reconciliation.md`](docs/verification/v2-reconciliation.md), [`docs/verification/official-source-freshness.md`](docs/verification/official-source-freshness.md) |
 | Deployment evidence | [`docs/execution/dashboard-v2-deployment.md`](docs/execution/dashboard-v2-deployment.md), [`evidence/dashboard-deployment.csv`](evidence/dashboard-deployment.csv) |
 | Weather-Adjusted Ridership v2 (Stretch 1) | [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md), [`scripts/build_weather_model_v2.py`](scripts/build_weather_model_v2.py) |
-| Public dashboard | https://citibike-app-kpkbtfmmcq-uc.a.run.app |
+| Public dashboard | https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike |
 | BigQuery project & objects | project `msbai-dwd-jrs10127`; clean view `citibike.trips_v2`; daily view `citibike.trips_daily_v2`; materialized table `citibike.trips_daily_table_v2` |
 
 ## Dashboard configuration
