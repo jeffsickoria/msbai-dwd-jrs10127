@@ -1,0 +1,721 @@
+destination,month,time_preference,status,planner_origin,planner_window,planner_flights,planner_disrupted,baseline_origin,baseline_window,baseline_flights,baseline_disrupted
+ATL,2025-01,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,93,26
+ATL,2025-01,Morning only,Evaluated,IAD,1,93,26,IAD,1,93,26
+ATL,2025-01,Evening only,Limited 2025 observations,IAD,4,27,10,IAD,4,27,10
+BDL,2025-01,Any time,Limited 2025 observations,IAD,1,25,2,IAD,4,8,1
+BDL,2025-01,Morning only,Limited 2025 observations,IAD,1,25,2,IAD,1,25,2
+BDL,2025-01,Evening only,Limited 2025 observations,IAD,4,8,1,IAD,4,8,1
+BNA,2025-01,Any time,Limited 2025 observations,IAD,1,25,4,IAD,3,28,4
+BNA,2025-01,Morning only,Limited 2025 observations,IAD,1,25,4,IAD,1,25,4
+BNA,2025-01,Evening only,Limited 2025 observations,DCA,4,83,20,IAD,4,0,0
+BOS,2025-01,Any time,Evaluated,IAD,1,31,5,IAD,2,31,3
+BOS,2025-01,Morning only,Evaluated,IAD,1,31,5,IAD,1,31,5
+BOS,2025-01,Evening only,Evaluated,IAD,4,31,5,IAD,4,31,5
+CLT,2025-01,Any time,Limited 2025 observations,IAD,0,15,4,IAD,1,76,13
+CLT,2025-01,Morning only,Evaluated,IAD,1,76,13,IAD,1,76,13
+CLT,2025-01,Evening only,Limited 2025 observations,IAD,4,20,5,IAD,4,20,5
+DEN,2025-01,Any time,Limited 2025 observations,IAD,0,3,0,DCA,3,31,12
+DEN,2025-01,Morning only,Evaluated,DCA,1,31,2,DCA,1,31,2
+DEN,2025-01,Evening only,Evaluated,IAD,4,35,5,DCA,4,31,8
+DFW,2025-01,Any time,Evaluated,IAD,1,57,8,IAD,3,50,18
+DFW,2025-01,Morning only,Evaluated,IAD,1,57,8,IAD,1,57,8
+DFW,2025-01,Evening only,Evaluated,DCA,4,31,10,DCA,4,31,10
+DTW,2025-01,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,37,9
+DTW,2025-01,Morning only,Evaluated,DCA,1,77,14,DCA,1,77,14
+DTW,2025-01,Evening only,Evaluated,DCA,4,52,24,DCA,4,52,24
+FLL,2025-01,Any time,Evaluated,IAD,1,31,3,IAD,1,31,3
+FLL,2025-01,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+FLL,2025-01,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-01,Any time,Evaluated,DCA,1,58,12,DCA,2,62,13
+IAH,2025-01,Morning only,Evaluated,DCA,1,58,12,DCA,1,58,12
+IAH,2025-01,Evening only,Limited 2025 observations,DCA,4,0,0,DCA,4,0,0
+JFK,2025-01,Any time,Limited 2025 observations,DCA,1,62,10,BWI,3,0,0
+JFK,2025-01,Morning only,Limited 2025 observations,DCA,1,62,10,BWI,1,0,0
+JFK,2025-01,Evening only,Limited training choices,,,,,,,,
+LAX,2025-01,Any time,Evaluated,IAD,2,32,5,DCA,1,62,18
+LAX,2025-01,Morning only,Evaluated,DCA,1,62,18,DCA,1,62,18
+LAX,2025-01,Evening only,Limited 2025 observations,IAD,4,25,5,IAD,4,25,5
+LGA,2025-01,Any time,Limited 2025 observations,IAD,1,0,0,IAD,2,31,5
+LGA,2025-01,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+LGA,2025-01,Evening only,Limited 2025 observations,IAD,4,8,2,IAD,4,8,2
+MCO,2025-01,Any time,Evaluated,DCA,1,126,23,IAD,1,67,11
+MCO,2025-01,Morning only,Evaluated,DCA,1,126,23,IAD,1,67,11
+MCO,2025-01,Evening only,Evaluated,IAD,4,42,9,IAD,4,42,9
+MDW,2025-01,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-01,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-01,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-01,Any time,Limited 2025 observations,IAD,1,23,3,IAD,1,23,3
+MIA,2025-01,Morning only,Limited 2025 observations,IAD,1,23,3,IAD,1,23,3
+MIA,2025-01,Evening only,Evaluated,DCA,4,62,12,DCA,4,62,12
+MSP,2025-01,Any time,Evaluated,IAD,1,31,4,IAD,1,31,4
+MSP,2025-01,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+MSP,2025-01,Evening only,Limited 2025 observations,DCA,4,58,30,IAD,4,0,0
+ORD,2025-01,Any time,Evaluated,IAD,1,31,3,DCA,1,174,29
+ORD,2025-01,Morning only,Evaluated,IAD,1,31,3,DCA,1,174,29
+ORD,2025-01,Evening only,Evaluated,IAD,4,31,5,DCA,4,117,22
+RDU,2025-01,Any time,Limited 2025 observations,IAD,1,25,1,IAD,3,24,6
+RDU,2025-01,Morning only,Limited 2025 observations,IAD,1,25,1,IAD,1,25,1
+RDU,2025-01,Evening only,Limited 2025 observations,DCA,4,58,14,IAD,4,13,2
+TPA,2025-01,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,33,3
+TPA,2025-01,Morning only,Evaluated,DCA,1,40,5,IAD,1,33,3
+TPA,2025-01,Evening only,Limited 2025 observations,IAD,4,2,0,IAD,4,2,0
+ATL,2025-02,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,86,9
+ATL,2025-02,Morning only,Evaluated,IAD,1,86,9,IAD,1,86,9
+ATL,2025-02,Evening only,Evaluated,IAD,4,33,14,IAD,4,33,14
+BDL,2025-02,Any time,Limited 2025 observations,IAD,1,12,0,IAD,4,19,1
+BDL,2025-02,Morning only,Limited 2025 observations,IAD,1,12,0,IAD,1,12,0
+BDL,2025-02,Evening only,Limited 2025 observations,IAD,4,19,1,IAD,4,19,1
+BNA,2025-02,Any time,Limited 2025 observations,IAD,1,28,1,IAD,3,28,6
+BNA,2025-02,Morning only,Limited 2025 observations,IAD,1,28,1,IAD,1,28,1
+BNA,2025-02,Evening only,Limited 2025 observations,DCA,4,80,49,IAD,4,0,0
+BOS,2025-02,Any time,Limited 2025 observations,IAD,1,28,5,IAD,2,28,5
+BOS,2025-02,Morning only,Limited 2025 observations,IAD,1,28,5,IAD,1,28,5
+BOS,2025-02,Evening only,Limited 2025 observations,IAD,4,28,4,IAD,4,28,4
+CLT,2025-02,Any time,Limited 2025 observations,IAD,0,5,0,IAD,1,79,10
+CLT,2025-02,Morning only,Evaluated,IAD,1,79,10,IAD,1,79,10
+CLT,2025-02,Evening only,Limited 2025 observations,IAD,4,20,8,IAD,4,20,8
+DEN,2025-02,Any time,Limited 2025 observations,IAD,0,0,0,DCA,3,28,12
+DEN,2025-02,Morning only,Limited 2025 observations,DCA,1,28,3,DCA,1,28,3
+DEN,2025-02,Evening only,Limited 2025 observations,IAD,4,38,7,DCA,4,28,19
+DFW,2025-02,Any time,Evaluated,IAD,1,50,6,IAD,3,36,7
+DFW,2025-02,Morning only,Evaluated,IAD,1,50,6,IAD,1,50,6
+DFW,2025-02,Evening only,Limited 2025 observations,DCA,4,28,9,DCA,4,28,9
+DTW,2025-02,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,32,11
+DTW,2025-02,Morning only,Evaluated,DCA,1,72,16,DCA,1,72,16
+DTW,2025-02,Evening only,Evaluated,DCA,4,50,30,DCA,4,50,30
+FLL,2025-02,Any time,Limited 2025 observations,IAD,1,28,5,IAD,1,28,5
+FLL,2025-02,Morning only,Limited 2025 observations,IAD,1,28,5,IAD,1,28,5
+FLL,2025-02,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-02,Any time,Evaluated,DCA,1,54,4,DCA,2,56,5
+IAH,2025-02,Morning only,Evaluated,DCA,1,54,4,DCA,1,54,4
+IAH,2025-02,Evening only,Limited 2025 observations,DCA,4,14,4,DCA,4,14,4
+JFK,2025-02,Any time,Limited 2025 observations,DCA,1,55,8,BWI,3,0,0
+JFK,2025-02,Morning only,Limited 2025 observations,DCA,1,55,8,BWI,1,0,0
+JFK,2025-02,Evening only,Limited training choices,,,,,,,,
+LAX,2025-02,Any time,Limited 2025 observations,IAD,2,28,2,DCA,1,56,17
+LAX,2025-02,Morning only,Evaluated,DCA,1,56,17,DCA,1,56,17
+LAX,2025-02,Evening only,Evaluated,IAD,4,32,3,IAD,4,32,3
+LGA,2025-02,Any time,Limited 2025 observations,IAD,1,0,0,IAD,2,19,6
+LGA,2025-02,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+LGA,2025-02,Evening only,Limited 2025 observations,IAD,4,8,1,IAD,4,8,1
+MCO,2025-02,Any time,Evaluated,DCA,1,116,19,IAD,1,56,5
+MCO,2025-02,Morning only,Evaluated,DCA,1,116,19,IAD,1,56,5
+MCO,2025-02,Evening only,Evaluated,IAD,4,44,7,IAD,4,44,7
+MDW,2025-02,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-02,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-02,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-02,Any time,Limited 2025 observations,IAD,1,24,4,IAD,1,24,4
+MIA,2025-02,Morning only,Limited 2025 observations,IAD,1,24,4,IAD,1,24,4
+MIA,2025-02,Evening only,Evaluated,DCA,4,54,23,DCA,4,54,23
+MSP,2025-02,Any time,Evaluated,IAD,1,32,2,IAD,1,32,2
+MSP,2025-02,Morning only,Evaluated,IAD,1,32,2,IAD,1,32,2
+MSP,2025-02,Evening only,Limited 2025 observations,DCA,4,50,34,IAD,4,0,0
+ORD,2025-02,Any time,Limited 2025 observations,IAD,1,28,2,DCA,1,165,16
+ORD,2025-02,Morning only,Limited 2025 observations,IAD,1,28,2,DCA,1,165,16
+ORD,2025-02,Evening only,Limited 2025 observations,IAD,4,28,3,DCA,4,106,36
+RDU,2025-02,Any time,Limited 2025 observations,IAD,1,13,0,IAD,3,20,2
+RDU,2025-02,Morning only,Limited 2025 observations,IAD,1,13,0,IAD,1,13,0
+RDU,2025-02,Evening only,Limited 2025 observations,DCA,4,38,14,IAD,4,6,0
+TPA,2025-02,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,30,7
+TPA,2025-02,Morning only,Evaluated,DCA,1,42,7,IAD,1,30,7
+TPA,2025-02,Evening only,Limited 2025 observations,IAD,4,7,4,IAD,4,7,4
+ATL,2025-03,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,94,13
+ATL,2025-03,Morning only,Evaluated,IAD,1,94,13,IAD,1,94,13
+ATL,2025-03,Evening only,Evaluated,IAD,4,56,14,IAD,4,56,14
+BDL,2025-03,Any time,Limited 2025 observations,IAD,1,0,0,IAD,4,28,7
+BDL,2025-03,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+BDL,2025-03,Evening only,Limited 2025 observations,IAD,4,28,7,IAD,4,28,7
+BNA,2025-03,Any time,Evaluated,IAD,1,31,3,IAD,3,33,6
+BNA,2025-03,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+BNA,2025-03,Evening only,Limited 2025 observations,DCA,4,90,35,IAD,4,0,0
+BOS,2025-03,Any time,Evaluated,IAD,1,31,3,IAD,2,31,4
+BOS,2025-03,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+BOS,2025-03,Evening only,Evaluated,IAD,4,31,5,IAD,4,31,5
+CLT,2025-03,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,88,9
+CLT,2025-03,Morning only,Evaluated,IAD,1,88,9,IAD,1,88,9
+CLT,2025-03,Evening only,Limited 2025 observations,IAD,4,5,2,IAD,4,5,2
+DEN,2025-03,Any time,Limited 2025 observations,IAD,0,0,0,DCA,3,31,5
+DEN,2025-03,Morning only,Evaluated,DCA,1,31,4,DCA,1,31,4
+DEN,2025-03,Evening only,Evaluated,IAD,4,81,14,DCA,4,30,8
+DFW,2025-03,Any time,Evaluated,IAD,1,53,6,IAD,3,58,14
+DFW,2025-03,Morning only,Evaluated,IAD,1,53,6,IAD,1,53,6
+DFW,2025-03,Evening only,Evaluated,DCA,4,31,8,DCA,4,31,8
+DTW,2025-03,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,30,5
+DTW,2025-03,Morning only,Evaluated,DCA,1,78,8,DCA,1,78,8
+DTW,2025-03,Evening only,Evaluated,DCA,4,59,25,DCA,4,59,25
+FLL,2025-03,Any time,Evaluated,IAD,1,31,3,IAD,1,31,3
+FLL,2025-03,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+FLL,2025-03,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-03,Any time,Evaluated,DCA,1,61,0,DCA,2,58,0
+IAH,2025-03,Morning only,Evaluated,DCA,1,61,0,DCA,1,61,0
+IAH,2025-03,Evening only,Limited 2025 observations,DCA,4,26,5,DCA,4,26,5
+JFK,2025-03,Any time,Limited 2025 observations,DCA,1,64,6,BWI,3,0,0
+JFK,2025-03,Morning only,Limited 2025 observations,DCA,1,64,6,BWI,1,0,0
+JFK,2025-03,Evening only,Limited training choices,,,,,,,,
+LAX,2025-03,Any time,Evaluated,IAD,2,31,1,DCA,1,62,12
+LAX,2025-03,Morning only,Evaluated,DCA,1,62,12,DCA,1,62,12
+LAX,2025-03,Evening only,Evaluated,IAD,4,46,6,IAD,4,46,6
+LGA,2025-03,Any time,Limited 2025 observations,IAD,1,1,0,IAD,2,16,2
+LGA,2025-03,Morning only,Limited 2025 observations,IAD,1,1,0,IAD,1,1,0
+LGA,2025-03,Evening only,Limited 2025 observations,IAD,4,3,1,IAD,4,3,1
+MCO,2025-03,Any time,Evaluated,DCA,1,154,11,IAD,1,62,8
+MCO,2025-03,Morning only,Evaluated,DCA,1,154,11,IAD,1,62,8
+MCO,2025-03,Evening only,Evaluated,IAD,4,39,10,IAD,4,39,10
+MDW,2025-03,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-03,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-03,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-03,Any time,Evaluated,IAD,1,31,1,IAD,1,31,1
+MIA,2025-03,Morning only,Evaluated,IAD,1,31,1,IAD,1,31,1
+MIA,2025-03,Evening only,Evaluated,DCA,4,61,25,DCA,4,61,25
+MSP,2025-03,Any time,Evaluated,IAD,1,32,4,IAD,1,32,4
+MSP,2025-03,Morning only,Evaluated,IAD,1,32,4,IAD,1,32,4
+MSP,2025-03,Evening only,Limited 2025 observations,DCA,4,52,18,IAD,4,0,0
+ORD,2025-03,Any time,Evaluated,IAD,1,57,6,DCA,1,182,13
+ORD,2025-03,Morning only,Evaluated,IAD,1,57,6,DCA,1,182,13
+ORD,2025-03,Evening only,Evaluated,IAD,4,31,2,DCA,4,112,36
+RDU,2025-03,Any time,Limited 2025 observations,IAD,1,3,0,IAD,3,22,1
+RDU,2025-03,Morning only,Limited 2025 observations,IAD,1,3,0,IAD,1,3,0
+RDU,2025-03,Evening only,Limited 2025 observations,DCA,4,31,7,IAD,4,24,4
+TPA,2025-03,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,31,3
+TPA,2025-03,Morning only,Evaluated,DCA,1,64,9,IAD,1,31,3
+TPA,2025-03,Evening only,Limited 2025 observations,IAD,4,18,7,IAD,4,18,7
+ATL,2025-04,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,93,11
+ATL,2025-04,Morning only,Evaluated,IAD,1,93,11,IAD,1,93,11
+ATL,2025-04,Evening only,Evaluated,IAD,4,39,12,IAD,4,39,12
+BDL,2025-04,Any time,Limited 2025 observations,IAD,1,4,1,IAD,4,1,0
+BDL,2025-04,Morning only,Limited 2025 observations,IAD,1,4,1,IAD,1,4,1
+BDL,2025-04,Evening only,Limited 2025 observations,IAD,4,1,0,IAD,4,1,0
+BNA,2025-04,Any time,Limited 2025 observations,IAD,1,21,4,IAD,3,60,11
+BNA,2025-04,Morning only,Limited 2025 observations,IAD,1,21,4,IAD,1,21,4
+BNA,2025-04,Evening only,Limited 2025 observations,DCA,4,79,24,IAD,4,0,0
+BOS,2025-04,Any time,Evaluated,IAD,1,30,0,IAD,2,30,0
+BOS,2025-04,Morning only,Evaluated,IAD,1,30,0,IAD,1,30,0
+BOS,2025-04,Evening only,Evaluated,IAD,4,34,5,IAD,4,34,5
+CLT,2025-04,Any time,Limited 2025 observations,IAD,0,28,1,IAD,1,63,4
+CLT,2025-04,Morning only,Evaluated,IAD,1,63,4,IAD,1,63,4
+CLT,2025-04,Evening only,Limited 2025 observations,IAD,4,27,6,IAD,4,27,6
+DEN,2025-04,Any time,Limited 2025 observations,IAD,0,6,0,DCA,3,30,9
+DEN,2025-04,Morning only,Evaluated,DCA,1,30,5,DCA,1,30,5
+DEN,2025-04,Evening only,Evaluated,IAD,4,83,19,DCA,4,30,10
+DFW,2025-04,Any time,Evaluated,IAD,1,56,9,IAD,3,56,17
+DFW,2025-04,Morning only,Evaluated,IAD,1,56,9,IAD,1,56,9
+DFW,2025-04,Evening only,Evaluated,DCA,4,30,10,DCA,4,30,10
+DTW,2025-04,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,27,7
+DTW,2025-04,Morning only,Evaluated,DCA,1,84,5,DCA,1,84,5
+DTW,2025-04,Evening only,Evaluated,DCA,4,57,21,DCA,4,57,21
+FLL,2025-04,Any time,Limited 2025 observations,IAD,1,20,0,IAD,1,20,0
+FLL,2025-04,Morning only,Limited 2025 observations,IAD,1,20,0,IAD,1,20,0
+FLL,2025-04,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-04,Any time,Evaluated,DCA,1,60,4,DCA,2,60,7
+IAH,2025-04,Morning only,Evaluated,DCA,1,60,4,DCA,1,60,4
+IAH,2025-04,Evening only,Limited 2025 observations,DCA,4,26,0,DCA,4,26,0
+JFK,2025-04,Any time,Limited 2025 observations,DCA,1,90,7,BWI,3,0,0
+JFK,2025-04,Morning only,Limited 2025 observations,DCA,1,90,7,BWI,1,0,0
+JFK,2025-04,Evening only,Limited training choices,,,,,,,,
+LAX,2025-04,Any time,Evaluated,IAD,2,30,3,DCA,1,60,9
+LAX,2025-04,Morning only,Evaluated,DCA,1,60,9,DCA,1,60,9
+LAX,2025-04,Evening only,Evaluated,IAD,4,47,4,IAD,4,47,4
+LGA,2025-04,Any time,Limited 2025 observations,IAD,1,4,0,IAD,2,0,0
+LGA,2025-04,Morning only,Limited 2025 observations,IAD,1,4,0,IAD,1,4,0
+LGA,2025-04,Evening only,Limited 2025 observations,IAD,4,4,1,IAD,4,4,1
+MCO,2025-04,Any time,Evaluated,DCA,1,149,18,IAD,1,63,6
+MCO,2025-04,Morning only,Evaluated,DCA,1,149,18,IAD,1,63,6
+MCO,2025-04,Evening only,Evaluated,IAD,4,32,3,IAD,4,32,3
+MDW,2025-04,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-04,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-04,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-04,Any time,Evaluated,IAD,1,30,0,IAD,1,30,0
+MIA,2025-04,Morning only,Evaluated,IAD,1,30,0,IAD,1,30,0
+MIA,2025-04,Evening only,Evaluated,DCA,4,56,21,DCA,4,56,21
+MSP,2025-04,Any time,Evaluated,IAD,1,30,3,IAD,1,30,3
+MSP,2025-04,Morning only,Evaluated,IAD,1,30,3,IAD,1,30,3
+MSP,2025-04,Evening only,Limited 2025 observations,DCA,4,52,24,IAD,4,15,3
+ORD,2025-04,Any time,Evaluated,IAD,1,60,4,DCA,1,172,19
+ORD,2025-04,Morning only,Evaluated,IAD,1,60,4,DCA,1,172,19
+ORD,2025-04,Evening only,Evaluated,IAD,4,30,5,DCA,4,112,19
+RDU,2025-04,Any time,Evaluated,IAD,1,30,2,IAD,3,30,5
+RDU,2025-04,Morning only,Evaluated,IAD,1,30,2,IAD,1,30,2
+RDU,2025-04,Evening only,Limited 2025 observations,DCA,4,33,8,IAD,4,4,0
+TPA,2025-04,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,35,1
+TPA,2025-04,Morning only,Evaluated,DCA,1,75,6,IAD,1,35,1
+TPA,2025-04,Evening only,Limited 2025 observations,IAD,4,10,2,IAD,4,10,2
+ATL,2025-05,Any time,Limited 2025 observations,IAD,0,9,3,IAD,1,93,15
+ATL,2025-05,Morning only,Evaluated,IAD,1,93,15,IAD,1,93,15
+ATL,2025-05,Evening only,Evaluated,IAD,4,47,19,IAD,4,47,19
+BDL,2025-05,Any time,Limited 2025 observations,IAD,1,21,1,IAD,4,31,12
+BDL,2025-05,Morning only,Limited 2025 observations,IAD,1,21,1,IAD,1,21,1
+BDL,2025-05,Evening only,Evaluated,IAD,4,31,12,IAD,4,31,12
+BNA,2025-05,Any time,Evaluated,IAD,1,31,3,IAD,3,59,14
+BNA,2025-05,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+BNA,2025-05,Evening only,Limited 2025 observations,DCA,4,82,37,IAD,4,2,0
+BOS,2025-05,Any time,Evaluated,IAD,1,31,3,IAD,2,31,9
+BOS,2025-05,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+BOS,2025-05,Evening only,Evaluated,IAD,4,31,9,IAD,4,31,9
+CLT,2025-05,Any time,Evaluated,IAD,0,31,3,IAD,1,48,7
+CLT,2025-05,Morning only,Evaluated,IAD,1,48,7,IAD,1,48,7
+CLT,2025-05,Evening only,Evaluated,IAD,4,45,15,IAD,4,45,15
+DEN,2025-05,Any time,Limited 2025 observations,IAD,0,8,1,DCA,3,31,10
+DEN,2025-05,Morning only,Evaluated,DCA,1,31,3,DCA,1,31,3
+DEN,2025-05,Evening only,Evaluated,IAD,4,85,28,DCA,4,31,18
+DFW,2025-05,Any time,Evaluated,IAD,1,56,9,IAD,3,63,26
+DFW,2025-05,Morning only,Evaluated,IAD,1,56,9,IAD,1,56,9
+DFW,2025-05,Evening only,Evaluated,DCA,4,31,11,DCA,4,31,11
+DTW,2025-05,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,35,11
+DTW,2025-05,Morning only,Evaluated,DCA,1,89,6,DCA,1,89,6
+DTW,2025-05,Evening only,Evaluated,DCA,4,61,27,DCA,4,61,27
+FLL,2025-05,Any time,Evaluated,IAD,1,31,4,IAD,1,31,4
+FLL,2025-05,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+FLL,2025-05,Evening only,Limited 2025 observations,IAD,4,10,2,IAD,4,10,2
+IAH,2025-05,Any time,Evaluated,DCA,1,61,1,DCA,2,61,7
+IAH,2025-05,Morning only,Evaluated,DCA,1,61,1,DCA,1,61,1
+IAH,2025-05,Evening only,Limited 2025 observations,DCA,4,28,11,DCA,4,28,11
+JFK,2025-05,Any time,Limited 2025 observations,DCA,1,93,6,BWI,3,0,0
+JFK,2025-05,Morning only,Limited 2025 observations,DCA,1,93,6,BWI,1,0,0
+JFK,2025-05,Evening only,Limited training choices,,,,,,,,
+LAX,2025-05,Any time,Evaluated,IAD,2,52,2,DCA,1,62,13
+LAX,2025-05,Morning only,Evaluated,DCA,1,62,13,DCA,1,62,13
+LAX,2025-05,Evening only,Evaluated,IAD,4,67,16,IAD,4,67,16
+LGA,2025-05,Any time,Limited 2025 observations,IAD,1,8,2,IAD,2,13,1
+LGA,2025-05,Morning only,Limited 2025 observations,IAD,1,8,2,IAD,1,8,2
+LGA,2025-05,Evening only,Limited 2025 observations,IAD,4,12,1,IAD,4,12,1
+MCO,2025-05,Any time,Evaluated,DCA,1,143,19,IAD,1,61,15
+MCO,2025-05,Morning only,Evaluated,DCA,1,143,19,IAD,1,61,15
+MCO,2025-05,Evening only,Evaluated,IAD,4,31,9,IAD,4,31,9
+MDW,2025-05,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-05,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-05,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-05,Any time,Evaluated,IAD,1,31,1,IAD,1,31,1
+MIA,2025-05,Morning only,Evaluated,IAD,1,31,1,IAD,1,31,1
+MIA,2025-05,Evening only,Evaluated,DCA,4,61,24,DCA,4,61,24
+MSP,2025-05,Any time,Evaluated,IAD,1,32,2,IAD,1,32,2
+MSP,2025-05,Morning only,Evaluated,IAD,1,32,2,IAD,1,32,2
+MSP,2025-05,Evening only,Limited 2025 observations,DCA,4,29,8,IAD,4,25,6
+ORD,2025-05,Any time,Evaluated,IAD,1,62,3,DCA,1,175,14
+ORD,2025-05,Morning only,Evaluated,IAD,1,62,3,DCA,1,175,14
+ORD,2025-05,Evening only,Evaluated,IAD,4,31,8,DCA,4,117,46
+RDU,2025-05,Any time,Limited 2025 observations,IAD,1,23,2,IAD,3,59,17
+RDU,2025-05,Morning only,Limited 2025 observations,IAD,1,23,2,IAD,1,23,2
+RDU,2025-05,Evening only,Evaluated,DCA,4,31,11,IAD,4,31,10
+TPA,2025-05,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,40,4
+TPA,2025-05,Morning only,Evaluated,DCA,1,87,9,IAD,1,40,4
+TPA,2025-05,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+ATL,2025-06,Any time,Limited 2025 observations,IAD,0,8,4,IAD,1,111,24
+ATL,2025-06,Morning only,Evaluated,IAD,1,111,24,IAD,1,111,24
+ATL,2025-06,Evening only,Evaluated,IAD,4,40,25,IAD,4,40,25
+BDL,2025-06,Any time,Limited 2025 observations,IAD,1,4,0,IAD,4,30,12
+BDL,2025-06,Morning only,Limited 2025 observations,IAD,1,4,0,IAD,1,4,0
+BDL,2025-06,Evening only,Evaluated,IAD,4,30,12,IAD,4,30,12
+BNA,2025-06,Any time,Evaluated,IAD,1,30,0,IAD,3,46,20
+BNA,2025-06,Morning only,Evaluated,IAD,1,30,0,IAD,1,30,0
+BNA,2025-06,Evening only,Limited 2025 observations,DCA,4,82,45,IAD,4,4,2
+BOS,2025-06,Any time,Evaluated,IAD,1,30,1,IAD,2,30,8
+BOS,2025-06,Morning only,Evaluated,IAD,1,30,1,IAD,1,30,1
+BOS,2025-06,Evening only,Evaluated,IAD,4,30,13,IAD,4,30,13
+CLT,2025-06,Any time,Limited 2025 observations,IAD,0,8,1,IAD,1,47,6
+CLT,2025-06,Morning only,Evaluated,IAD,1,47,6,IAD,1,47,6
+CLT,2025-06,Evening only,Evaluated,IAD,4,30,18,IAD,4,30,18
+DEN,2025-06,Any time,Limited 2025 observations,IAD,0,17,0,DCA,3,30,8
+DEN,2025-06,Morning only,Evaluated,DCA,1,30,2,DCA,1,30,2
+DEN,2025-06,Evening only,Limited 2025 observations,IAD,4,89,38,DCA,4,26,16
+DFW,2025-06,Any time,Evaluated,IAD,1,58,5,IAD,3,34,18
+DFW,2025-06,Morning only,Evaluated,IAD,1,58,5,IAD,1,58,5
+DFW,2025-06,Evening only,Evaluated,DCA,4,30,18,DCA,4,30,18
+DTW,2025-06,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,30,9
+DTW,2025-06,Morning only,Evaluated,DCA,1,85,9,DCA,1,85,9
+DTW,2025-06,Evening only,Evaluated,DCA,4,53,37,DCA,4,53,37
+FLL,2025-06,Any time,Evaluated,IAD,1,30,2,IAD,1,30,2
+FLL,2025-06,Morning only,Evaluated,IAD,1,30,2,IAD,1,30,2
+FLL,2025-06,Evening only,Limited 2025 observations,IAD,4,25,11,IAD,4,25,11
+IAH,2025-06,Any time,Evaluated,DCA,1,56,9,DCA,2,56,11
+IAH,2025-06,Morning only,Evaluated,DCA,1,56,9,DCA,1,56,9
+IAH,2025-06,Evening only,Limited 2025 observations,DCA,4,28,12,DCA,4,28,12
+JFK,2025-06,Any time,Limited 2025 observations,DCA,1,90,10,BWI,3,0,0
+JFK,2025-06,Morning only,Limited 2025 observations,DCA,1,90,10,BWI,1,0,0
+JFK,2025-06,Evening only,Limited training choices,,,,,,,,
+LAX,2025-06,Any time,Evaluated,IAD,2,30,4,DCA,1,60,19
+LAX,2025-06,Morning only,Evaluated,DCA,1,60,19,DCA,1,60,19
+LAX,2025-06,Evening only,Evaluated,IAD,4,85,33,IAD,4,85,33
+LGA,2025-06,Any time,Limited 2025 observations,IAD,1,5,1,IAD,2,30,8
+LGA,2025-06,Morning only,Limited 2025 observations,IAD,1,5,1,IAD,1,5,1
+LGA,2025-06,Evening only,Limited 2025 observations,IAD,4,12,8,IAD,4,12,8
+MCO,2025-06,Any time,Evaluated,DCA,1,148,22,IAD,1,60,6
+MCO,2025-06,Morning only,Evaluated,DCA,1,148,22,IAD,1,60,6
+MCO,2025-06,Evening only,Evaluated,IAD,4,30,11,IAD,4,30,11
+MDW,2025-06,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-06,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-06,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-06,Any time,Evaluated,IAD,1,30,5,IAD,1,30,5
+MIA,2025-06,Morning only,Evaluated,IAD,1,30,5,IAD,1,30,5
+MIA,2025-06,Evening only,Evaluated,DCA,4,60,37,DCA,4,60,37
+MSP,2025-06,Any time,Evaluated,IAD,1,34,2,IAD,1,34,2
+MSP,2025-06,Morning only,Evaluated,IAD,1,34,2,IAD,1,34,2
+MSP,2025-06,Evening only,Limited 2025 observations,DCA,4,28,17,IAD,4,24,8
+ORD,2025-06,Any time,Evaluated,IAD,1,60,3,DCA,1,149,15
+ORD,2025-06,Morning only,Evaluated,IAD,1,60,3,DCA,1,149,15
+ORD,2025-06,Evening only,Evaluated,IAD,4,30,6,DCA,4,113,60
+RDU,2025-06,Any time,Limited 2025 observations,IAD,1,27,2,IAD,3,47,15
+RDU,2025-06,Morning only,Limited 2025 observations,IAD,1,27,2,IAD,1,27,2
+RDU,2025-06,Evening only,Limited 2025 observations,DCA,4,48,31,IAD,4,28,8
+TPA,2025-06,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,30,4
+TPA,2025-06,Morning only,Evaluated,DCA,1,59,4,IAD,1,30,4
+TPA,2025-06,Evening only,Limited 2025 observations,IAD,4,20,14,IAD,4,20,14
+ATL,2025-07,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,120,33
+ATL,2025-07,Morning only,Evaluated,IAD,1,120,33,IAD,1,120,33
+ATL,2025-07,Evening only,Evaluated,IAD,4,35,20,IAD,4,35,20
+BDL,2025-07,Any time,Limited 2025 observations,IAD,1,17,3,IAD,4,31,10
+BDL,2025-07,Morning only,Limited 2025 observations,IAD,1,17,3,IAD,1,17,3
+BDL,2025-07,Evening only,Evaluated,IAD,4,31,10,IAD,4,31,10
+BNA,2025-07,Any time,Limited 2025 observations,IAD,1,31,1,IAD,3,26,9
+BNA,2025-07,Morning only,Evaluated,IAD,1,31,1,IAD,1,31,1
+BNA,2025-07,Evening only,Limited 2025 observations,DCA,4,83,56,IAD,4,4,2
+BOS,2025-07,Any time,Evaluated,IAD,1,31,5,IAD,2,31,6
+BOS,2025-07,Morning only,Evaluated,IAD,1,31,5,IAD,1,31,5
+BOS,2025-07,Evening only,Evaluated,IAD,4,31,13,IAD,4,31,13
+CLT,2025-07,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,57,8
+CLT,2025-07,Morning only,Evaluated,IAD,1,57,8,IAD,1,57,8
+CLT,2025-07,Evening only,Limited 2025 observations,IAD,4,25,15,IAD,4,25,15
+DEN,2025-07,Any time,Limited 2025 observations,IAD,0,16,2,DCA,3,31,10
+DEN,2025-07,Morning only,Evaluated,DCA,1,31,4,DCA,1,31,4
+DEN,2025-07,Evening only,Limited 2025 observations,IAD,4,91,49,DCA,4,25,14
+DFW,2025-07,Any time,Evaluated,IAD,1,49,12,IAD,3,30,17
+DFW,2025-07,Morning only,Evaluated,IAD,1,49,12,IAD,1,49,12
+DFW,2025-07,Evening only,Evaluated,DCA,4,30,24,DCA,4,30,24
+DTW,2025-07,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,31,3
+DTW,2025-07,Morning only,Evaluated,DCA,1,89,15,DCA,1,89,15
+DTW,2025-07,Evening only,Evaluated,DCA,4,57,41,DCA,4,57,41
+FLL,2025-07,Any time,Evaluated,IAD,1,31,2,IAD,1,31,2
+FLL,2025-07,Morning only,Evaluated,IAD,1,31,2,IAD,1,31,2
+FLL,2025-07,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-07,Any time,Evaluated,DCA,1,62,5,DCA,2,62,11
+IAH,2025-07,Morning only,Evaluated,DCA,1,62,5,DCA,1,62,5
+IAH,2025-07,Evening only,Limited 2025 observations,DCA,4,26,13,DCA,4,26,13
+JFK,2025-07,Any time,Limited 2025 observations,DCA,1,93,19,BWI,3,0,0
+JFK,2025-07,Morning only,Limited 2025 observations,DCA,1,93,19,BWI,1,0,0
+JFK,2025-07,Evening only,Limited training choices,,,,,,,,
+LAX,2025-07,Any time,Evaluated,IAD,2,31,2,DCA,1,62,23
+LAX,2025-07,Morning only,Evaluated,DCA,1,62,23,DCA,1,62,23
+LAX,2025-07,Evening only,Evaluated,IAD,4,77,39,IAD,4,77,39
+LGA,2025-07,Any time,Limited 2025 observations,IAD,1,2,0,IAD,2,31,8
+LGA,2025-07,Morning only,Limited 2025 observations,IAD,1,2,0,IAD,1,2,0
+LGA,2025-07,Evening only,Limited 2025 observations,IAD,4,5,2,IAD,4,5,2
+MCO,2025-07,Any time,Evaluated,DCA,1,159,24,IAD,1,62,7
+MCO,2025-07,Morning only,Evaluated,DCA,1,159,24,IAD,1,62,7
+MCO,2025-07,Evening only,Evaluated,IAD,4,35,14,IAD,4,35,14
+MDW,2025-07,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-07,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-07,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-07,Any time,Evaluated,IAD,1,31,3,IAD,1,31,3
+MIA,2025-07,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+MIA,2025-07,Evening only,Evaluated,DCA,4,60,39,DCA,4,60,39
+MSP,2025-07,Any time,Evaluated,IAD,1,31,3,IAD,1,31,3
+MSP,2025-07,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+MSP,2025-07,Evening only,Limited 2025 observations,DCA,4,30,16,IAD,4,23,11
+ORD,2025-07,Any time,Evaluated,IAD,1,61,5,DCA,1,151,20
+ORD,2025-07,Morning only,Evaluated,IAD,1,61,5,DCA,1,151,20
+ORD,2025-07,Evening only,Evaluated,IAD,4,31,14,DCA,4,115,75
+RDU,2025-07,Any time,Limited 2025 observations,IAD,1,30,2,IAD,3,0,0
+RDU,2025-07,Morning only,Evaluated,IAD,1,30,2,IAD,1,30,2
+RDU,2025-07,Evening only,Limited 2025 observations,DCA,4,33,18,IAD,4,22,11
+TPA,2025-07,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,31,4
+TPA,2025-07,Morning only,Evaluated,DCA,1,58,9,IAD,1,31,4
+TPA,2025-07,Evening only,Evaluated,IAD,4,52,30,IAD,4,52,30
+ATL,2025-08,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,124,18
+ATL,2025-08,Morning only,Evaluated,IAD,1,124,18,IAD,1,124,18
+ATL,2025-08,Evening only,Limited 2025 observations,IAD,4,27,10,IAD,4,27,10
+BDL,2025-08,Any time,Limited 2025 observations,IAD,1,25,1,IAD,4,27,3
+BDL,2025-08,Morning only,Limited 2025 observations,IAD,1,25,1,IAD,1,25,1
+BDL,2025-08,Evening only,Limited 2025 observations,IAD,4,27,3,IAD,4,27,3
+BNA,2025-08,Any time,Limited 2025 observations,IAD,1,28,1,IAD,3,32,6
+BNA,2025-08,Morning only,Limited 2025 observations,IAD,1,28,1,IAD,1,28,1
+BNA,2025-08,Evening only,Limited 2025 observations,DCA,4,83,29,IAD,4,5,1
+BOS,2025-08,Any time,Evaluated,IAD,1,31,4,IAD,2,31,4
+BOS,2025-08,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+BOS,2025-08,Evening only,Evaluated,IAD,4,31,6,IAD,4,31,6
+CLT,2025-08,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,46,11
+CLT,2025-08,Morning only,Evaluated,IAD,1,46,11,IAD,1,46,11
+CLT,2025-08,Evening only,Evaluated,IAD,4,43,12,IAD,4,43,12
+DEN,2025-08,Any time,Limited 2025 observations,IAD,0,11,1,DCA,3,31,7
+DEN,2025-08,Morning only,Evaluated,DCA,1,31,6,DCA,1,31,6
+DEN,2025-08,Evening only,Limited 2025 observations,IAD,4,75,32,DCA,4,26,11
+DFW,2025-08,Any time,Evaluated,IAD,1,44,9,IAD,3,31,8
+DFW,2025-08,Morning only,Evaluated,IAD,1,44,9,IAD,1,44,9
+DFW,2025-08,Evening only,Evaluated,DCA,4,31,14,DCA,4,31,14
+DTW,2025-08,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,31,6
+DTW,2025-08,Morning only,Evaluated,DCA,1,88,8,DCA,1,88,8
+DTW,2025-08,Evening only,Evaluated,DCA,4,60,20,DCA,4,60,20
+FLL,2025-08,Any time,Limited 2025 observations,IAD,1,18,3,IAD,1,18,3
+FLL,2025-08,Morning only,Limited 2025 observations,IAD,1,18,3,IAD,1,18,3
+FLL,2025-08,Evening only,Limited 2025 observations,IAD,4,13,1,IAD,4,13,1
+IAH,2025-08,Any time,Evaluated,DCA,1,62,1,DCA,2,62,9
+IAH,2025-08,Morning only,Evaluated,DCA,1,62,1,DCA,1,62,1
+IAH,2025-08,Evening only,Limited 2025 observations,DCA,4,26,6,DCA,4,26,6
+JFK,2025-08,Any time,Limited 2025 observations,DCA,1,93,7,BWI,3,0,0
+JFK,2025-08,Morning only,Limited 2025 observations,DCA,1,93,7,BWI,1,0,0
+JFK,2025-08,Evening only,Limited training choices,,,,,,,,
+LAX,2025-08,Any time,Evaluated,IAD,2,31,3,DCA,1,62,16
+LAX,2025-08,Morning only,Evaluated,DCA,1,62,16,DCA,1,62,16
+LAX,2025-08,Evening only,Evaluated,IAD,4,60,22,IAD,4,60,22
+LGA,2025-08,Any time,Limited 2025 observations,IAD,1,21,1,IAD,2,31,4
+LGA,2025-08,Morning only,Limited 2025 observations,IAD,1,21,1,IAD,1,21,1
+LGA,2025-08,Evening only,Evaluated,IAD,4,31,6,IAD,4,31,6
+MCO,2025-08,Any time,Evaluated,DCA,1,159,23,IAD,1,62,9
+MCO,2025-08,Morning only,Evaluated,DCA,1,159,23,IAD,1,62,9
+MCO,2025-08,Evening only,Evaluated,IAD,4,43,13,IAD,4,43,13
+MDW,2025-08,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-08,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-08,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-08,Any time,Evaluated,IAD,1,31,3,IAD,1,31,3
+MIA,2025-08,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+MIA,2025-08,Evening only,Evaluated,DCA,4,58,23,DCA,4,58,23
+MSP,2025-08,Any time,Evaluated,IAD,1,31,4,IAD,1,31,4
+MSP,2025-08,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+MSP,2025-08,Evening only,Limited 2025 observations,DCA,4,31,14,IAD,4,20,6
+ORD,2025-08,Any time,Evaluated,IAD,1,62,3,DCA,1,145,14
+ORD,2025-08,Morning only,Evaluated,IAD,1,62,3,DCA,1,145,14
+ORD,2025-08,Evening only,Evaluated,IAD,4,45,7,DCA,4,125,48
+RDU,2025-08,Any time,Evaluated,IAD,1,31,0,IAD,3,31,5
+RDU,2025-08,Morning only,Evaluated,IAD,1,31,0,IAD,1,31,0
+RDU,2025-08,Evening only,Limited 2025 observations,DCA,4,53,22,IAD,4,14,3
+TPA,2025-08,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,27,3
+TPA,2025-08,Morning only,Limited 2025 observations,DCA,1,56,7,IAD,1,27,3
+TPA,2025-08,Evening only,Evaluated,IAD,4,42,10,IAD,4,42,10
+ATL,2025-09,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,121,9
+ATL,2025-09,Morning only,Evaluated,IAD,1,121,9,IAD,1,121,9
+ATL,2025-09,Evening only,Limited 2025 observations,IAD,4,12,2,IAD,4,12,2
+BDL,2025-09,Any time,Limited 2025 observations,IAD,1,26,2,IAD,4,30,4
+BDL,2025-09,Morning only,Limited 2025 observations,IAD,1,26,2,IAD,1,26,2
+BDL,2025-09,Evening only,Evaluated,IAD,4,30,4,IAD,4,30,4
+BNA,2025-09,Any time,Limited 2025 observations,IAD,1,22,0,IAD,3,30,0
+BNA,2025-09,Morning only,Limited 2025 observations,IAD,1,22,0,IAD,1,22,0
+BNA,2025-09,Evening only,Limited 2025 observations,DCA,4,78,22,IAD,4,0,0
+BOS,2025-09,Any time,Evaluated,IAD,1,30,2,IAD,2,30,10
+BOS,2025-09,Morning only,Evaluated,IAD,1,30,2,IAD,1,30,2
+BOS,2025-09,Evening only,Evaluated,IAD,4,30,9,IAD,4,30,9
+CLT,2025-09,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,11,0
+CLT,2025-09,Morning only,Limited 2025 observations,IAD,1,11,0,IAD,1,11,0
+CLT,2025-09,Evening only,Evaluated,IAD,4,49,11,IAD,4,49,11
+DEN,2025-09,Any time,Limited 2025 observations,IAD,0,9,0,DCA,3,30,10
+DEN,2025-09,Morning only,Evaluated,DCA,1,30,1,DCA,1,30,1
+DEN,2025-09,Evening only,Limited 2025 observations,IAD,4,57,17,DCA,4,26,9
+DFW,2025-09,Any time,Evaluated,IAD,1,46,6,IAD,3,51,12
+DFW,2025-09,Morning only,Evaluated,IAD,1,46,6,IAD,1,46,6
+DFW,2025-09,Evening only,Evaluated,DCA,4,30,14,DCA,4,30,14
+DTW,2025-09,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,57,5
+DTW,2025-09,Morning only,Evaluated,DCA,1,82,6,DCA,1,82,6
+DTW,2025-09,Evening only,Evaluated,DCA,4,52,9,DCA,4,52,9
+FLL,2025-09,Any time,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+FLL,2025-09,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+FLL,2025-09,Evening only,Evaluated,IAD,4,30,2,IAD,4,30,2
+IAH,2025-09,Any time,Evaluated,DCA,1,81,4,DCA,2,60,4
+IAH,2025-09,Morning only,Evaluated,DCA,1,81,4,DCA,1,81,4
+IAH,2025-09,Evening only,Evaluated,DCA,4,52,8,DCA,4,52,8
+JFK,2025-09,Any time,Limited 2025 observations,DCA,1,90,3,BWI,3,0,0
+JFK,2025-09,Morning only,Limited 2025 observations,DCA,1,90,3,BWI,1,0,0
+JFK,2025-09,Evening only,Limited training choices,,,,,,,,
+LAX,2025-09,Any time,Evaluated,IAD,2,30,3,DCA,1,60,8
+LAX,2025-09,Morning only,Evaluated,DCA,1,60,8,DCA,1,60,8
+LAX,2025-09,Evening only,Evaluated,IAD,4,61,3,IAD,4,61,3
+LGA,2025-09,Any time,Limited 2025 observations,IAD,1,22,1,IAD,2,30,2
+LGA,2025-09,Morning only,Limited 2025 observations,IAD,1,22,1,IAD,1,22,1
+LGA,2025-09,Evening only,Evaluated,IAD,4,30,5,IAD,4,30,5
+MCO,2025-09,Any time,Evaluated,DCA,1,125,13,IAD,1,60,3
+MCO,2025-09,Morning only,Evaluated,DCA,1,125,13,IAD,1,60,3
+MCO,2025-09,Evening only,Evaluated,IAD,4,51,5,IAD,4,51,5
+MDW,2025-09,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-09,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-09,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-09,Any time,Evaluated,IAD,1,30,0,IAD,1,30,0
+MIA,2025-09,Morning only,Evaluated,IAD,1,30,0,IAD,1,30,0
+MIA,2025-09,Evening only,Evaluated,DCA,4,56,24,DCA,4,56,24
+MSP,2025-09,Any time,Limited 2025 observations,IAD,1,10,0,IAD,1,10,0
+MSP,2025-09,Morning only,Limited 2025 observations,IAD,1,10,0,IAD,1,10,0
+MSP,2025-09,Evening only,Limited 2025 observations,DCA,4,54,12,IAD,4,0,0
+ORD,2025-09,Any time,Evaluated,IAD,1,60,2,DCA,1,147,15
+ORD,2025-09,Morning only,Evaluated,IAD,1,60,2,DCA,1,147,15
+ORD,2025-09,Evening only,Evaluated,IAD,4,58,10,DCA,4,114,35
+RDU,2025-09,Any time,Evaluated,IAD,1,30,1,IAD,3,53,8
+RDU,2025-09,Morning only,Evaluated,IAD,1,30,1,IAD,1,30,1
+RDU,2025-09,Evening only,Limited 2025 observations,DCA,4,56,25,IAD,4,29,1
+TPA,2025-09,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,22,0
+TPA,2025-09,Morning only,Limited 2025 observations,DCA,1,56,5,IAD,1,22,0
+TPA,2025-09,Evening only,Evaluated,IAD,4,40,6,IAD,4,40,6
+ATL,2025-10,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,120,10
+ATL,2025-10,Morning only,Evaluated,IAD,1,120,10,IAD,1,120,10
+ATL,2025-10,Evening only,Limited 2025 observations,IAD,4,19,7,IAD,4,19,7
+BDL,2025-10,Any time,Evaluated,IAD,1,30,3,IAD,4,30,4
+BDL,2025-10,Morning only,Evaluated,IAD,1,30,3,IAD,1,30,3
+BDL,2025-10,Evening only,Evaluated,IAD,4,30,4,IAD,4,30,4
+BNA,2025-10,Any time,Evaluated,IAD,1,30,1,IAD,3,31,4
+BNA,2025-10,Morning only,Evaluated,IAD,1,30,1,IAD,1,30,1
+BNA,2025-10,Evening only,Limited 2025 observations,DCA,4,79,19,IAD,4,1,0
+BOS,2025-10,Any time,Evaluated,IAD,1,31,2,IAD,2,31,7
+BOS,2025-10,Morning only,Evaluated,IAD,1,31,2,IAD,1,31,2
+BOS,2025-10,Evening only,Evaluated,IAD,4,31,7,IAD,4,31,7
+CLT,2025-10,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,45,2
+CLT,2025-10,Morning only,Evaluated,IAD,1,45,2,IAD,1,45,2
+CLT,2025-10,Evening only,Evaluated,IAD,4,47,8,IAD,4,47,8
+DEN,2025-10,Any time,Limited 2025 observations,IAD,0,2,0,DCA,3,35,5
+DEN,2025-10,Morning only,Evaluated,DCA,1,31,3,DCA,1,31,3
+DEN,2025-10,Evening only,Limited 2025 observations,IAD,4,52,11,DCA,4,26,4
+DFW,2025-10,Any time,Evaluated,IAD,1,49,5,IAD,3,58,13
+DFW,2025-10,Morning only,Evaluated,IAD,1,49,5,IAD,1,49,5
+DFW,2025-10,Evening only,Evaluated,DCA,4,31,9,DCA,4,31,9
+DTW,2025-10,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,56,5
+DTW,2025-10,Morning only,Evaluated,DCA,1,85,4,DCA,1,85,4
+DTW,2025-10,Evening only,Evaluated,DCA,4,56,12,DCA,4,56,12
+FLL,2025-10,Any time,Limited 2025 observations,IAD,1,6,1,IAD,1,6,1
+FLL,2025-10,Morning only,Limited 2025 observations,IAD,1,6,1,IAD,1,6,1
+FLL,2025-10,Evening only,Limited 2025 observations,IAD,4,25,3,IAD,4,25,3
+IAH,2025-10,Any time,Evaluated,DCA,1,87,4,DCA,2,84,10
+IAH,2025-10,Morning only,Evaluated,DCA,1,87,4,DCA,1,87,4
+IAH,2025-10,Evening only,Evaluated,DCA,4,58,12,DCA,4,58,12
+JFK,2025-10,Any time,Limited 2025 observations,DCA,1,93,7,BWI,3,0,0
+JFK,2025-10,Morning only,Limited 2025 observations,DCA,1,93,7,BWI,1,0,0
+JFK,2025-10,Evening only,Limited training choices,,,,,,,,
+LAX,2025-10,Any time,Evaluated,IAD,2,31,4,DCA,1,62,10
+LAX,2025-10,Morning only,Evaluated,DCA,1,62,10,DCA,1,62,10
+LAX,2025-10,Evening only,Evaluated,IAD,4,80,6,IAD,4,80,6
+LGA,2025-10,Any time,Limited 2025 observations,IAD,1,7,1,IAD,2,31,7
+LGA,2025-10,Morning only,Limited 2025 observations,IAD,1,7,1,IAD,1,7,1
+LGA,2025-10,Evening only,Evaluated,IAD,4,30,2,IAD,4,30,2
+MCO,2025-10,Any time,Evaluated,DCA,1,154,12,IAD,1,56,1
+MCO,2025-10,Morning only,Evaluated,DCA,1,154,12,IAD,1,56,1
+MCO,2025-10,Evening only,Evaluated,IAD,4,53,10,IAD,4,53,10
+MDW,2025-10,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-10,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-10,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-10,Any time,Evaluated,IAD,1,31,0,IAD,1,31,0
+MIA,2025-10,Morning only,Evaluated,IAD,1,31,0,IAD,1,31,0
+MIA,2025-10,Evening only,Evaluated,DCA,4,84,32,DCA,4,84,32
+MSP,2025-10,Any time,Limited 2025 observations,IAD,1,26,1,IAD,1,26,1
+MSP,2025-10,Morning only,Limited 2025 observations,IAD,1,26,1,IAD,1,26,1
+MSP,2025-10,Evening only,Limited 2025 observations,DCA,4,57,7,IAD,4,19,0
+ORD,2025-10,Any time,Evaluated,IAD,1,62,4,DCA,1,151,12
+ORD,2025-10,Morning only,Evaluated,IAD,1,62,4,DCA,1,151,12
+ORD,2025-10,Evening only,Evaluated,IAD,4,52,8,DCA,4,117,31
+RDU,2025-10,Any time,Evaluated,IAD,1,31,4,IAD,3,31,5
+RDU,2025-10,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+RDU,2025-10,Evening only,Evaluated,DCA,4,58,15,IAD,4,31,3
+TPA,2025-10,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,31,1
+TPA,2025-10,Morning only,Evaluated,DCA,1,58,8,IAD,1,31,1
+TPA,2025-10,Evening only,Limited 2025 observations,IAD,4,10,3,IAD,4,10,3
+ATL,2025-11,Any time,Limited 2025 observations,IAD,0,4,3,IAD,1,108,12
+ATL,2025-11,Morning only,Evaluated,IAD,1,108,12,IAD,1,108,12
+ATL,2025-11,Evening only,Evaluated,IAD,4,31,11,IAD,4,31,11
+BDL,2025-11,Any time,Limited 2025 observations,IAD,1,25,2,IAD,4,29,4
+BDL,2025-11,Morning only,Limited 2025 observations,IAD,1,25,2,IAD,1,25,2
+BDL,2025-11,Evening only,Limited 2025 observations,IAD,4,29,4,IAD,4,29,4
+BNA,2025-11,Any time,Limited 2025 observations,IAD,1,27,3,IAD,3,30,4
+BNA,2025-11,Morning only,Limited 2025 observations,IAD,1,27,3,IAD,1,27,3
+BNA,2025-11,Evening only,Limited 2025 observations,DCA,4,85,27,IAD,4,0,0
+BOS,2025-11,Any time,Evaluated,IAD,1,30,0,IAD,2,30,4
+BOS,2025-11,Morning only,Evaluated,IAD,1,30,0,IAD,1,30,0
+BOS,2025-11,Evening only,Limited 2025 observations,IAD,4,29,4,IAD,4,29,4
+CLT,2025-11,Any time,Limited 2025 observations,IAD,0,1,0,IAD,1,63,7
+CLT,2025-11,Morning only,Evaluated,IAD,1,63,7,IAD,1,63,7
+CLT,2025-11,Evening only,Limited 2025 observations,IAD,4,28,6,IAD,4,28,6
+DEN,2025-11,Any time,Limited 2025 observations,IAD,0,15,0,DCA,3,54,10
+DEN,2025-11,Morning only,Evaluated,DCA,1,31,3,DCA,1,31,3
+DEN,2025-11,Evening only,Limited 2025 observations,IAD,4,45,10,DCA,4,27,6
+DFW,2025-11,Any time,Evaluated,IAD,1,52,7,IAD,3,54,15
+DFW,2025-11,Morning only,Evaluated,IAD,1,52,7,IAD,1,52,7
+DFW,2025-11,Evening only,Limited 2025 observations,DCA,4,29,8,DCA,4,29,8
+DTW,2025-11,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,59,13
+DTW,2025-11,Morning only,Evaluated,DCA,1,87,18,DCA,1,87,18
+DTW,2025-11,Evening only,Evaluated,DCA,4,50,18,DCA,4,50,18
+FLL,2025-11,Any time,Evaluated,IAD,1,30,1,IAD,1,30,1
+FLL,2025-11,Morning only,Evaluated,IAD,1,30,1,IAD,1,30,1
+FLL,2025-11,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-11,Any time,Evaluated,DCA,1,81,6,DCA,2,79,13
+IAH,2025-11,Morning only,Evaluated,DCA,1,81,6,DCA,1,81,6
+IAH,2025-11,Evening only,Evaluated,DCA,4,53,14,DCA,4,53,14
+JFK,2025-11,Any time,Limited 2025 observations,DCA,1,87,9,BWI,3,0,0
+JFK,2025-11,Morning only,Limited 2025 observations,DCA,1,87,9,BWI,1,0,0
+JFK,2025-11,Evening only,Limited training choices,,,,,,,,
+LAX,2025-11,Any time,Evaluated,IAD,2,30,5,DCA,1,59,10
+LAX,2025-11,Morning only,Evaluated,DCA,1,59,10,DCA,1,59,10
+LAX,2025-11,Evening only,Evaluated,IAD,4,114,26,IAD,4,114,26
+LGA,2025-11,Any time,Limited 2025 observations,IAD,1,1,0,IAD,2,30,11
+LGA,2025-11,Morning only,Limited 2025 observations,IAD,1,1,0,IAD,1,1,0
+LGA,2025-11,Evening only,Limited 2025 observations,IAD,4,27,3,IAD,4,27,3
+MCO,2025-11,Any time,Evaluated,DCA,1,149,20,IAD,1,39,3
+MCO,2025-11,Morning only,Evaluated,DCA,1,149,20,IAD,1,39,3
+MCO,2025-11,Evening only,Evaluated,IAD,4,41,12,IAD,4,41,12
+MDW,2025-11,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-11,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-11,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-11,Any time,Evaluated,IAD,1,30,6,IAD,1,30,6
+MIA,2025-11,Morning only,Evaluated,IAD,1,30,6,IAD,1,30,6
+MIA,2025-11,Evening only,Evaluated,DCA,4,33,13,DCA,4,33,13
+MSP,2025-11,Any time,Evaluated,IAD,1,30,1,IAD,1,30,1
+MSP,2025-11,Morning only,Evaluated,IAD,1,30,1,IAD,1,30,1
+MSP,2025-11,Evening only,Limited 2025 observations,DCA,4,53,19,IAD,4,18,3
+ORD,2025-11,Any time,Evaluated,IAD,1,60,1,DCA,1,167,26
+ORD,2025-11,Morning only,Evaluated,IAD,1,60,1,DCA,1,167,26
+ORD,2025-11,Evening only,Evaluated,IAD,4,31,8,DCA,4,118,45
+RDU,2025-11,Any time,Limited 2025 observations,IAD,1,29,0,IAD,3,30,2
+RDU,2025-11,Morning only,Limited 2025 observations,IAD,1,29,0,IAD,1,29,0
+RDU,2025-11,Evening only,Limited 2025 observations,DCA,4,50,25,IAD,4,29,5
+TPA,2025-11,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,29,2
+TPA,2025-11,Morning only,Limited 2025 observations,DCA,1,62,6,IAD,1,29,2
+TPA,2025-11,Evening only,Limited 2025 observations,IAD,4,5,2,IAD,4,5,2
+ATL,2025-12,Any time,Limited 2025 observations,IAD,0,16,5,IAD,1,90,14
+ATL,2025-12,Morning only,Evaluated,IAD,1,90,14,IAD,1,90,14
+ATL,2025-12,Evening only,Evaluated,IAD,4,39,18,IAD,4,39,18
+BDL,2025-12,Any time,Limited 2025 observations,IAD,1,19,0,IAD,4,29,2
+BDL,2025-12,Morning only,Limited 2025 observations,IAD,1,19,0,IAD,1,19,0
+BDL,2025-12,Evening only,Limited 2025 observations,IAD,4,29,2,IAD,4,29,2
+BNA,2025-12,Any time,Limited 2025 observations,IAD,1,25,2,IAD,3,29,8
+BNA,2025-12,Morning only,Limited 2025 observations,IAD,1,25,2,IAD,1,25,2
+BNA,2025-12,Evening only,Limited 2025 observations,DCA,4,76,18,IAD,4,0,0
+BOS,2025-12,Any time,Evaluated,IAD,1,31,3,IAD,2,31,4
+BOS,2025-12,Morning only,Evaluated,IAD,1,31,3,IAD,1,31,3
+BOS,2025-12,Evening only,Limited 2025 observations,IAD,4,29,8,IAD,4,29,8
+CLT,2025-12,Any time,Limited 2025 observations,IAD,0,0,0,IAD,1,74,13
+CLT,2025-12,Morning only,Evaluated,IAD,1,74,13,IAD,1,74,13
+CLT,2025-12,Evening only,Limited 2025 observations,IAD,4,9,3,IAD,4,9,3
+DEN,2025-12,Any time,Limited 2025 observations,IAD,0,13,2,DCA,3,57,9
+DEN,2025-12,Morning only,Limited 2025 observations,DCA,1,28,4,DCA,1,28,4
+DEN,2025-12,Evening only,Limited 2025 observations,IAD,4,46,16,DCA,4,26,7
+DFW,2025-12,Any time,Evaluated,IAD,1,62,13,IAD,3,49,15
+DFW,2025-12,Morning only,Evaluated,IAD,1,62,13,IAD,1,62,13
+DFW,2025-12,Evening only,Limited 2025 observations,DCA,4,29,13,DCA,4,29,13
+DTW,2025-12,Any time,Limited 2025 observations,BWI,0,0,0,DCA,2,53,18
+DTW,2025-12,Morning only,Evaluated,DCA,1,82,20,DCA,1,82,20
+DTW,2025-12,Evening only,Evaluated,DCA,4,42,18,DCA,4,42,18
+FLL,2025-12,Any time,Evaluated,IAD,1,31,6,IAD,1,31,6
+FLL,2025-12,Morning only,Evaluated,IAD,1,31,6,IAD,1,31,6
+FLL,2025-12,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+IAH,2025-12,Any time,Evaluated,DCA,1,82,11,DCA,2,83,15
+IAH,2025-12,Morning only,Evaluated,DCA,1,82,11,DCA,1,82,11
+IAH,2025-12,Evening only,Evaluated,DCA,4,50,9,DCA,4,50,9
+JFK,2025-12,Any time,Limited 2025 observations,DCA,1,92,18,BWI,3,0,0
+JFK,2025-12,Morning only,Limited 2025 observations,DCA,1,92,18,BWI,1,0,0
+JFK,2025-12,Evening only,Limited training choices,,,,,,,,
+LAX,2025-12,Any time,Evaluated,IAD,2,31,2,DCA,1,62,22
+LAX,2025-12,Morning only,Evaluated,DCA,1,62,22,DCA,1,62,22
+LAX,2025-12,Evening only,Evaluated,IAD,4,92,19,IAD,4,92,19
+LGA,2025-12,Any time,Limited 2025 observations,IAD,1,14,2,IAD,2,31,9
+LGA,2025-12,Morning only,Limited 2025 observations,IAD,1,14,2,IAD,1,14,2
+LGA,2025-12,Evening only,Evaluated,IAD,4,31,12,IAD,4,31,12
+MCO,2025-12,Any time,Evaluated,DCA,1,154,25,IAD,1,32,4
+MCO,2025-12,Morning only,Evaluated,DCA,1,154,25,IAD,1,32,4
+MCO,2025-12,Evening only,Evaluated,IAD,4,46,16,IAD,4,46,16
+MDW,2025-12,Any time,Limited 2025 observations,IAD,0,0,0,IAD,4,0,0
+MDW,2025-12,Morning only,Limited 2025 observations,IAD,1,0,0,IAD,1,0,0
+MDW,2025-12,Evening only,Limited 2025 observations,IAD,4,0,0,IAD,4,0,0
+MIA,2025-12,Any time,Evaluated,IAD,1,31,0,IAD,1,31,0
+MIA,2025-12,Morning only,Evaluated,IAD,1,31,0,IAD,1,31,0
+MIA,2025-12,Evening only,Evaluated,DCA,4,53,20,DCA,4,53,20
+MSP,2025-12,Any time,Evaluated,IAD,1,31,2,IAD,1,31,2
+MSP,2025-12,Morning only,Evaluated,IAD,1,31,2,IAD,1,31,2
+MSP,2025-12,Evening only,Limited 2025 observations,DCA,4,42,18,IAD,4,17,8
+ORD,2025-12,Any time,Evaluated,IAD,1,53,2,DCA,1,174,26
+ORD,2025-12,Morning only,Evaluated,IAD,1,53,2,DCA,1,174,26
+ORD,2025-12,Evening only,Evaluated,IAD,4,31,3,DCA,4,109,29
+RDU,2025-12,Any time,Limited 2025 observations,IAD,1,31,4,IAD,3,29,9
+RDU,2025-12,Morning only,Evaluated,IAD,1,31,4,IAD,1,31,4
+RDU,2025-12,Evening only,Evaluated,DCA,4,43,22,IAD,4,31,7
+TPA,2025-12,Any time,Limited 2025 observations,BWI,0,0,0,IAD,1,43,4
+TPA,2025-12,Morning only,Evaluated,DCA,1,63,11,IAD,1,43,4
+TPA,2025-12,Evening only,Limited 2025 observations,IAD,4,2,0,IAD,4,2,0

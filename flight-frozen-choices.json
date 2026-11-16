@@ -1,0 +1,633 @@
+{
+  "ATL": {
+    "Any time": [
+      [
+        "IAD",
+        0
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "BDL": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "BNA": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        3
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "BOS": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        2
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "CLT": {
+    "Any time": [
+      [
+        "IAD",
+        0
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "DEN": {
+    "Any time": [
+      [
+        "IAD",
+        0
+      ],
+      [
+        "DCA",
+        3
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "DFW": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        3
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "DTW": {
+    "Any time": [
+      [
+        "BWI",
+        0
+      ],
+      [
+        "DCA",
+        2
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "FLL": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "IAH": {
+    "Any time": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "DCA",
+        2
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "JFK": {
+    "Any time": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "BWI",
+        3
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "BWI",
+        1
+      ]
+    ],
+    "Evening only": null
+  },
+  "LAX": {
+    "Any time": [
+      [
+        "IAD",
+        2
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "LGA": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        2
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "MCO": {
+    "Any time": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "MDW": {
+    "Any time": [
+      [
+        "IAD",
+        0
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "MIA": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "MSP": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "ORD": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "DCA",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "DCA",
+        4
+      ]
+    ]
+  },
+  "RDU": {
+    "Any time": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        3
+      ]
+    ],
+    "Morning only": [
+      [
+        "IAD",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "DCA",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  },
+  "TPA": {
+    "Any time": [
+      [
+        "BWI",
+        0
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Morning only": [
+      [
+        "DCA",
+        1
+      ],
+      [
+        "IAD",
+        1
+      ]
+    ],
+    "Evening only": [
+      [
+        "IAD",
+        4
+      ],
+      [
+        "IAD",
+        4
+      ]
+    ]
+  }
+}
