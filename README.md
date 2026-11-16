@@ -1,14 +1,22 @@
-# Citi Bike + NYC Weather — Dealing with Data
+# Citi Bike Ridership and NYC Weather
 
-End-to-end data product for the NYU *Dealing with Data* course: an ETL pipeline
-that loads the complete NYC Citi Bike trip history (2013-06 → 2026-05, ~308M
-trips) into BigQuery, joins it to daily NYC weather, and serves an interactive
-Streamlit dashboard on Cloud Run.
+**How does daily Citi Bike usage change with weather, and which days are unusual enough to investigate?** This NYU Stern *Dealing with Data* project combines about **308 million NYC trips** from June 2013 through May 2026 with daily weather and presents the results in Streamlit.
 
-**Live app:** https://citibike-app-kpkbtfmmcq-uc.a.run.app
-**Production status:** Cloud Run revision `citibike-app-00005-t4q` is Ready,
-receives 100% of traffic, and uses the verified v2 trip table and
-Weather-Adjusted Ridership model v2.*
+[Open the hosted dashboard](https://citibike-app-kpkbtfmmcq-uc.a.run.app) · [Model validation](docs/verification/weather-model-v2.md) · [Source reconciliation](docs/verification/official-source-freshness.md)
+
+## What to explore
+
+1. Compare member and casual ridership across dates and weather conditions.
+2. Compare observed ridership with the weather-adjusted historical baseline and inspect flagged days.
+3. Check the active data source and date range before interpreting the charts.
+
+## What the project delivered
+
+- **Verified data pipeline.** Staged official Citi Bike archives in Cloud Storage, reconciled trip counts against published sources, and served the dashboard from a materialized BigQuery daily table.
+- **Measured model performance.** On a 179-day holdout, the total-ridership baseline reduced mean absolute error by **18.0%** against a seasonal-naive benchmark. It also underpredicted part of the recent growth period. Its intended use is historical anomaly review.
+- **Clear coverage.** The trip archive ends May 31, 2026. The joined weather analysis ends May 29, 2026. Jersey City and Hoboken are outside the project scope.
+
+The deployment record identifies the verified dashboard revision at the time of the project. See the [deployment evidence](evidence/stage3-model-v2-deployment.csv) for that checkpoint.
 
 ## Architecture
 
@@ -43,7 +51,7 @@ only as historical evidence.
 The v2 table was verified in three stages (all evidence in this repo):
 1. **Reconciliation** against the course reference (`docs/verification/v2-reconciliation.md`) — loss-free build, 2013/2015/2018 defects fixed.
 2. **Official-source audit** (`docs/verification/official-source-freshness.md`) — the staged archives are byte-identical (MD5) to the current official Citi Bike archive, and official row counts match `trips_daily_table_v2` exactly (24/26 target months at +0 rows; remainder are cross-archive month-boundary rows). NYC DOT-published totals agree with the project within 0.05%; the course reference overcounts April 2018 (2×) and 2022/2023/May 2024 (~2.4–3.2%).
-3. **Cutover and deployment** — the verified v2 trip source and `trips_daily_model_v2` are live in Cloud Run. Deployment and external acceptance evidence are recorded under `docs/execution/` and `evidence/`.
+3. **Cutover and deployment** — the verified v2 trip source and `trips_daily_model_v2` were deployed to Cloud Run at the recorded checkpoint. Deployment and external acceptance evidence are recorded under `docs/execution/` and `evidence/`.
 
 Evidence lives in `evidence/` (manifests, job logs, inventories, row counts)
 and `docs/` (execution, verification, repair, recovery records).
@@ -84,9 +92,8 @@ unknown-rider trips (≈0.017%); the member/casual series never absorb them.
 ```bash
 pip install -r requirements.txt
 
-# Credentials: cloud-bootstrap (see CLAUDE.md) decrypts the service-account
-# key automatically in Claude Code sessions; otherwise set
-# GOOGLE_APPLICATION_CREDENTIALS to a key with BigQuery read access.
+# Configure authorized Google Cloud Application Default Credentials locally.
+# The dashboard needs read access to the configured BigQuery data.
 
 streamlit run app.py                      # local dashboard (verified v2 source)
 CITIBIKE_SOURCE_MODE=reference streamlit run app.py   # course-reference fallback
