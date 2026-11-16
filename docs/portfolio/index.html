@@ -13,6 +13,8 @@ section{background:white;border:1px solid var(--line);border-radius:1rem;padding
 fieldset{border:0;padding:0;margin:1rem 0;display:flex;gap:1rem;flex-wrap:wrap}legend{font-weight:700;margin-bottom:.35rem}label{display:inline-flex;align-items:center;gap:.35rem}select{font:inherit;border:1px solid #718998;background:white;color:var(--ink);padding:.35rem .55rem;border-radius:.35rem}input{accent-color:var(--blue)}:focus-visible{outline:3px solid #0b6bac;outline-offset:3px}
 .metrics{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0}.metric{min-width:9rem;background:var(--bg);padding:.65rem .85rem;border-radius:.55rem}.metric strong{display:block;font-size:1.5rem}.metric span{color:var(--muted);font-size:.86rem}
 table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}th,td{padding:.38rem .3rem;border-bottom:1px solid var(--line)}td:last-child{text-align:right;white-space:nowrap}thead th:last-child{text-align:right}tbody th{font-weight:600}.bar{height:.55rem;min-width:9rem;border-radius:.3rem;background:#e1eaee;overflow:hidden}.fill{display:block;background:var(--green);height:100%;border-radius:inherit}summary{cursor:pointer;font-weight:650}footer{padding:.25rem 0 1rem;color:var(--muted)}
+.panel{margin:1.25rem 0;padding:1rem;border:1px solid var(--line);border-radius:.65rem}.panel h3{margin-top:0}.chart{width:100%;height:auto;display:block;background:#f4f8fa;border-radius:.4rem}.controls{display:flex;flex-wrap:wrap;gap:.7rem;margin:.7rem 0}.scroll{overflow-x:auto}.panel input[type=file]{max-width:100%}.table-note{margin:.45rem 0}.flag{color:#7c3d0b;font-weight:650}.legend-key{display:inline-block;width:1em;height:.25em;margin-left:.6rem;vertical-align:middle}
+@media(max-width:540px){.bar{min-width:3rem}.panel{padding:.6rem}}
 </style>
 </head>
 <body>
@@ -25,7 +27,14 @@ table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:t
 <p class="guide"><strong>Try this.</strong> Compare the three airports, then switch to weather conditions. The views answer different questions. The weather view pools airports and cannot isolate the reason for the airport differences.</p>
 <fieldset><legend>Compare by</legend><label><input type="radio" name="flight-view" value="airport" checked> Origin airport</label><label><input type="radio" name="flight-view" value="weather"> Daily weather</label></fieldset>
 <div id="flight-results" aria-live="polite"></div>
-<details><summary>Coverage and method</summary><p>Snapshot reconciled to the project warehouse on July 17, 2026. The delay rate divides departures at least 15 minutes late by completed departures. Weather was measured at airport stations at daily resolution. These are descriptive comparisons. Per-group flight counts, route and departure-block exports, and the formal 2025 holdout are unavailable in this edition.</p><p>Sources: <a href="https://transtats.bts.gov/PREZIP/">U.S. DOT BTS On-Time Performance</a> and <a href="https://doi.org/10.7289/V5D21VHZ">NOAA NCEI GHCN-Daily</a>.</p></details>
+<div class="panel">
+<h3>Routes and departure windows</h3>
+<p>Compare a destination served by multiple airports, then examine scheduled departure windows for a selected origin. An airport-wide departure pattern cannot explain an individual route.</p>
+<label>Open a verified airport snapshot <input id="airport-upload" type="file" accept=".json,application/json"></label>
+<p id="airport-status" class="note" role="status">A route and departure-window snapshot is needed for this view.</p>
+<div id="airport-detail"></div>
+</div>
+<details><summary>Coverage and method</summary><p>Snapshot reconciled to the project warehouse on July 17, 2026. The delay rate divides departures at least 15 minutes late by completed departures. Weather was measured at airport stations at daily resolution. These are descriptive comparisons. The headline audit reports the overall flight count. Route and departure-window rows loaded below show their own counts. The formal 2025 holdout is pending.</p><p>Sources: <a href="https://transtats.bts.gov/PREZIP/">U.S. DOT BTS On-Time Performance</a> and <a href="https://doi.org/10.7289/V5D21VHZ">NOAA NCEI GHCN-Daily</a>.</p></details>
 </section>
 <section id="bike" aria-labelledby="bike-title">
 <p class="kicker">Citi Bike · 2022 and 2023 archive audit</p><h2 id="bike-title">Citi Bike ridership and NYC weather</h2>
@@ -33,10 +42,17 @@ table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:t
 <p class="guide"><strong>Try this.</strong> Select 2023, compare member and casual trips, then open the model results. The monthly counts show seasonality. A daily weather-adjusted baseline is the next step when investigating a particular day.</p>
 <fieldset><legend>Explore the audited archive</legend><label>Year <select id="bike-year"><option>2023</option><option>2022</option></select></label><label>Rider group <select id="bike-group"><option value="0">All riders</option><option value="1">Members</option><option value="2">Casual riders</option></select></label></fieldset>
 <p id="bike-total" aria-live="polite"></p><div id="bike-results"></div>
+<div class="panel">
+<h3>Daily observed and expected ridership</h3>
+<p>Pick a rider group, then compare unusually high and low dates with the model’s expected range. The range is an investigation aid.</p>
+<label>Open a verified daily model snapshot <input id="bike-upload" type="file" accept=".json,application/json"></label>
+<p id="bike-status" class="note" role="status">A daily model snapshot is needed for this view.</p>
+<div id="bike-detail"></div>
+</div>
 <details><summary>Weather model and holdout results</summary>
 <p>The original project modeled daily ridership using temperature, precipitation, snow, day of week, and month. On the final 179 days of model coverage, the overall mean absolute error was 18.0% lower than the seasonal-naive benchmark. The model underpredicted part of the recent growth period.</p>
 <table><thead><tr><th scope="col">Rider series</th><th scope="col">Mean absolute error</th><th scope="col">Improvement vs. benchmark</th></tr></thead><tbody><tr><th scope="row">Total</th><td>23,808</td><td>18.0%</td></tr><tr><th scope="row">Member</th><td>21,993</td><td>12.8%</td></tr><tr><th scope="row">Casual</th><td>2,595</td><td>44.7%</td></tr></tbody></table>
-<p class="note">These are holdout summary metrics. Daily observed and expected series are unavailable in this edition.</p>
+<p class="note">These holdout summary metrics come from the original validation record.</p>
 </details>
 <p class="note">Monthly totals count 2022 and 2023 archive records by trip-start month. The audited archives omit 410 December 2023 boundary trips that the full pipeline recovered from an adjacent archive.</p>
 <p><a href="https://github.com/jeffsickoria/msbai-dwd-jrs10127/blob/main/docs/verification/official-source-freshness.md">Source audit</a> · <a href="https://github.com/jeffsickoria/msbai-dwd-jrs10127/blob/main/docs/verification/weather-model-v2.md">Model validation</a></p>
@@ -73,6 +89,161 @@ document.getElementById("bike-year").addEventListener("change",renderBike);
 document.getElementById("bike-group").addEventListener("change",renderBike);
 renderFlight();
 renderBike();
+
+const origins = {BWI:[-76.67,39.18],DCA:[-77.04,38.85],IAD:[-77.46,38.95]};
+const knownWeather = ["Adverse","Calm","Unavailable"];
+const holdoutStart = "2025-12-01";
+const validDate = value => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)
+  && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0,10) === value;
+const safeCount = value => Number.isSafeInteger(value) && value >= 0;
+const finiteNonnegative = value => Number.isFinite(value) && value >= 0;
+const rateLabel = (count,total) => total ? (100*count/total).toFixed(1)+"%" : "n/a";
+const plain = value => String(value).replace(/[&<>"']/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character]));
+const optionList = entries => entries.map(([key,label])=>'<option value="'+plain(key)+'">'+plain(label)+'</option>').join("");
+const sourceOK = value => typeof value === "string" && value.trim().length > 0 && value.length <= 300;
+function checkBike(data) {
+  if (!data || !sourceOK(data.source) || !Array.isArray(data.rows) || !data.rows.length) throw Error("Provide a source label and daily rows.");
+  const keys = new Set();
+  for (const row of data.rows) {
+    if (!row || !validDate(row.date) || row.date < "2022-01-01" || row.date > "2026-05-29" || !["total","member","casual"].includes(row.series)
+        || !safeCount(row.actual) || ![row.expected,row.lower,row.upper].every(finiteNonnegative)
+        || row.lower > row.expected || row.expected > row.upper
+        || !knownWeather.includes(row.weather)) throw Error("A daily row has invalid values.");
+    const key = row.series+"|"+row.date;
+    if (keys.has(key)) throw Error("Duplicate rider group and date.");
+    keys.add(key);
+  }
+  return data;
+}
+function checkAirport(data) {
+  if (!data || !sourceOK(data.source) || data.month !== "2023-12" || !Array.isArray(data.routes)
+      || !Array.isArray(data.windows) || !data.routes.length || !data.windows.length) throw Error("Provide both December 2023 tables and their source.");
+  const points = new Map();
+  for (const row of data.routes) {
+    if (!row || !Object.hasOwn(origins,row.origin) || typeof row.destination !== "string" || !/^[A-Z0-9]{3}$/.test(row.destination)
+        || !Number.isFinite(row.lon) || Math.abs(row.lon)>180 || !Number.isFinite(row.lat)
+        || Math.abs(row.lat)>90) throw Error("A route has an invalid airport or coordinate.");
+    const point = row.lon+"|"+row.lat;
+    if (points.has(row.destination) && points.get(row.destination)!==point) throw Error("Destination coordinates conflict.");
+    points.set(row.destination,point);
+  }
+  const keys = new Set();
+  for (const [type, rows] of [["route",data.routes],["window",data.windows]]) {
+    for (const row of rows) {
+      if (!row || !Object.hasOwn(origins,row.origin) || !safeCount(row.eligible)
+          || !safeCount(row.delayed) || row.delayed>row.eligible
+          || (type==="window" && (typeof row.window!=="string" || !/^(?:[0-9]{4}-[0-9]{4}|Unknown)$/.test(row.window)
+            || !Number.isInteger(row.day) || row.day<1 || row.day>7))) throw Error("A count row has invalid values.");
+      const key = type+"|"+row.origin+"|"+(type==="route"?row.destination:row.day+"|"+row.window);
+      if (keys.has(key)) throw Error("Duplicate "+type+" group.");
+      keys.add(key);
+    }
+  }
+  const sums = data.windows.reduce((total,row)=>[total[0]+row.eligible,total[1]+row.delayed],[0,0]);
+  if (sums[0]!==23258 || sums[1]!==4860) throw Error("Departure-window totals do not match the audited December 2023 denominator and numerator.");
+  return data;
+}
+function connectSnapshot(input, status, validate, display) {
+  document.getElementById(input).addEventListener("change",async event=>{
+    const file = event.target.files[0];
+    if (!file) return;
+    try {
+      if (file.size>5000000) throw Error("Use a snapshot under 5 MB.");
+      const data = validate(JSON.parse(await file.text()));
+      display(data);
+      document.getElementById(status).textContent = "Source supplied with snapshot: "+data.source;
+    } catch (error) {
+      document.getElementById(status).textContent = "Snapshot could not be opened. "+error.message;
+    } finally {
+      event.target.value = "";
+    }
+  });
+}
+function table(headers,rows) {
+  return '<div class="scroll"><table><thead><tr>'+headers.map(v=>'<th scope="col">'+plain(v)+'</th>').join("")
+    +'</tr></thead><tbody>'+rows.map(row=>'<tr><th scope="row">'+plain(row[0])+'</th>'
+      +row.slice(1).map(v=>'<td>'+plain(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
+}
+function showBike(data) {
+  const target = document.getElementById("bike-detail");
+  const groups = ["total","member","casual"].filter(group=>data.rows.some(row=>row.series===group));
+  target.innerHTML = '<div class="controls"><label>Daily rider group <select>'+optionList(groups.map(g=>[g,g]))+'</select></label></div><div class="result" aria-live="polite"></div>';
+  const select = target.querySelector("select");
+  const draw = ()=>{
+    const rows = data.rows.filter(row=>row.series===select.value).sort((a,b)=>a.date.localeCompare(b.date));
+    const first = Date.parse(rows[0].date);
+    const span = Math.max(86400000,Date.parse(rows.at(-1).date)-first);
+    const max = Math.max(1,...rows.map(row=>Math.max(row.actual,row.upper)));
+    const x = r=>42+742*(Date.parse(r.date)-first)/span;
+    const y = v=>202-186*v/max;
+    const line = key=>rows.map(r=>x(r).toFixed(1)+","+y(r[key]).toFixed(1)).join(" ");
+    const band = line("upper")+" "+rows.slice().reverse().map(r=>x(r).toFixed(1)+","+y(r.lower).toFixed(1)).join(" ");
+    const flag = rows.filter(r=>r.actual>r.upper||r.actual<r.lower).sort((a,b)=>Math.abs(b.actual-b.expected)-Math.abs(a.actual-a.expected))[0];
+    const growth = rows.filter(r=>r.date>=holdoutStart&&r.actual>r.expected&&r!==flag).sort((a,b)=>(b.actual-b.expected)-(a.actual-a.expected))[0];
+    const examples = [flag,growth].filter(Boolean);
+    target.querySelector(".result").innerHTML =
+      '<p class="note">'+rows[0].date+' to '+rows.at(-1).date+' · '+format.format(rows.length)+' observed dates</p>'
+      +'<svg class="chart" viewBox="0 0 800 228" role="img" aria-label="Observed daily trips, expected trips and expected range">'
+      +'<path d="M42 16V202H784" fill="none" stroke="#8195a1"/><polygon points="'+band+'" fill="#d8e7ee"/>'
+      +'<polyline points="'+line("expected")+'" fill="none" stroke="#365f81" stroke-width="2" stroke-dasharray="6 4"/>'
+      +'<polyline points="'+line("actual")+'" fill="none" stroke="#126352" stroke-width="2"/>'
+      +examples.map(r=>'<circle cx="'+x(r)+'" cy="'+y(r.actual)+'" r="5" fill="#a1491c"><title>'+r.date+' · '+format.format(r.actual)+' trips</title></circle>').join("")
+      +'<text x="3" y="19" font-size="11">'+format.format(Math.round(max))+'</text><text x="20" y="205" font-size="11">0</text><text x="42" y="220" font-size="11">'+rows[0].date+'</text><text x="784" y="220" text-anchor="end" font-size="11">'+rows.at(-1).date+'</text></svg>'
+      +'<p class="note"><span class="legend-key" style="background:#126352"></span> Observed <span class="legend-key" style="background:#365f81"></span> Expected <span class="legend-key" style="background:#d8e7ee"></span> Model range</p>'
+      +(examples.length?table(["Selected date","Observed trips","Expected trips","Difference","Weather"],examples.map(r=>[r.date,format.format(r.actual),format.format(Math.round(r.expected)),(r.actual>=r.expected?"+":"")+format.format(Math.round(r.actual-r.expected)),r.weather]))
+      +'<p class="note">Check service changes, events, and data completeness before assigning a cause to these gaps.</p>':'<p class="note">No flagged or holdout-underprediction examples in these rows.</p>');
+  };
+  select.addEventListener("change",draw);
+  draw();
+}
+function showAirport(data) {
+  const target = document.getElementById("airport-detail");
+  const destinations = [...new Set(data.routes.map(row=>row.destination))];
+  const support = code=>data.routes.filter(row=>row.destination===code).length;
+  destinations.sort((a,b)=>support(b)-support(a)||a.localeCompare(b));
+  target.innerHTML = '<div class="controls"><label>Destination <select id="route-destination">'+optionList(destinations.map(d=>[d,d+" · "+support(d)+" origin(s)"]))+'</select></label></div>'
+    +'<div id="route-output" aria-live="polite"></div><div class="controls"><label>Departure origin <select id="departure-origin">'+optionList(Object.keys(origins).map(o=>[o,o]))+'</select></label>'
+    +'<label>Day <select id="departure-day">'+optionList(["All days","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"].map((label,i)=>[i,label]))+'</select></label></div><div id="window-output" aria-live="polite"></div>';
+  const minSupport = 100;
+  const outputRow = (label,row)=>[label,rateLabel(row.delayed,row.eligible),format.format(row.eligible),row.eligible<minSupport?"Low volume":""];
+  function drawRoute() {
+    const code = document.getElementById("route-destination").value;
+    const selected = data.routes.filter(row=>row.destination===code);
+    const destination = [selected[0].lon,selected[0].lat];
+    const points = [...Object.values(origins),destination];
+    const limits = axis=>[Math.min(...points.map(p=>p[axis]))-.25,Math.max(...points.map(p=>p[axis]))+.25];
+    const [west,east] = limits(0);
+    const [south,north] = limits(1);
+    const screen = ([lon,lat])=>[45+(lon-west)/(east-west)*590,180-(lat-south)/(north-south)*145];
+    const [dx,dy] = screen(destination);
+    const strokes = selected.map(row=>{const [x,y]=screen(origins[row.origin]);return '<line x1="'+x+'" y1="'+y+'" x2="'+dx+'" y2="'+dy+'" stroke="#126352" stroke-width="2" opacity=".65"/>';}).join("");
+    const pointsHtml = [...Object.entries(origins),[code,destination]].map(([label,p])=>{const [x,y]=screen(p);return '<circle cx="'+x+'" cy="'+y+'" r="4" fill="#174a72"><title>'+label+'</title></circle>';}).join("");
+    document.getElementById("route-output").innerHTML = '<svg class="chart" viewBox="0 0 680 200" role="img" aria-label="Schematic airport routes to '+code+'">'+strokes+pointsHtml+'</svg>'
+      +'<p class="note">Schematic route map. Compare airports on the same destination. Carrier and schedule mix may differ.</p>'
+      +table(["Origin → destination","Delayed","Completed","Sample"],selected.map(row=>outputRow(row.origin+" → "+code,row)));
+  }
+  function drawWindows() {
+    const origin = document.getElementById("departure-origin").value;
+    const day = Number(document.getElementById("departure-day").value);
+    const totals = new Map();
+    for (const row of data.windows.filter(r=>r.origin===origin && (!day||r.day===day))) {
+      const existing = totals.get(row.window)||{eligible:0,delayed:0};
+      totals.set(row.window,{eligible:existing.eligible+row.eligible,delayed:existing.delayed+row.delayed});
+    }
+    const rows = [...totals].sort(([a],[b])=>a.localeCompare(b));
+    document.getElementById("window-output").innerHTML = rows.length
+      ?table(["Scheduled window","Delayed","Completed","Sample"],rows.map(([key,row])=>outputRow(key,row)))
+       +'<p class="note">Low volume marks fewer than 100 completed departures. This comparison pools destinations.</p>'
+      :'<p class="note">No records for this selection.</p>';
+  }
+  document.getElementById("route-destination").addEventListener("change",drawRoute);
+  document.getElementById("departure-origin").addEventListener("change",drawWindows);
+  document.getElementById("departure-day").addEventListener("change",drawWindows);
+  drawRoute();
+  drawWindows();
+}
+connectSnapshot("bike-upload","bike-status",checkBike,showBike);
+connectSnapshot("airport-upload","airport-status",checkAirport,showAirport);
 </script>
 </body>
 </html>
