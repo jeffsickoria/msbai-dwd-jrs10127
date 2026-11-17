@@ -14,4 +14,4 @@ Run `python expansion/build_flights.py BTS_2022_2025 BTS_2026_JAN_JUN WEATHER_DI
 
 ## Publish
 
-Run `python expansion/assemble.py PHASE3_HTML OUT_DIR index.html` and `gzip -n -c OUT_DIR/flight-schedule-replay.csv > OUT_DIR/flight-schedule-replay.csv.gz`. Compress each flight-network-YYYY.json with gzip and publish the generated index, expansion JS, and aggregate evidence files. Use `--watts` when the static public Watt’s Next assets are deployed under `watts-next/`. That copy uses only assets served by the original public dashboard.
+Run `python expansion/assemble.py PHASE3_HTML OUT_DIR index.html`, then `python expansion/add_tabs.py index.html` and `gzip -n -c OUT_DIR/flight-schedule-replay.csv > OUT_DIR/flight-schedule-replay.csv.gz`. Compress each flight-network-YYYY.json with gzip and publish the generated index, both expansion JS files, and aggregate evidence files. Use `--watts` when the static public Watt’s Next assets are deployed under `watts-next/`. That copy uses only assets served by the original public dashboard.
