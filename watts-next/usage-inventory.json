@@ -1,0 +1,134 @@
+[
+  {
+    "name": "EIA regional demand \u00b7 ISNE / PJM / CAISO",
+    "use_status": "Used in dashboard",
+    "purpose": "Regional electricity-demand context in Test scenarios. Shows historical demand plus a declared facility load; does not assign that demand to a county.",
+    "acquisition": "Official EIA bulk download; API reconciliation for a missing PJM adjusted record.",
+    "storage": "Repository: data/releases/comparison-2025.json. Published browser copy: dashboard-data.json \u2192 regions / timestamps.",
+    "processing": "Hourly series aligned to a common UTC year; hour-ending labels converted to interval starts. Browser adds scenario load.",
+    "period": "2025 UTC year",
+    "review": "Frozen historical context; does not establish spare capacity.",
+    "code": "scripts/acquire_workbench.py"
+  },
+  {
+    "name": "EIA-930 ISNE qualified snapshot",
+    "use_status": "Used in experiment",
+    "purpose": "Input to the fixed ISNE scheduling and forecasting experiments.",
+    "acquisition": "Paginated EIA v2 hourly API requests; source bytes checked and normalized.",
+    "storage": "Published browser copy: dashboard-data.json \u2192 isne. Source register: registers/sources.json. Exact raw snapshot location is not included in this Site.",
+    "processing": "Normalized hourly intervals retain publisher flags; frozen experiment summaries are packaged for the browser.",
+    "period": "2025; retrospective evaluation Jul 1\u2013Dec 30",
+    "review": "Conditional; independent acceptance pending.",
+    "code": "scripts/build_isne_snapshot.py"
+  },
+  {
+    "name": "Census county boundaries",
+    "use_status": "Used in dashboard",
+    "purpose": "County map shapes and county identifiers.",
+    "acquisition": "Downloaded official 2025 Census cartographic boundaries; transformed into the county map release.",
+    "storage": "Repository: data/county/county_screen.geojson. Published: county-screen.geojson.",
+    "processing": "Boundary geometry joined to county attributes; FIPS identifiers preserve county identity.",
+    "period": "2025 boundaries",
+    "review": "Prototype map; colors are workforce measures, not suitability scores.",
+    "code": "scripts/build_county_spine.py"
+  },
+  {
+    "name": "BLS LAUS supplied workforce workbook",
+    "use_status": "Retained historical input; not displayed",
+    "purpose": "Historical national workforce acquisition retained in project records. Its nonpilot county metrics are not published or used by the current map.",
+    "acquisition": "Supplied BLS workbook imported into the county spine.",
+    "storage": "Repository: data/county/county_spine.csv and data/county/county_spine_manifest.json. Published: county-screen.geojson.",
+    "processing": "County workforce attributes joined to boundaries. Original supplied workbook location is not recorded in this Site.",
+    "period": "National colors: August 2025",
+    "review": "Candidate review status despite display use; newer pilot data are separate.",
+    "code": "scripts/build_county_spine.py"
+  },
+  {
+    "name": "BLS LAUS pilot API series",
+    "use_status": "Used in dashboard",
+    "purpose": "Workforce map colors and county detail for the enabled pilot counties only. Published map values and detail use the same released period.",
+    "acquisition": "BLS public API; raw response and acquisition index retained by acquisition workflow.",
+    "storage": "Repository: data/pilot/daq-17/laus_county_monthly.csv and manifest.json. Published: dashboard-data.json \u2192 counties.",
+    "processing": "Parses monthly measures, preserves unavailable values and compares revised August 2025 values with supplied data.",
+    "period": "Jan 2025\u2013Aug 2026",
+    "review": "Candidate; compare matching months before drawing conclusions.",
+    "code": "scripts/acquire_pilot_counties.py"
+  },
+  {
+    "name": "BLS QCEW pilot county slices",
+    "use_status": "Used in dashboard",
+    "purpose": "Workplace employment context for the three pilot counties.",
+    "acquisition": "Downloads county CSV slices from BLS QCEW open-data API.",
+    "storage": "Repository: data/pilot/daq-18/qcew_2026_q1_county.csv and manifest.json. Published: dashboard-data.json \u2192 counties.",
+    "processing": "Checks county and quarter; retains disclosure codes and missing values. Workplace jobs differ from resident workforce.",
+    "period": "2026 Q1",
+    "review": "Candidate; figures subject to revision.",
+    "code": "scripts/acquire_pilot_counties.py"
+  },
+  {
+    "name": "EIA-861 utility relationships",
+    "use_status": "Used in dashboard",
+    "purpose": "County details and comparison brief: reported utilities and utility/state grid-area candidates.",
+    "acquisition": "Official EIA-861 2025 ZIP downloaded, then pilot relationship tables extracted.",
+    "storage": "Repository: data/pilot/eia861-2025/county-utility.csv and utility-ba.csv. Published: dashboard-data.json \u2192 counties.",
+    "processing": "Matches reported county/utility records; grid-area candidates remain at utility/state level.",
+    "period": "2025; acquired Oct 25, 2026",
+    "review": "Acquired, unaccepted; parcel service and county-to-grid assignment remain unresolved.",
+    "code": "scripts/extract_eia861_pilot.py"
+  },
+  {
+    "name": "FERC Form 714 ISNE filing",
+    "use_status": "Used in dashboard",
+    "purpose": "Data library planning-area forecasts and comparison context; separate from EIA balancing-authority demand.",
+    "acquisition": "Downloaded FERC XBRL filing; qualification script parses planning-area hourly records.",
+    "storage": "Repository: registers/ferc714_qualification.json. Published: dashboard-data.json \u2192 ferc. Exact raw filing path is not included in this Site.",
+    "processing": "Preserves planning-area definition and local-year offset; forecast values are displayed as planning context.",
+    "period": "2025 filing; forecast years shown in chart",
+    "review": "Conditional; not connection headroom or an accepted cross-region forecast comparison.",
+    "code": "scripts/qualify_ferc_714.py"
+  },
+  {
+    "name": "PJM / CAISO / ISO-NE planning documents",
+    "use_status": "Acquired; reference only",
+    "purpose": "Links and acquisition fingerprints in Data library. Not inputs to the regional added-load calculator.",
+    "acquisition": "Direct PDF / HTML / XLSX downloads from publishers.",
+    "storage": "Repository acquisition index: registers/acquisition_observations_2026_10_25.json. Published metadata: dashboard-data.json \u2192 planning_sources. Raw documents are not bundled in this Site.",
+    "processing": "Catalogs retrieval time and file fingerprint; no common capacity metric inferred.",
+    "period": "Acquired Oct 25, 2026; individual document vintages vary",
+    "review": "Acquired, unaccepted.",
+    "code": "scripts/build_team_dashboard.py"
+  },
+  {
+    "name": "NOAA station weather",
+    "use_status": "Used in underlying release",
+    "purpose": "Nearby-station weather context in the historical regional release; not an active cooling model in the hosted Scenario lab.",
+    "acquisition": "Official NOAA station-file download.",
+    "storage": "Underlying release: data/releases/comparison-2025.json. Raw acquisition folder is not included in this Site.",
+    "processing": "Station summaries provide weather context; hosted scenario uses the user-entered PUE.",
+    "period": "Historical 2025 context",
+    "review": "Not evidence of water service or validated cooling performance.",
+    "code": "scripts/weather_context.py"
+  },
+  {
+    "name": "NYIS one-week demand samples",
+    "use_status": "Acquired; unused in current screens",
+    "purpose": "Source-method samples in the register; New York is not one of the three displayed grid regions.",
+    "acquisition": "EIA v2 API sample requests recorded in the source register.",
+    "storage": "Metadata: registers/sources.json; published dashboard-data.json \u2192 sources. Raw sample paths not included in this Site.",
+    "processing": "Retains sample periods and fingerprints; not used in the three-region comparison.",
+    "period": "January 2025, one-week samples",
+    "review": "Candidate.",
+    "code": "scripts/fetch_eia_pilot.py"
+  },
+  {
+    "name": "ACS / USGS / FEMA / EPA and local service evidence",
+    "use_status": "Proposed / not integrated",
+    "purpose": "Potential community, water, hazard, emissions and site-service evidence.",
+    "acquisition": "Future acquisition or qualification; methods depend on each source.",
+    "storage": "No integrated scoring dataset in this hosted release.",
+    "processing": "No missing values are filled or treated as favorable.",
+    "period": "Not applicable",
+    "review": "Not used for scoring or final site recommendations.",
+    "code": null
+  }
+]

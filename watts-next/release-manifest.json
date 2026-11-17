@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "built_at_utc": "2026-10-27T19:20:57.480018+00:00",
+  "files": {
+    "map.html": "14d9c9ef9014162b14afb04bac394bf329801a0db2f39e64912535c07f40a661",
+    "legacy-map.css": "e270b2c9ee8764d623f79a6ee422e6aef1e9911707b579e0e02ff9fd23e2d1a9",
+    "pilot-score-ui.js": "9489c0ec4f30a7a784bab94f1dc6b4b9efd5ce7c75d3a89f800c3eddcfbf9eb0",
+    "flow.js": "fa72f85c7004cfd770f8c2d196b2c52307dd2d28dd4d9b79f43ff87fd3660dd6",
+    "research-workflow.js": "2c8101f390cb283c61f9f27af3553ce2f8526142c2287751664916f55769156d",
+    "dashboard-data.json": "cf488767ca484b93798bde9b7f4f623b4dc81d966b0d44d6a51130b58856b041",
+    "dashboard.css": "2b597dd0403369ff0fa8b3692f4f4275921dd732ad09e65d4a4d045717644200",
+    "scenario-math.js": "71c219467a3b22b1f0faed10fd3e13f9bc6e07510b60ff578364ad491a5121a8",
+    "county-map.js": "30660953c1ff2ba3b81e2dbeb26b897b76f5e27dc6a7088829193614a542b35e",
+    "flow.css": "f2340f46ca8bc3b75a932e71e4b619fff0f8402321d8b0e594e8ea3ae091a0ce",
+    "research.html": "14d9c9ef9014162b14afb04bac394bf329801a0db2f39e64912535c07f40a661",
+    "map-dashboard.js": "6b4216856ead8213d606f81a5f5aabe08dd5a0caeab25b6238e440dbc8c190fd",
+    "pilot-scoring.js": "160aa7ad0268c4ac4befb8c6f024416a804d47d6b4df533c36f51ef04b78e4b6",
+    "usage-inventory.json": "256cf3235c5ebdc9b324c195695f5540740c4d40b215cb62856b571bf6c19da1",
+    "dashboard.js": "d1701871701043c97982bd53b0007a22c45c11bd9b807cef9dbdcd931cd17745",
+    "map-scoring.css": "3b14bc0e9a86e3b4185aeea06216ebe91317db8dfbba9f2d2e256aa97fa1673f",
+    "map-layers.js": "a172bc702b8a4fe4e340f0af3fd98749713970f0927ebd19fb7a289accb32b45",
+    "index.html": "fd70ed77709b672cfeee93fe152d5503db29632c500d2d0c1a70d5595cad691e",
+    "research-context.js": "5289177df1fd4a81f93247cc94138d0c7bd7a7a9185f0fce89b2db7d7e663d2d",
+    "county-screen.geojson": "4f769c01c97edc4403c21d995636076d19311830ec7b0d79ca7fc17ffa53f6da"
+  },
+  "ui_updated_at_utc": "2026-11-03"
+}
