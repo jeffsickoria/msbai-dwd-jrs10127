@@ -1,12 +1,15 @@
-# Citi Bike + NYC Weather — Dealing with Data
+# Citi Bike ridership and NYC weather
 
-End-to-end data product for the NYU *Dealing with Data* course: an ETL pipeline
-that loads the complete NYC Citi Bike trip history (2013-06 → 2026-05, ~308M
-trips) into BigQuery, joins it to daily NYC weather, and originally served an interactive
-Streamlit dashboard on Cloud Run. The public portfolio runs on GitHub Pages using exported data.
+**[Open the live Citi Bike dashboard](https://jeffsickoria.github.io/#bike)** · [Ridership trends](https://jeffsickoria.github.io/#bike-trends) · [Evaluation and sources](https://jeffsickoria.github.io/#bike-evidence)
 
-**Live app:** https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike
-The original Cloud Run deployment used the verified v2 trip table and Weather-Adjusted Ridership model v2.
+Start with the January 26–27, 2026 ridership drop. Use the station and rider-group comparisons to see where the drop was concentrated, then explore daily anomalies and the weekly review workflow.
+
+The public dashboard includes audited archive trends for 2022–2025. Each of the **731 daily counts** in the 2024–2025 rebuild matched the saved daily model counts. The station drill-down measures recorded trip starts. Investigating bike or dock availability would require inventory data.
+
+- [2024–2025 archive reconciliation](https://jeffsickoria.github.io/bike-archive-audit.json)
+- [Download station comparison results](https://jeffsickoria.github.io/bike-station-breakdown.csv)
+
+This NYU Stern project originally built a BigQuery pipeline covering NYC Citi Bike trip history from June 2013 through May 2026 and served a weather-adjusted ridership dashboard on Streamlit. The public dashboard uses precomputed data on GitHub Pages. The following sections document the original pipeline and its verification.
 
 ## Architecture
 
@@ -57,7 +60,7 @@ and `docs/` (execution, verification, repair, recovery records).
 | Reconciliation & official-source evidence | [`docs/verification/v2-reconciliation.md`](docs/verification/v2-reconciliation.md), [`docs/verification/official-source-freshness.md`](docs/verification/official-source-freshness.md) |
 | Deployment evidence | [`docs/execution/dashboard-v2-deployment.md`](docs/execution/dashboard-v2-deployment.md), [`evidence/dashboard-deployment.csv`](evidence/dashboard-deployment.csv) |
 | Weather-Adjusted Ridership v2 (Stretch 1) | [`docs/verification/weather-model-v2.md`](docs/verification/weather-model-v2.md), [`scripts/build_weather_model_v2.py`](scripts/build_weather_model_v2.py) |
-| Public dashboard | https://jeffsickoria.github.io/msbai-dwd-jrs10127/#bike |
+| Public dashboard | https://jeffsickoria.github.io/#bike |
 | BigQuery project & objects | project `msbai-dwd-jrs10127`; clean view `citibike.trips_v2`; daily view `citibike.trips_daily_v2`; materialized table `citibike.trips_daily_table_v2` |
 
 ## Dashboard configuration
