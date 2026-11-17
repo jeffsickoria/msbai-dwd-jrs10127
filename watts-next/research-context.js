@@ -20,7 +20,7 @@
  let state=clean(null),warning='';
  try{const p=new URL(location.href).searchParams;if(p.has('context'))state=clean(JSON.parse(p.get('context')));else state=clean(JSON.parse(localStorage.getItem(key)||'null'));}catch{warning='Saved context could not be read. Defaults restored.';}
  function url(path=location.href){const u=new URL(path,location.href);u.searchParams.set('context',JSON.stringify(state));return u.href;}
- function save(){try{localStorage.setItem(key,JSON.stringify(state));history.replaceState(null,'',url());}catch{/* Sharing still works when storage is disabled. */}document.querySelectorAll('a[href*="research.html"],a[href*="index.html"]').forEach(a=>{a.href=url(a.href);});}
+ function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch{/* Sharing still works when storage is disabled. */}document.querySelectorAll('a[href*="research.html"],a[href*="index.html"]').forEach(a=>{a.href=url(a.href);});}
  window.WattsContext={get:()=>clean(state),update:patch=>{state=clean({...state,...patch});save();window.dispatchEvent(new Event("watts-context-change"));},url,
   attach:release=>{if(state.release&&state.release!==release)warning='This link was saved against a different release. Values shown use the current release; check dates before comparing.';state.release=release;save();return warning;},
   brief:(data,countyRows)=>({kind:'county research brief; no suitability ranking',context_contract_version:1,product_release_id:data.product_release_id,regional_snapshot_id:data.release_id,context:clean(state),counties:countyRows,regional_context:{assignment:'Not assigned to shortlisted counties',scenario:state.scenario},limitations:data.limitations})};
